@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:jordantimes_final/models/Category.dart';
+import 'package:jordantimes_final/models/Trip.dart';
+
 import '../models/Category.dart';
-const Categories_data = const{
+import '../models/Trip.dart';
+const Categories_data = const[
   Category(
     id: 'c1',
     title:'Amman',
@@ -46,4 +49,38 @@ const Categories_data = const{
       imageUrl:'assets/irbid.png'
 
   )
-};
+];
+
+
+const Trips_data = const [
+  Trip (
+    id: 'm1',
+    categories: ['c1'],
+    title: 'Amman Trip',
+    imageUrl: 'assets/ammanOffer.png',
+    activities: ['climb',
+        'lazertag'],
+    program: ['trip tour'],
+    duration: 3,
+    tripType: TripType.Exploration,
+    price : 10,
+
+
+  ),
+
+
+  Trip (
+    id: 'm2',
+    categories: ['c6'],
+    title: 'Jarash Trip',
+    imageUrl: 'assets/jarashOffer.png',
+    activities: ['tour', 'festival', 'breakfast',],
+    program: ['trip tour'],
+    duration: 3,
+    tripType: TripType.Exploration,
+    price: 20,
+
+
+  ),
+
+];

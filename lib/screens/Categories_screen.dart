@@ -8,7 +8,7 @@ class Categoriesscreen extends StatelessWidget{
       appBar:AppBar(
         title:Text('JordanTimes')
       ),
-
+      drawer: Drawer(child: Text('NavBar Menu'),),
         body:GridView(
           padding: EdgeInsets.all(10),
         gridDelegate:SliverGridDelegateWithMaxCrossAxisExtent(
@@ -20,7 +20,7 @@ class Categoriesscreen extends StatelessWidget{
         ),
 
           children: Categories_data.map((categoryData)=>
-              CategoryItem(categoryData.title, categoryData.imageUrl)
+              CategoryItem(categoryData.id, categoryData.title, categoryData.imageUrl)
           ).toList(),
 
       ),

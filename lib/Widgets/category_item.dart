@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:jordantimes_final/screens/category_trips_screen.dart';
+
 import '../screens/category_trips_screen.dart';
 
 class CategoryItem extends StatelessWidget {
+  final String id;
   final String title;
   final String imageUrl ;
 
-  CategoryItem(this.title, this.imageUrl);
+  CategoryItem(this.id, this.title, this.imageUrl);
 
   void selectCategory(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(
-        builder:(c) =>CategoryTripsScreen()));
+    Navigator.of(context).pushNamed(
+    '/category-trips',
+        arguments:{
+        'id': id,
+        'title': title,
+
+        }
+    );
   }
   @override
   Widget build (BuildContext context){
