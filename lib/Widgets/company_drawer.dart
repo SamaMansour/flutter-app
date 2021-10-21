@@ -4,7 +4,7 @@ import 'package:jordantimes_final/screens/Goverment_Notifications_screen.dart';
 import 'package:jordantimes_final/screens/Goverment_screen.dart';
 import 'package:jordantimes_final/screens/welcome_screen.dart';
 
-class AppDrawer extends StatelessWidget {
+class CompanyDrawer extends StatelessWidget {
   final _auth = FirebaseAuth.instance;
   Widget buildListTile(String title, IconData icon, Function onTapLink) {
     return ListTile(
@@ -33,7 +33,7 @@ class AppDrawer extends StatelessWidget {
             alignment: Alignment.center,
             color: Colors.red,
             child: Text(
-              'MOTA',
+            _auth.currentUser!.email as String,
               style: Theme.of(context).textTheme.headline6,
             ),
           ),
@@ -59,6 +59,14 @@ class AppDrawer extends StatelessWidget {
               onTap: () {
                
               }),
+
+                SizedBox(height: 20),
+          new ListTile(
+              title: Text('EditProfile', style: Theme.of(context).textTheme.headline6),
+              onTap: () {
+               
+              }),
+        
         
           SizedBox(height: 20),
           new ListTile(

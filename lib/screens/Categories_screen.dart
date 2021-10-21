@@ -8,7 +8,7 @@ class Categoriesscreen extends StatelessWidget{
       appBar:AppBar(
         title:Text('JordanTimes')
       ),
-      drawer: Drawer(child: Text('NavBar Menu'),),
+     
         body:GridView(
           padding: EdgeInsets.all(10),
         gridDelegate:SliverGridDelegateWithMaxCrossAxisExtent(

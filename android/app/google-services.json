@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "792542358010",
+    "project_id": "project0-324506",
+    "storage_bucket": "project0-324506.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:792542358010:android:c48242c65bdffce3eb5c43",
+        "android_client_info": {
+          "package_name": "co.appbrewery.flash_chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "792542358010-2crdt1880ia05f13flimaqk2n6vqcspe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLHtkLMgIQYdxdRWvkpeBxWr0AkKqC2hM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "792542358010-2crdt1880ia05f13flimaqk2n6vqcspe.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:792542358010:android:fa5447a14156f59deb5c43",
+        "android_client_info": {
+          "package_name": "com.example.jordantimes_final"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "792542358010-2crdt1880ia05f13flimaqk2n6vqcspe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLHtkLMgIQYdxdRWvkpeBxWr0AkKqC2hM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "792542358010-2crdt1880ia05f13flimaqk2n6vqcspe.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

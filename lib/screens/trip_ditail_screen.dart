@@ -10,7 +10,7 @@ class TripDetailScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('blah'),
+        title: Text('title'),
       ),
     );
   }
