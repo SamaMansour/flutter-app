@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -11,17 +12,23 @@ import 'package:file_picker/file_picker.dart';
 import 'package:path/path.dart';
 
 class CompanyScreen extends StatefulWidget {
+  List<String> locations = [];
+  
+  CompanyScreen({required this.locations});
+   
+
   @override
   _CompanyScreenState createState() => _CompanyScreenState();
 }
 
 class _CompanyScreenState extends State<CompanyScreen> {
   final _firestore = FirebaseFirestore.instance;
+ 
   String id = " ";
   String title = " ";
   String description = " ";
   String price = "";
-  var locations = [];
+
   @override
   Widget build(BuildContext context) {
     UploadTask? task;
@@ -30,7 +37,7 @@ class _CompanyScreenState extends State<CompanyScreen> {
 
     Future selectFile() async {
       FilePickerResult? result =
-          await FilePicker.platform.pickFiles(allowMultiple: true);
+          await FilePicker.platform.pickFiles(allowMultiple: false);
       if (result == null) return;
       final path = result.files.single.path!;
       setState(() => file = File(path));
@@ -42,7 +49,17 @@ class _CompanyScreenState extends State<CompanyScreen> {
       final destination = 'files/$fileName';
 
       FirebaseApi.uploadFile(destination, file!);
+
+      setState(() {});
+
+      if (task == null) return;
+
+      final snapshot = await task.whenComplete(() {});
+      final urlDownload = await snapshot.ref.getDownloadURL();
+
+      print('Download-Link: $urlDownload');
     }
+   
 
     final _auth = FirebaseAuth.instance;
     return Scaffold(
@@ -118,7 +135,7 @@ class _CompanyScreenState extends State<CompanyScreen> {
             TextField(
               textAlign: TextAlign.center,
               onChanged: (value) {
-                price =value ;
+                price = value;
               },
               decoration: InputDecoration(
                 hintText: 'Enter price',
@@ -160,9 +177,10 @@ class _CompanyScreenState extends State<CompanyScreen> {
                     final loggedUser = _auth.currentUser;
                     _firestore.collection('trips').add({
                       'id': loggedUser!.uid,
-                      'title':title,
-                      'description':description,
-                      'price':price,
+                      'title': title,
+                      'description': description,
+                      'price': price,
+                      'locations': "locations",
                     });
                     uploadFile();
                   },

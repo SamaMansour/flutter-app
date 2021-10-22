@@ -12,6 +12,7 @@ class LoginScreen extends StatelessWidget {
   final _firestore = FirebaseFirestore.instance;
   String email = ' ';
   String password = ' ';
+  List<String> locations = [];
 
   @override
   Widget build(BuildContext context) {
@@ -82,13 +83,10 @@ class LoginScreen extends StatelessWidget {
             SizedBox(
               height: 24.0,
             ),
-
-
             TextButton(
                 onPressed: () {
-                 Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) =>
-                               ForgotPassword()));
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => ForgotPassword()));
                 },
                 child: Text('Forgot Password?')),
             Padding(
@@ -107,24 +105,18 @@ class LoginScreen extends StatelessWidget {
                     if (_auth.currentUser!.email == "gov@gmail.com") {
                       Navigator.of(context).pushReplacement(MaterialPageRoute(
                           builder: (context) => GovermentScreen()));
-                    } 
-                      //Navigate Admin To Their Page
-                      else if (_auth.currentUser!.email == "admin@gmail.com") {
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => AdminScreen()));
-                      }
-                    
-                 
-                      else if (_auth.currentUser!.email == "sma302000@gmail.com") {
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => CompanyScreen()));
-                      }
+                    }
+                    //Navigate Admin To Their Page
+                    else if (_auth.currentUser!.email == "admin@gmail.com") {
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) => AdminScreen()));
+                    } else if (_auth.currentUser!.email ==
+                        "sma302000@gmail.com") {
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) => CompanyScreen( locations: [],)));
+                    }
 
-                    
-
-                    
-                    
-                   /* await for (var snapshot
+                    /* await for (var snapshot
                         in _firestore.collection('users').snapshots()) {
                       for (var savedUser in snapshot.docs) {
                         print(savedUser.get('id'));
