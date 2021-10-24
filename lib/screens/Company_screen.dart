@@ -33,7 +33,7 @@ class _CompanyScreenState extends State<CompanyScreen> {
   Widget build(BuildContext context) {
     UploadTask? task;
     File? file;
-    final fileName = file != null ? basename(file.path) : 'No file is selected';
+    final fileName = file != null ? basename(file.path) : ' ';
 
     Future selectFile() async {
       FilePickerResult? result =

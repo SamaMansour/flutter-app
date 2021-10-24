@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jordantimes_final/Widgets/admin_drawer.dart';
 
 class AdminScreen extends StatelessWidget {
   @override
@@ -7,6 +8,8 @@ class AdminScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Admin'),
       ),
+
+      drawer: AdminDrawer(),
     );
   }
 }

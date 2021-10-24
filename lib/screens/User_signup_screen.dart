@@ -7,13 +7,13 @@ class UserSignupScreen extends StatelessWidget {
    TextEditingController _emailController = TextEditingController();
   final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
-
+ // Declare User Variables
   String name = '';
   String phone = ' ';
   String email = ' ';
   String password = ' ';
   String confirmPassword = ' ';
-
+// Name Text Input
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,6 +50,7 @@ class UserSignupScreen extends StatelessWidget {
             SizedBox(
               height: 8.0,
             ),
+            // Phone Text Input
             TextField(
               textAlign: TextAlign.center,
               onChanged: (value) {
@@ -75,6 +76,7 @@ class UserSignupScreen extends StatelessWidget {
             SizedBox(
               height: 8.0,
             ),
+            //Email Text Input
             TextField(
               textAlign: TextAlign.center,
               controller: _emailController,
@@ -101,6 +103,8 @@ class UserSignupScreen extends StatelessWidget {
             SizedBox(
               height: 8.0,
             ),
+
+            //Password Text
             TextField(
               obscureText: true,
               textAlign: TextAlign.center,

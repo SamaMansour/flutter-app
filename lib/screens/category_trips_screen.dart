@@ -33,6 +33,7 @@ class CategoryTripsScreen extends StatelessWidget {
             );
           },
           itemCount: filteredTrips.length,
-        ));
+        )
+        );
   }
 }

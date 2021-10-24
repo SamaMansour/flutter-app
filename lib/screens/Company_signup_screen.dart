@@ -15,14 +15,14 @@ class _CompanySignupScreenState extends State<CompanySignupScreen> {
   final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
   
-
+ //Declare User Variables
   String number = '';
   String name = '';
   String phone = ' ';
   String email = ' ';
   String password = ' ';
   String confirmPassword = ' ';
-
+// Company No Text Input
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,6 +59,8 @@ class _CompanySignupScreenState extends State<CompanySignupScreen> {
             SizedBox(
               height: 8.0,
             ),
+
+            //Company Name Text Input 
             TextField(
               textAlign: TextAlign.center,
               onChanged: (value) {
@@ -84,6 +86,8 @@ class _CompanySignupScreenState extends State<CompanySignupScreen> {
             SizedBox(
               height: 8.0,
             ),
+
+            // Company Phone Text Input
             TextField(
               textAlign: TextAlign.center,
               controller: _phoneController,
@@ -110,6 +114,7 @@ class _CompanySignupScreenState extends State<CompanySignupScreen> {
             SizedBox(
               height: 8.0,
             ),
+            // Company Email Text Input
             TextField(
               textAlign: TextAlign.center,
               controller: _emailController,
@@ -136,6 +141,8 @@ class _CompanySignupScreenState extends State<CompanySignupScreen> {
             SizedBox(
               height: 8.0,
             ),
+
+            //Password Input
             TextField(
               obscureText: true,
               textAlign: TextAlign.center,
@@ -162,6 +169,7 @@ class _CompanySignupScreenState extends State<CompanySignupScreen> {
             SizedBox(
               height: 8.0,
             ),
+            //Repeat Password
             TextField(
               obscureText: true,
               textAlign: TextAlign.center,
@@ -206,6 +214,7 @@ class _CompanySignupScreenState extends State<CompanySignupScreen> {
                     } catch (e) {
                       print(e);
                     }
+                    // Insert Users into Firestore
                       final loggedUser = _auth.currentUser;
                     _firestore.collection('users').add({
                        'id' : loggedUser!.uid,
