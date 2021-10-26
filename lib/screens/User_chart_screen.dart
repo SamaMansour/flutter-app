@@ -8,17 +8,12 @@ class UserChart extends StatefulWidget {
 }
 
 class _UserChartState extends State<UserChart> {
-
- 
-
- 
   late List<UsersData> _chartData;
-   @override
-  void initState (){
+  @override
+  void initState() {
     _chartData = getChartData();
     super.initState();
   }
-
 
   
 
@@ -26,51 +21,48 @@ class _UserChartState extends State<UserChart> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-           appBar: AppBar(
+      appBar: AppBar(
         title: Text('Charts'),
       ),
-      body: SfCartesianChart(series:<ChartSeries>[
-        LineSeries<UsersData, int> (
-          dataSource: _chartData,
-         xValueMapper: (UsersData users, _) => users.month,
-         yValueMapper: (UsersData users, _) => users.users
-         )
-      ],
-      primaryXAxis: NumericAxis(edgeLabelPlacement: EdgeLabelPlacement.shift),
-      
+      body: SfCartesianChart(
+        series: <ChartSeries>[
+          LineSeries<UsersData, double>(
+              dataSource: _chartData,
+              xValueMapper: (UsersData users, _) => users.month,
+              yValueMapper: (UsersData users, _) => users.users)
+        ],
+        primaryXAxis: NumericAxis(edgeLabelPlacement: EdgeLabelPlacement.shift),
       ),
     ));
   }
-}
+}final _firestore = FirebaseFirestore.instance;
 
+
+
+
+
+var usersNum = countDocuments();
 List<UsersData> getChartData() {
   final List<UsersData> chartData = [
-    UsersData(1, 101),
-    UsersData(2, 102),
-    UsersData(3, 103),
-    UsersData(4, 104)
+    UsersData(1, usersNum as double),
+    UsersData(2, usersNum as double),
+    UsersData(3, usersNum as double),
+    UsersData(4, usersNum as double),
   ];
   return chartData;
 }
 
-final _firestore = FirebaseFirestore.instance;
+
 
 countDocuments() async {
-    QuerySnapshot _myDoc = await _firestore.collection('users').get();
-    List<DocumentSnapshot> _myDocCount = _myDoc.docs;
-    return _myDocCount.length; // Count of Documents in Collection
-
+  QuerySnapshot _myDoc = await _firestore.collection('users').get();
+  List<DocumentSnapshot> _myDocCount = _myDoc.docs;
+  return _myDocCount.length; // Count of Documents in Collection
 }
-
- 
-  
-
-
-
 
 class UsersData {
   UsersData(this.month, this.users);
 
-  final int month;
+  final double month;
   final double users;
 }

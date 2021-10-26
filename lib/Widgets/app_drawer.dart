@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:jordantimes_final/screens/Goverment_History.dart';
 import 'package:jordantimes_final/screens/Goverment_Notifications_screen.dart';
 import 'package:jordantimes_final/screens/Goverment_screen.dart';
 import 'package:jordantimes_final/screens/welcome_screen.dart';
@@ -57,6 +58,8 @@ class AppDrawer extends StatelessWidget {
           new ListTile(
               title: Text('History', style: Theme.of(context).textTheme.headline6),
               onTap: () {
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => GovermentHistory()));
                
               }),
         

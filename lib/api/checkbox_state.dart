@@ -1,9 +1,11 @@
 class checkBoxState {
-  final String title ;
+  final String title;
   bool value = false;
+
 
   checkBoxState({
     required this.title,
-    this.value= false,
+    this.value = false,
+  
   });
 }

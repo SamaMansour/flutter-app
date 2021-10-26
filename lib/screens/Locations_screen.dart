@@ -5,7 +5,7 @@ import 'package:jordantimes_final/api/checkbox_state.dart';
 import 'package:jordantimes_final/screens/Company_screen.dart';
 
 class LocationsScreen extends StatefulWidget {
-  List<String> locations = [];
+ var locations = new List.filled(14, null, growable: false);
   @override
   _LocationsScreenState createState() => _LocationsScreenState();
 }
@@ -13,7 +13,7 @@ class LocationsScreen extends StatefulWidget {
 class _LocationsScreenState extends State<LocationsScreen> {
   bool value = false;
   final locations = [
-    checkBoxState(title: 'Amman'),
+    checkBoxState(title: 'Amman' ),
     checkBoxState(title: 'Aqaba'),
     checkBoxState(title: 'Balqa'),
     checkBoxState(title: 'Jarash'),
@@ -28,15 +28,19 @@ class _LocationsScreenState extends State<LocationsScreen> {
   ];
   @override
   Widget buildSingleCheckbox(checkBoxState checkbox) => CheckboxListTile(
-      controlAffinity: ListTileControlAffinity.leading,
+    
+
       activeColor: Colors.red,
       value: checkbox.value,
       title: Text(checkbox.title, style: TextStyle(fontSize: 20)),
       onChanged: (value) => setState(() => {
             checkbox.value = value!,
-            if (checkbox.value == true) {locations.add(checkbox)}
+             locations.add(checkbox)
+           
           }));
 
+
+          
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
