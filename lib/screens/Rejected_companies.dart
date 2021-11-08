@@ -1,25 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:jordantimes_final/Widgets/history_drawer.dart';
-
 import 'package:jordantimes_final/screens/Goverment_screen.dart';
 
-class GovermentHistory extends StatefulWidget {
-  const GovermentHistory({Key? key}) : super(key: key);
+class RejectedCompanies extends StatefulWidget {
+  const RejectedCompanies({ Key? key }) : super(key: key);
 
   @override
-  _GovermentHistoryState createState() => _GovermentHistoryState();
+  _RejectedCompaniesState createState() => _RejectedCompaniesState();
 }
 
-class _GovermentHistoryState extends State<GovermentHistory> {
+class _RejectedCompaniesState extends State<RejectedCompanies> {
     final _firestore = FirebaseFirestore.instance;
-  
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('History'),
+        title: Text('Declined Companies'),
       ),
-      drawer: HistoryDrawer(),
+    
 
 
       
@@ -30,7 +28,7 @@ class _GovermentHistoryState extends State<GovermentHistory> {
           children: [
             StreamBuilder<QuerySnapshot>(
               
-                stream: _firestore.collection('accepted').snapshots(),
+                stream: _firestore.collection('declined').snapshots(),
                 builder: (context, snapshot) {
                   List<ItemLine> companiesWidgets = [];
                   if (!snapshot.hasData) {
@@ -38,7 +36,7 @@ class _GovermentHistoryState extends State<GovermentHistory> {
                       backgroundColor: Colors.red,
                     );
                   }
-                  //Stream Companies from Database
+                  //Stream Rejected Companies 
 
                   final companies = snapshot.data!.docs;
                   for (var company in companies) {

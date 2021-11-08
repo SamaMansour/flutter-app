@@ -8,6 +8,8 @@ class Categoriesscreen extends StatelessWidget{
       appBar:AppBar(
         title:Text('JordanTimes')
       ),
+
+      //Category Grid
      
         body:GridView(
           padding: EdgeInsets.all(10),
@@ -18,7 +20,7 @@ class Categoriesscreen extends StatelessWidget{
           crossAxisSpacing: 10
 
         ),
-
+        //Category Widget
           children: Categories_data.map((categoryData)=>
               CategoryItem(categoryData.id, categoryData.title, categoryData.imageUrl)
           ).toList(),

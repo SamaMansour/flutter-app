@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:jordantimes_final/screens/SendOtp_screen.dart';
 
 class UserSignupScreen extends StatelessWidget {
-   TextEditingController _emailController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
   final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
- // Declare User Variables
+  // Declare User Variables
   String name = '';
   String phone = ' ';
   String email = ' ';
@@ -25,7 +25,6 @@ class UserSignupScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             TextField(
-             
               textAlign: TextAlign.center,
               onChanged: (value) {
                 name = value;
@@ -164,25 +163,29 @@ class UserSignupScreen extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(30.0)),
                 elevation: 5.0,
                 child: MaterialButton(
-                  onPressed: () async{
+                  onPressed: () async {
                     try {
-                    final newUser =
-                    await _auth.createUserWithEmailAndPassword(
-                     email: email, password: password).then((_){
-                     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => SendOtp(_emailController.text)));
-                    });
-
+                      final newUser = await _auth
+                          .createUserWithEmailAndPassword(
+                              email: email, password: password)
+                          .then((_) {
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) =>
+                                SendOtp(_emailController.text)));
+                      });
                     } catch (e) {
-                    print(e);
+                      print(e);
                     }
-                      final loggedUser = _auth.currentUser;
+                    var count = 1;
+                    final loggedUser = _auth.currentUser;
                     _firestore.collection('users').add({
-                      'id' : loggedUser!.uid,
+                      'id': loggedUser!.uid,
                       'name': name,
                       'phone': phone,
                       'role': "user",
-                     
+                      'count': count 
                     });
+                    count++;
                   },
                   minWidth: 200.0,
                   height: 42.0,

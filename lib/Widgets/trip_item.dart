@@ -7,16 +7,15 @@ class TripItem extends StatelessWidget {
   final String id;
   final String title;
   final String imageUrl;
-  final int duration;
-  final TripType tripType;
+  final int description;
+ 
   final int price;
 
   TripItem({
     required this.id,
     required this.title,
     required this.imageUrl,
-    required this.duration,
-    required this.tripType,
+    required this.description,
     required this.price,
   });
   void selectTrip(BuildContext context) {
@@ -42,7 +41,7 @@ class TripItem extends StatelessWidget {
                     topLeft: Radius.circular(15),
                     topRight: Radius.circular(15),
                   ),
-                  child: Image.asset(
+                  child: Image.network(
                     imageUrl,
                     height: 250,
                     width: double.infinity,
@@ -82,7 +81,7 @@ class TripItem extends StatelessWidget {
                       SizedBox(
                         width: 6,
                       ),
-                      Text('$duration Days'),
+                      Text('$description Days'),
                     ],
                   ),
                   Row(

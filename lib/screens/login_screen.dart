@@ -106,29 +106,34 @@ class LoginScreen extends StatelessWidget {
                       Navigator.of(context).pushReplacement(MaterialPageRoute(
                           builder: (context) => GovermentScreen()));
                     }
+                  
                     //Navigate Admin To Their Page
                     else if (_auth.currentUser!.email == "admin@gmail.com") {
                       Navigator.of(context).pushReplacement(MaterialPageRoute(
                           builder: (context) => AdminScreen()));
-                    } else if (_auth.currentUser!.email ==
+                    } /*else if (_auth.currentUser!.email ==
                         "sma302000@gmail.com") {
                       Navigator.of(context).pushReplacement(MaterialPageRoute(
                           builder: (context) => CompanyScreen( locations: [],)));
-                    }
+                    }*/
 
-                    /* await for (var snapshot
-                        in _firestore.collection('users').snapshots()) {
-                      for (var savedUser in snapshot.docs) {
-                        print(savedUser.get('id'));
-                        if (savedUser.get('id') as String ==_auth.currentUser!.uid &&savedUser.get('role') as String == "company") {
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                  builder: (context) => CompanyScreen()));
+                    else {
+                      await for (var snapshot
+                      in _firestore.collection('users').snapshots()) {
+                        for (var savedUser in snapshot.docs) {
+                          
+                          if (savedUser.get('role') as String == "company") {
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        CompanyScreen(locations: [],)));
+                          }
                         }
                       }
                     }
+                  
 
-                    await for (var snapshot
+                    /*await for (var snapshot
                         in _firestore.collection('users').snapshots()) {
                       for (var savedUser in snapshot.docs) {
                         if (savedUser.get('id') as String ==

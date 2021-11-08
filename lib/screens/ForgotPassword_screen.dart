@@ -51,6 +51,7 @@ class ForgotPassword extends StatelessWidget {
                   elevation: 5.0,
                   child: MaterialButton(
                     onPressed: () {
+                      //Reset Password and Navigate Back To LoginScreen
                       _auth.sendPasswordResetEmail(email: _emailController.text);
                          Navigator.of(context).pushReplacement(MaterialPageRoute(
                           builder: (context) => LoginScreen()));

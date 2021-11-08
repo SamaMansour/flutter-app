@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:jordantimes_final/models/userModel.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class UserChart extends StatefulWidget {
@@ -8,6 +9,8 @@ class UserChart extends StatefulWidget {
 }
 
 class _UserChartState extends State<UserChart> {
+  
+  
   late List<UsersData> _chartData;
   @override
   void initState() {
@@ -24,7 +27,12 @@ class _UserChartState extends State<UserChart> {
       appBar: AppBar(
         title: Text('Charts'),
       ),
+
+      
+
+      
       body: SfCartesianChart(
+        
         series: <ChartSeries>[
           LineSeries<UsersData, double>(
               dataSource: _chartData,
@@ -41,28 +49,29 @@ class _UserChartState extends State<UserChart> {
 
 
 
-var usersNum = countDocuments();
+
+
+
 List<UsersData> getChartData() {
   final List<UsersData> chartData = [
-    UsersData(1, usersNum as double),
-    UsersData(2, usersNum as double),
-    UsersData(3, usersNum as double),
-    UsersData(4, usersNum as double),
+    UsersData(1, 100),
+    UsersData(2, 200),
+    UsersData(3, 300),
+    UsersData(4, 400),
   ];
   return chartData;
 }
 
 
 
-countDocuments() async {
-  QuerySnapshot _myDoc = await _firestore.collection('users').get();
-  List<DocumentSnapshot> _myDocCount = _myDoc.docs;
-  return _myDocCount.length; // Count of Documents in Collection
-}
+
+
+
+ 
 
 class UsersData {
   UsersData(this.month, this.users);
 
   final double month;
-  final double users;
+  final int users;
 }

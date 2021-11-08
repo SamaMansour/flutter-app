@@ -27,8 +27,8 @@ class CategoryTripsScreen extends StatelessWidget {
               id: filteredTrips[index].id,
               title: filteredTrips[index].title,
               imageUrl: filteredTrips[index].imageUrl,
-              duration: filteredTrips[index].duration,
-              tripType: filteredTrips[index].tripType,
+              description: filteredTrips[index].duration,
+              
               price: filteredTrips[index].price,
             );
           },

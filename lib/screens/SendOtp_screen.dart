@@ -11,6 +11,7 @@ class SendOtp extends StatelessWidget {
   //TextEditingController _emailController = TextEditingController();
 
   EmailAuth emailAuth = new EmailAuth(sessionName: '');
+  //Send OTP to Auth Email
   void sendOTP() async {
     emailAuth.sessionName = "JordanTimes";
 
@@ -21,7 +22,7 @@ class SendOtp extends StatelessWidget {
       print("Invalid OTP");
     }
   }
-
+// Verify User OTP 
   void verifyOTP() {
     var res = emailAuth.validateOtp(
         recipientMail:email, userOtp: _otpController.text);

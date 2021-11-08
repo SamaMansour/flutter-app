@@ -20,8 +20,6 @@ class GovermentScreen extends StatelessWidget {
     }
   }
 
- 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,14 +45,17 @@ class GovermentScreen extends StatelessWidget {
                   final companies = snapshot.data!.docs;
                   for (var company in companies) {
                     if (company.get('role') == "company") {
+                      final id = company.get('id');
                       final no = company.get('number');
                       final name = company.get('name');
                       final phone = company.get('phone');
+                      final email = company.get('email');
 
                       final companyWidget = ItemLine(
                         no: no,
                         name: name,
                         phone: phone,
+                        email: email,
                       );
 
                       companiesWidgets.add(companyWidget);
@@ -77,14 +78,24 @@ class GovermentScreen extends StatelessWidget {
 
 class ItemLine extends StatelessWidget {
   TextEditingController customController = TextEditingController();
-  
-
+  var pressedValue = false;
   final _firestore = FirebaseFirestore.instance;
-  ItemLine({this.no, this.name, this.phone, Key? key}) : super(key: key);
+  ItemLine(
+      {this.no,
+      this.name,
+      this.phone,
+      this.email,
+      Key? key,
+      status,
+      title,
+      description,
+      price})
+      : super(key: key);
 
   String? no;
   String? name;
   String? phone;
+  String? email;
 
   @override
   Widget build(BuildContext context) {
@@ -107,13 +118,15 @@ class ItemLine extends StatelessWidget {
         ),
         TextButton(
             onPressed: () async {
-              _firestore.collection('accepted').doc(no).set({
+              _firestore.collection('accepted').doc(email).set({
                 'name': name,
                 'number': no,
                 'phone': phone,
+                'email': email,
                 'role': "company",
                 'verfied': "accepted",
               });
+              pressedValue = true;
             },
             child: Text('Accept')),
         SizedBox(
@@ -121,20 +134,23 @@ class ItemLine extends StatelessWidget {
         ),
         TextButton(
             onPressed: () {
-              _firestore.collection('declined').doc(no).set({
-                'name': name,
-                'number': no,
-                'phone': phone,
-                'role': "company",
-                'verfied': "accepted",
-              });
-              createAlertDialog(context);
+              if (pressedValue == false) {
+                _firestore.collection('declined').doc(email).set({
+                  'name': name,
+                  'number': no,
+                  'phone': phone,
+                  'email': email,
+                  'role': "company",
+                  'verfied': "accepted",
+                });
+                pressedValue = true;
+                createAlertDialog(context);
+              }
             },
             child: Text('Decline')),
       ]),
     );
   }
-
 
   createAlertDialog(BuildContext context) {
     return showDialog(
@@ -154,7 +170,7 @@ class ItemLine extends StatelessWidget {
                       'number': no,
                       'phone': phone,
                       'role': "company",
-                      'verfied': "declined", 
+                      'verfied': "declined",
                       'reason': customController.text,
                     });
                   })

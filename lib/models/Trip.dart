@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+//Trip Model
 enum TripType{
   Exploration,
   Recovery,
