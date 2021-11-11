@@ -45,15 +45,17 @@ class HistoryDrawer extends StatelessWidget {
              
               title: Text('Accepted', style: Theme.of(context).textTheme.headline6),
               onTap: () {
-                Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => GovermentHistory()));
+                 Navigator.of(context).pushNamed(
+                       'Goverment_History');
+                 
               }),
           SizedBox(height: 20),
            new ListTile(
               title: Text('Rejected', style: Theme.of(context).textTheme.headline6),
               onTap: () {
-                Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => RejectedCompanies()));
+                Navigator.of(context).pushNamed(
+                       'Rejected_companies');
+                
               }),
          
          

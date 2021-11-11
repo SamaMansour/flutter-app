@@ -43,23 +43,23 @@ class AppDrawer extends StatelessWidget {
              
               title: Text('Dashboard', style: Theme.of(context).textTheme.headline6),
               onTap: () {
-                Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => GovermentScreen()));
+               //Keep At Same Page
               }),
           SizedBox(height: 20),
            new ListTile(
               title: Text('Notifications', style: Theme.of(context).textTheme.headline6),
               onTap: () {
-                Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => GovermentNotifications()));
+                 
+               
               }),
          
           SizedBox(height: 20),
           new ListTile(
               title: Text('History', style: Theme.of(context).textTheme.headline6),
               onTap: () {
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => GovermentHistory()));
+                Navigator.of(context).pushNamed(
+                       'Goverment_History');
+                 
                
               }),
         

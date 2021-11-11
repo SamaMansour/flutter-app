@@ -47,8 +47,18 @@ class _CompanyDrawerState extends State<CompanyDrawer> {
     document.get().then((docData) => {
           if (docData.exists)
             {status = 'Accepted'}
-          else
-            {status = 'Not Accepted'}
+         
+        });
+
+
+        var document2 = FirebaseFirestore.instance
+        .collection('declined')
+        .doc(_auth.currentUser!.email);
+    print(_auth.currentUser!.uid);
+    document2.get().then((docData) => {
+          if (docData.exists)
+            {status = 'Declined'}
+         
         });
     return Drawer(
       child: SafeArea(
@@ -76,6 +86,7 @@ class _CompanyDrawerState extends State<CompanyDrawer> {
                 title: Text('Dashboard',
                     style: Theme.of(context).textTheme.headline6),
                 onTap: () {
+                  //Keep At The Same Page
                  
                 }),
             SizedBox(height: 20),
@@ -83,24 +94,25 @@ class _CompanyDrawerState extends State<CompanyDrawer> {
                 title: Text('Notifications',
                     style: Theme.of(context).textTheme.headline6),
                 onTap: () {
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (context) => CompanyNotifications()));
+                   Navigator.of(context).pushNamed(
+                       'Company_Notifications');
+                 
                 }),
             SizedBox(height: 20),
             new ListTile(
                 title: Text('History',
                     style: Theme.of(context).textTheme.headline6),
                 onTap: () {
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (context) => CompanyHistory()));
+                  Navigator.of(context).pushNamed(
+                       'CompanyHistory');
                 }),
             SizedBox(height: 20),
             new ListTile(
                 title: Text('EditProfile',
                     style: Theme.of(context).textTheme.headline6),
                 onTap: () {
-                  Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => editProfile()));
+                  Navigator.of(context).pushNamed(
+                       'edit_profile');
                 }),
             SizedBox(height: 20),
             new ListTile(

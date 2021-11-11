@@ -11,6 +11,7 @@ import 'package:jordantimes_final/screens/welcome_screen.dart';
 class GovermentScreen extends StatelessWidget {
   final _firestore = FirebaseFirestore.instance;
   TextEditingController _searchController = TextEditingController();
+  
 
   void messagesStream() async {
     await for (var snapshot in _firestore.collection('users').snapshots()) {
@@ -22,6 +23,17 @@ class GovermentScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Query (
+  String field, {
+  dynamic isEqualTo,
+  dynamic isLessThan,
+  dynamic isLessThanOrEqualTo,
+  dynamic isGreaterThan,
+  dynamic isGreaterThanOrEqualTo,
+  dynamic arrayContains,
+
+}){
+}
     return Scaffold(
       appBar: AppBar(
         title: Text('MOTA'),
@@ -135,14 +147,7 @@ class ItemLine extends StatelessWidget {
         TextButton(
             onPressed: () {
               if (pressedValue == false) {
-                _firestore.collection('declined').doc(email).set({
-                  'name': name,
-                  'number': no,
-                  'phone': phone,
-                  'email': email,
-                  'role': "company",
-                  'verfied': "accepted",
-                });
+               
                 pressedValue = true;
                 createAlertDialog(context);
               }
@@ -165,7 +170,7 @@ class ItemLine extends StatelessWidget {
               MaterialButton(
                   child: Text('Submit'),
                   onPressed: () {
-                    _firestore.collection('declined').doc(no).set({
+                    _firestore.collection('declined').doc(email).set({
                       'name': name,
                       'number': no,
                       'phone': phone,

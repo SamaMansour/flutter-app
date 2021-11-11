@@ -16,9 +16,9 @@ import 'package:file_picker/file_picker.dart';
 import 'package:path/path.dart';
 
 class CompanyScreen extends StatefulWidget {
-  List<String> locations = [];
+  List<String> locationsList = [];
 
-  CompanyScreen({required this.locations});
+  CompanyScreen({Key, key, required this.locationsList}) : super(key: key);
 
   @override
   _CompanyScreenState createState() => _CompanyScreenState();
@@ -32,7 +32,7 @@ class _CompanyScreenState extends State<CompanyScreen> {
   String description = " ";
   String arDescription = " ";
   String price = "";
-  double seats = 0.0;
+  int seats = 0;
   bool breakfast = false;
   bool lunch = false;
   bool dinner = false;
@@ -40,14 +40,22 @@ class _CompanyScreenState extends State<CompanyScreen> {
   UploadTask? task;
   File? file;
 
+  bool value = false;
+  //final meals = [
+    //checkBoxState(title: 'Breakfast'),
+    //checkBoxState(title: 'Lunch'),
+    //checkBoxState(title: 'Dinner'),
+    
+  //];
+/*List<String> mealsList = [];
   @override
   Widget buildSingleCheckbox(checkBoxState checkbox) => CheckboxListTile(
       activeColor: Colors.red,
       value: checkbox.value,
       title: Text(checkbox.title, style: TextStyle(fontSize: 20)),
-      onChanged: (value) => setState(() => {
-            checkbox.value = value!,
-          }));
+      onChanged: (value) =>
+          setState(() => {checkbox.value = value!,
+          mealsList.add(checkbox.title) }));*/
 
   @override
   Widget build(BuildContext context) {
@@ -168,11 +176,11 @@ class _CompanyScreenState extends State<CompanyScreen> {
                 },
                 onSaved: (value) {
                   setState(() {
-                     myDateRange = value! ;
+                    myDateRange = value!;
                     print(myDateRange);
                   });
                 }),
-                Text("Saved value is: ${myDateRange.toString()}"),
+            Text("Saved value is: ${myDateRange.toString()}"),
             SizedBox(
               height: 8.0,
             ),
@@ -195,7 +203,7 @@ class _CompanyScreenState extends State<CompanyScreen> {
               min: 1,
               max: 100,
               value: 5,
-              onChanged: (value) => seats = value,
+              onChanged: (value) => seats = value.toInt(),
             ),
             SizedBox(
               height: 8.0,
@@ -204,8 +212,7 @@ class _CompanyScreenState extends State<CompanyScreen> {
               children: [
                 TextButton.icon(
                     onPressed: () {
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => LocationsScreen()));
+                      Navigator.of(context).pushNamed('Locations_screen');
                     },
                     icon: Icon(Icons.map),
                     label: Text('location')),
@@ -223,6 +230,13 @@ class _CompanyScreenState extends State<CompanyScreen> {
               ],
             ),
             SizedBox(height: 8.0),
+
+             /*ListView(
+          children: [
+            //...meals.map(buildSingleCheckbox).toList(),
+            
+          ],
+        ),*/
             Padding(
               padding: EdgeInsets.symmetric(vertical: 16.0),
               child: Material(
@@ -234,8 +248,11 @@ class _CompanyScreenState extends State<CompanyScreen> {
                     String img = await uploadFile();
                     final loggedUser = _auth.currentUser;
                     var myDateRange;
-                    _firestore.collection('trips').add({
-                      'id': loggedUser!.uid,
+
+                    print(widget.locationsList.join(',').toString());
+                    _firestore.collection('trips').doc(id).set({
+                      'userId': loggedUser!.uid,
+                      'id': id,
                       'email': loggedUser.email,
                       'title': title,
                       'description': description,
@@ -244,7 +261,7 @@ class _CompanyScreenState extends State<CompanyScreen> {
                       'img': img,
                       'seats': seats,
                       'date': 'date',
-                      'locations': "locations",
+                      'locations': widget.locationsList.join(',').toString(),
                     });
                     uploadFile();
                   },
@@ -263,7 +280,7 @@ class _CompanyScreenState extends State<CompanyScreen> {
         onPressed: () {
           Navigator.of(context).pushReplacement(MaterialPageRoute(
               builder: (context) => CompanyScreen(
-                    locations: [],
+                    locationsList: [],
                   )));
         },
         child: const Icon(Icons.add),

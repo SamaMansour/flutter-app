@@ -5,7 +5,7 @@ import 'package:jordantimes_final/api/checkbox_state.dart';
 import 'package:jordantimes_final/screens/Company_screen.dart';
 
 class LocationsScreen extends StatefulWidget {
-  var locations = new List.filled(5, null, growable: false);
+  
   
   @override
   _LocationsScreenState createState() => _LocationsScreenState();
@@ -27,13 +27,16 @@ class _LocationsScreenState extends State<LocationsScreen> {
     checkBoxState(title: 'Tafila'),
     checkBoxState(title: 'Karak'),
   ];
+
+ List<String> locationsList = [];
   @override
   Widget buildSingleCheckbox(checkBoxState checkbox) => CheckboxListTile(
       activeColor: Colors.red,
       value: checkbox.value,
       title: Text(checkbox.title, style: TextStyle(fontSize: 20)),
       onChanged: (value) =>
-          setState(() => {checkbox.value = value!, }));
+          setState(() => {checkbox.value = value!,
+          locationsList.add(checkbox.title) }));
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,10 +63,11 @@ class _LocationsScreenState extends State<LocationsScreen> {
                 elevation: 5.0,
                 child: MaterialButton(
                   onPressed: () async {
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    Navigator.of(context).pop(MaterialPageRoute(
                         builder: (context) => CompanyScreen(
-                              locations: [],
+                              locationsList: [],
                             )));
+                            print(locationsList);
                   },
                   minWidth: 200.0,
                   height: 42.0,

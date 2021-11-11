@@ -17,6 +17,7 @@ class _CompanySignupScreenState extends State<CompanySignupScreen> {
   String confirmPassword = " ";
   final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
+  bool val = false;
   //Email Validation
   bool isValidEmail(value) {
     final emailRegExp = RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
@@ -88,12 +89,19 @@ class _CompanySignupScreenState extends State<CompanySignupScreen> {
     return TextFormField(
       textAlign: TextAlign.center,
       validator: (v) {
-        /*if (_firestore.collection('users').doc(v).get() != null)
-          return 'Please enter a valid number';
+        var document = FirebaseFirestore.instance.collection('users').doc(v);
+
+        document.get().then(
+            (docData) => {if (docData.exists) val = true else val = false});
+
+        if (val == true)
+          return 'This number already exists';
         else {
+          number = v!;
           return null;
-        }*/
-        number = v!;
+          
+          
+        }
       },
       decoration: InputDecoration(
         hintText: 'Enter Company Number',
@@ -121,12 +129,12 @@ class _CompanySignupScreenState extends State<CompanySignupScreen> {
     return TextFormField(
       textAlign: TextAlign.center,
       validator: (v) {
-        //if (isNotNull(v)) {
+        if (isNotNull(v)) {
           name = v!;
-          //return null;
-        //} else {
-          //return 'Please enter a valid name';
-        //}
+          return null;
+        } else {
+          return 'Please enter a valid name';
+        }
       },
       decoration: InputDecoration(
         hintText: 'Enter Company Name ',
@@ -154,12 +162,12 @@ class _CompanySignupScreenState extends State<CompanySignupScreen> {
     return TextFormField(
       textAlign: TextAlign.center,
       validator: (v) {
-        //if (isValidPhone(v)) {
-         phone = v!;
-         // return null;
-       // } else {
-          //return 'Phone Number must be up to 9 digits starting with 962';
-        //}
+        if (isValidPhone(v)) {
+          phone = v!;
+          return null;
+        } else {
+          return 'Phone Number must be up to 9 digits starting with 962';
+        }
       },
       decoration: InputDecoration(
         hintText: ' +962 Enter Company Phone',
