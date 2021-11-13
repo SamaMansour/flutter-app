@@ -101,7 +101,7 @@ class ItemLine extends StatelessWidget {
       status,
       title,
       description,
-      price})
+      price, bio, img})
       : super(key: key);
 
   String? no;

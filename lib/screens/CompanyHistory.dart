@@ -83,8 +83,24 @@ class _CompanyHistoryState extends State<CompanyHistory> {
                     final price = company.get('price');
                     final seats = company.get('seats');
                     final img = company.get('img');
-                    _alltrips.add({"email":email,"id":id,"title": title, "description": description, "price": price, "seats": seats, "img": img});
-                    
+                    final date = company.get('date');
+                    final locations_from = company.get('locations_from');
+                    final locations_to = company.get('locations_to');
+                    final meals = company.get('meals');
+                    _alltrips.add({
+                      "email": email,
+                      "id": id,
+                      "title": title,
+                      "description": description,
+                      "price": price,
+                      "seats": seats,
+                      "img": img,
+                      "date" :date,
+                      "locations_from" :locations_from,
+                      "locations_to" :locations_to,
+                      "meals": meals
+
+                    });
 
                     final companyWidget = Card(
                       clipBehavior: Clip.antiAlias,
@@ -144,77 +160,91 @@ class _CompanyHistoryState extends State<CompanyHistory> {
                       ),
                     );
                     //Stream Data from Database
-                    
+
                   }
 
-                 
-
                   return Expanded(
-                   child: _foundTrips.isNotEmpty &&  _foundTrips[0]['email'] == _auth.currentUser!.email
-                  ? ListView.builder(
-                      itemCount: _foundTrips.length,
-                      itemBuilder: (context, index) => Card(
-                      clipBehavior: Clip.antiAlias,
-                      child: Column(
-                        children: [
-                          ListTile(
-                            leading: CircleAvatar(
-                                backgroundImage: NetworkImage(_foundTrips[index]['img'].toString())),
-                            title: Text(_foundTrips[index]['title']),
-                            subtitle: Text(
-                              _foundTrips[index]['price']+ 'JD' + ' ' + ' ' + 'Offered by ' + _foundTrips[index]['email'],
-                              style: TextStyle(
-                                  color: Colors.black.withOpacity(0.6)),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Text(
-                             _foundTrips[index]['description'] +
-                                  '\n' +
-                                  'Number of seats' +
-                                  _foundTrips[index]['seats'].toString(),
-                              style: TextStyle(
-                                  color: Colors.black.withOpacity(0.6)),
-                            ),
-                          ),
-                          ButtonBar(
-                            alignment: MainAxisAlignment.start,
-                            children: [
-                              FlatButton(
-                                textColor: Colors.red,
-                                onPressed: () {
-                                  print(_foundTrips[index]['id']);
-                                  Navigator.of(context)
-                                      .pushReplacement(MaterialPageRoute(
-                                          builder: (context) => EditTrip(
-                                                _foundTrips[index]['id'],
-                                              )));
-                                },
-                                child: const Text('Edit'),
+                    child: _foundTrips.isNotEmpty &&
+                            _foundTrips[0]['email'] == _auth.currentUser!.email
+                        ? ListView.builder(
+                            itemCount: _foundTrips.length,
+                            itemBuilder: (context, index) => Card(
+                              clipBehavior: Clip.antiAlias,
+                              child: Column(
+                                children: [
+                                  ListTile(
+                                    leading: CircleAvatar(
+                                        backgroundImage: NetworkImage(
+                                            _foundTrips[index]['img']
+                                                .toString())),
+                                    title: Text(_foundTrips[index]['title']),
+                                    subtitle: Text(
+                                      _foundTrips[index]['price'] +
+                                          'JD' +
+                                          ' ' +
+                                          ' ' +
+                                          'Offered by ' +
+                                          _foundTrips[index]['email'],
+                                      style: TextStyle(
+                                          color: Colors.black.withOpacity(0.6)),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Text(
+                                      _foundTrips[index]['description'] +
+                                          '\n' +
+                                          'Number of seats' +
+                                          _foundTrips[index]['seats']
+                                              .toString() + '\n' +
+                                              'From :'+
+                                              _foundTrips[index]['locations_from'].toString()
+                                              +'\n'+ 'To :'+_foundTrips[index]['locations_to'].toString()
+                                              +'\n' + 'Meals' + _foundTrips[index]['meals'].toString(),
+
+                                      style: TextStyle(
+                                          color: Colors.black.withOpacity(0.6)),
+                                    ),
+                                  ),
+                                  ButtonBar(
+                                    alignment: MainAxisAlignment.start,
+                                    children: [
+                                      FlatButton(
+                                        textColor: Colors.red,
+                                        onPressed: () {
+                                          print(_foundTrips[index]['id']);
+                                          Navigator.of(context).pushReplacement(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      EditTrip(
+                                                        _foundTrips[index]
+                                                            ['id'],
+                                                      )));
+                                        },
+                                        child: const Text('Edit'),
+                                      ),
+                                      FlatButton(
+                                        textColor: Colors.red,
+                                        onPressed: () async {
+                                          print(_foundTrips[index]['id']);
+                                          await _firestore
+                                              .collection('trips')
+                                              .doc(_foundTrips[index]['id'])
+                                              .delete();
+                                        },
+                                        child: const Text('Delete'),
+                                      ),
+                                    ],
+                                  ),
+                                  Image.network(_foundTrips[index]['img']),
+                                ],
                               ),
-                              FlatButton(
-                                textColor: Colors.red,
-                                onPressed: () async {
-                                  print(_foundTrips[index]['id']);
-                                  await _firestore
-                                      .collection('trips')
-                                      .doc(_foundTrips[index]['id'])
-                                      .delete();
-                                },
-                                child: const Text('Delete'),
-                              ),
-                            ],
+                            ),
+                          )
+                        : const Text(
+                            'No results found',
+                            style: TextStyle(fontSize: 24),
                           ),
-                          Image.network(_foundTrips[index]['img']),
-                        ],
-                      ),
-                    ),
-                    )
-                  : const Text(
-                      'No results found',
-                      style: TextStyle(fontSize: 24),
-                    ),
                   );
                 })
           ],

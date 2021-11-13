@@ -59,8 +59,8 @@ class AdminDrawer extends StatelessWidget {
           new ListTile(
               title: Text('Charts', style: Theme.of(context).textTheme.headline6),
               onTap: () {
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => UserChart()));
+                  Navigator.of(context).pushNamed(
+                       'User_chart_screen');
                
               }),
 

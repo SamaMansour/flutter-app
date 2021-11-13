@@ -12,40 +12,49 @@ import 'package:jordantimes_final/api/FirebaseApi.dart';
 import 'package:jordantimes_final/api/checkbox_state.dart';
 import 'package:jordantimes_final/screens/Locations_screen.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
+import 'package:multi_select_flutter/multi_select_flutter.dart';
+import 'package:multiselect_formfield/multiselect_formfield.dart';
 
 import 'package:path/path.dart';
 
 class CompanyScreen extends StatefulWidget {
-  List<String> locationsList = [];
-
-  CompanyScreen({Key, key, required this.locationsList}) : super(key: key);
-
   @override
   _CompanyScreenState createState() => _CompanyScreenState();
 }
 
 class _CompanyScreenState extends State<CompanyScreen> {
   final _firestore = FirebaseFirestore.instance;
+  final formKey = new GlobalKey<FormState>();
+
+  List? _myFromLocations;
+  List? _myToLocations;
+  String _myFromLocationsResult = " ";
+  String _myToLocationsResult = "";
 
   String id = " ";
   String title = " ";
   String description = " ";
   String arDescription = " ";
-  String price = "";
+  int price = 0;
   int seats = 0;
   bool breakfast = false;
   bool lunch = false;
   bool dinner = false;
+  int breakfast_price = 0;
+  int lunch_price = 0;
+  int dinner_price = 0;
+  List <String> meals =[];
 
   UploadTask? task;
   File? file;
 
   bool value = false;
   //final meals = [
-    //checkBoxState(title: 'Breakfast'),
-    //checkBoxState(title: 'Lunch'),
-    //checkBoxState(title: 'Dinner'),
-    
+  //checkBoxState(title: 'Breakfast'),
+  //checkBoxState(title: 'Lunch'),
+  //checkBoxState(title: 'Dinner'),
+
   //];
 /*List<String> mealsList = [];
   @override
@@ -58,10 +67,29 @@ class _CompanyScreenState extends State<CompanyScreen> {
           mealsList.add(checkbox.title) }));*/
 
   @override
+  void initState() {
+    super.initState();
+    _myFromLocations = [];
+    _myFromLocationsResult = '';
+  }
+
+  _saveForm() {
+    var form = formKey.currentState;
+    if (form!.validate()) {
+      form.save();
+      setState(() {
+        _myFromLocationsResult = _myFromLocations.toString();
+        _myToLocationsResult = _myToLocations.toString();
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final fileName = file != null ? basename(file!.path) : 'No File Selected';
     final _auth = FirebaseAuth.instance;
-    var myDateRange;
+    DateTime myDateRange;
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -176,18 +204,17 @@ class _CompanyScreenState extends State<CompanyScreen> {
                 },
                 onSaved: (value) {
                   setState(() {
-                    myDateRange = value!;
+                    myDateRange = value! as DateTime;
                     print(myDateRange);
                   });
                 }),
-            Text("Saved value is: ${myDateRange.toString()}"),
             SizedBox(
               height: 8.0,
             ),
             TextField(
               textAlign: TextAlign.center,
               onChanged: (value) {
-                price = value;
+                price = int.parse(value);
               },
               decoration: InputDecoration(
                 hintText: 'Enter price',
@@ -198,24 +225,227 @@ class _CompanyScreenState extends State<CompanyScreen> {
             SizedBox(
               height: 8.0,
             ),
+            MultiSelectFormField(
+              autovalidate: false,
+              chipBackGroundColor: Colors.red,
+              chipLabelStyle: TextStyle(fontWeight: FontWeight.bold),
+              dialogTextStyle: TextStyle(fontWeight: FontWeight.bold),
+              checkBoxActiveColor: Colors.red,
+              checkBoxCheckColor: Colors.white,
+              dialogShapeBorder: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(12.0))),
+              title: Text(
+                "Location Form :",
+                style: TextStyle(fontSize: 16),
+              ),
+              dataSource: [
+                {
+                  "display": "Amman",
+                  "value": "Amman",
+                },
+                {
+                  "display": "Aqaba",
+                  "value": "Aqaba",
+                },
+                {
+                  "display": "Balqa",
+                  "value": "Balqa",
+                },
+                {
+                  "display": "Jarash",
+                  "value": "Jarash",
+                },
+                {
+                  "display": "Irbid",
+                  "value": "Irbid",
+                },
+                {
+                  "display": "Maan",
+                  "value": "Maan",
+                },
+                {
+                  "display": "Mafraq",
+                  "value": "Mafraq",
+                },
+                {
+                  "display": "Ajloun",
+                  "value": "Ajloun",
+                },
+                {
+                  "display": "Madaba",
+                  "value": "Madaba",
+                },
+                {
+                  "display": "Tafila",
+                  "value": "Tafila",
+                },
+                {
+                  "display": "Karak",
+                  "value": "Karak",
+                },
+              ],
+              textField: 'display',
+              valueField: 'value',
+              okButtonLabel: 'OK',
+              cancelButtonLabel: 'CANCEL',
+              hintWidget: Text('Please choose one or more'),
+              initialValue: _myFromLocations,
+              onSaved: (value) {
+                if (value == null) return;
+                setState(() {
+                  _myFromLocations = value;
+                });
+              },
+            ),
+            SizedBox(
+              height: 18.0,
+            ),
+            MultiSelectFormField(
+              autovalidate: false,
+              chipBackGroundColor: Colors.red,
+              chipLabelStyle: TextStyle(fontWeight: FontWeight.bold),
+              dialogTextStyle: TextStyle(fontWeight: FontWeight.bold),
+              checkBoxActiveColor: Colors.red,
+              checkBoxCheckColor: Colors.white,
+              dialogShapeBorder: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(12.0))),
+              title: Text(
+                "Location To :",
+                style: TextStyle(fontSize: 16),
+              ),
+              dataSource: [
+                {
+                  "display": "Amman",
+                  "value": "Amman",
+                },
+                {
+                  "display": "Aqaba",
+                  "value": "Aqaba",
+                },
+                {
+                  "display": "Balqa",
+                  "value": "Balqa",
+                },
+                {
+                  "display": "Jarash",
+                  "value": "Jarash",
+                },
+                {
+                  "display": "Irbid",
+                  "value": "Irbid",
+                },
+                {
+                  "display": "Maan",
+                  "value": "Maan",
+                },
+                {
+                  "display": "Mafraq",
+                  "value": "Mafraq",
+                },
+                {
+                  "display": "Ajloun",
+                  "value": "Ajloun",
+                },
+                {
+                  "display": "Madaba",
+                  "value": "Madaba",
+                },
+                {
+                  "display": "Tafila",
+                  "value": "Tafila",
+                },
+                {
+                  "display": "Karak",
+                  "value": "Karak",
+                },
+              ],
+              textField: 'display',
+              valueField: 'value',
+              okButtonLabel: 'OK',
+              cancelButtonLabel: 'CANCEL',
+              hintWidget: Text('Please choose one or more'),
+              initialValue: _myToLocations,
+              onSaved: (value) {
+                if (value == null) return;
+                setState(() {
+                  _myToLocations = value;
+                });
+              },
+            ),
+
+             SizedBox(
+              height: 18.0,
+            ),
             Text('No of seats'),
             SpinBox(
               min: 1,
               max: 100,
               value: 5,
+             
               onChanged: (value) => seats = value.toInt(),
             ),
             SizedBox(
-              height: 8.0,
+              height: 18.0,
             ),
+            Column(
+              children: [
+                Row(
+                  children: [
+                    Checkbox(
+                      value: breakfast,
+                      onChanged: (bool? value) {
+                        // This is where we update the state when the checkbox is tapped
+                        setState(() {
+                          breakfast = value!;
+                          breakfast_price = 2;
+                          meals.add('breakfast');
+                        });
+                      },
+                    ),
+
+                 
+                    Text('Breakfast'),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Checkbox(
+                      value: lunch,
+                      onChanged: (bool? value) {
+                        // This is where we update the state when the checkbox is tapped
+                        setState(() {
+                          lunch = value!;
+                          lunch_price = 5;
+                          meals.add('lunch');
+                        });
+                      },
+                    ),
+                    Text('Lunch')
+                  ],
+                ),
+                Row(
+                  children: [
+                    Checkbox(
+                      value: dinner,
+                      onChanged: (bool? value) {
+                        // This is where we update the state when the checkbox is tapped
+                        setState(() {
+                          dinner = value!;
+                          dinner_price = 10;
+                          meals.add('dinner');
+                        });
+                      },
+                    ),
+                    Text('Dinner')
+                  ],
+                ),
+              ],
+            ),
+
+             
             Row(
               children: [
-                TextButton.icon(
-                    onPressed: () {
-                      Navigator.of(context).pushNamed('Locations_screen');
-                    },
-                    icon: Icon(Icons.map),
-                    label: Text('location')),
+               
                 TextButton.icon(
                     onPressed: () {
                       selectFile();
@@ -231,7 +461,7 @@ class _CompanyScreenState extends State<CompanyScreen> {
             ),
             SizedBox(height: 8.0),
 
-             /*ListView(
+            /*ListView(
           children: [
             //...meals.map(buildSingleCheckbox).toList(),
             
@@ -247,9 +477,11 @@ class _CompanyScreenState extends State<CompanyScreen> {
                   onPressed: () async {
                     String img = await uploadFile();
                     final loggedUser = _auth.currentUser;
-                    var myDateRange;
+                    price =
+                        price + breakfast_price + lunch_price + dinner_price;
+                    print(_myFromLocations);
+                    print(_myToLocations);
 
-                    print(widget.locationsList.join(',').toString());
                     _firestore.collection('trips').doc(id).set({
                       'userId': loggedUser!.uid,
                       'id': id,
@@ -257,11 +489,13 @@ class _CompanyScreenState extends State<CompanyScreen> {
                       'title': title,
                       'description': description,
                       'ar_description': arDescription,
-                      'price': price,
+                      'price': price.toString(),
                       'img': img,
                       'seats': seats,
                       'date': 'date',
-                      'locations': widget.locationsList.join(',').toString(),
+                      'meals': meals,
+                      'locations_from': _myFromLocations,
+                      'locations_to': _myToLocations,
                     });
                     uploadFile();
                   },
@@ -278,10 +512,8 @@ class _CompanyScreenState extends State<CompanyScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).pushReplacement(MaterialPageRoute(
-              builder: (context) => CompanyScreen(
-                    locationsList: [],
-                  )));
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => CompanyScreen()));
         },
         child: const Icon(Icons.add),
         backgroundColor: Colors.grey,

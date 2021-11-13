@@ -14,12 +14,24 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   String email = " ";
+  
 
   String password = " ";
 
   final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
   bool val = false;
+  late String  _myFromLocationsResult = " ";
+  late String  _myToLocationsResult =" ";
+
+  late List<String> _myFromLocations =[];
+  late List<String> _myToLocations =[];
+
+  
+
+  
+
+  
   //Email Validation
   bool isValidEmail(value) {
     final emailRegExp = RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
@@ -186,10 +198,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         for (var savedUser in snapshot.docs) {
                           
                           if (savedUser.get('role') as String == "company") {
+                            int calc_price =0;
                             Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        CompanyScreen(locationsList: [],)));
+                                        CompanyScreen()));
                           }
                         }
                       }
