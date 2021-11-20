@@ -33,7 +33,9 @@ class _CompanyNotificationsState extends State<CompanyNotifications> {
         .doc(_auth.currentUser!.email);
     print(_auth.currentUser!.uid);
     acceptedDocument.get().then((docData) => {
-          if (docData.exists) {status = 'You have got accepted  by goverment'}
+          if (docData.exists) {
+            status = 'You have got accepted  by goverment',
+            }
         });
     return Scaffold(
         appBar: AppBar(title: Text('Notifications')),

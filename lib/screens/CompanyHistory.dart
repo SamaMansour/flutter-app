@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:jordantimes_final/Widgets/trip_item.dart';
 import 'package:jordantimes_final/screens/Goverment_screen.dart';
 import 'package:jordantimes_final/screens/edit_trip.dart';
@@ -73,6 +74,8 @@ class _CompanyHistoryState extends State<CompanyHistory> {
                       backgroundColor: Colors.red,
                     );
                   }
+               var name  = FirebaseFirestore.instance.collection('indicies').doc(_auth.currentUser!.email);
+               final username = name.get() ;
 
                   final companies = snapshot.data!.docs;
                   for (var company in companies) {
@@ -81,8 +84,9 @@ class _CompanyHistoryState extends State<CompanyHistory> {
                     final title = company.get('title');
                     final description = company.get('description');
                     final price = company.get('price');
-                    final seats = company.get('seats');
                     final img = company.get('img');
+                    final img2 = company.get('img2');
+                    final img3 = company.get('img3');
                     final date = company.get('date');
                     final locations_from = company.get('locations_from');
                     final locations_to = company.get('locations_to');
@@ -93,13 +97,15 @@ class _CompanyHistoryState extends State<CompanyHistory> {
                       "title": title,
                       "description": description,
                       "price": price,
-                      "seats": seats,
+                     
                       "img": img,
-                      "date" :date,
-                      "locations_from" :locations_from,
-                      "locations_to" :locations_to,
+                      "img2": img2,
+                      "img3": img3,
+                      "date": date,
+                      "username":username,
+                      "locations_from": locations_from,
+                      "locations_to": locations_to,
                       "meals": meals
-
                     });
 
                     final companyWidget = Card(
@@ -111,7 +117,7 @@ class _CompanyHistoryState extends State<CompanyHistory> {
                                 backgroundImage: NetworkImage(img)),
                             title: Text(title),
                             subtitle: Text(
-                              price + 'JD' + ' ' + ' ' + 'Offered by ' + email,
+                              price + 'JD' + ' ' + ' ' + 'Offered by ',
                               style: TextStyle(
                                   color: Colors.black.withOpacity(0.6)),
                             ),
@@ -119,10 +125,7 @@ class _CompanyHistoryState extends State<CompanyHistory> {
                           Padding(
                             padding: const EdgeInsets.all(16.0),
                             child: Text(
-                              description +
-                                  '\n' +
-                                  'Number of seats' +
-                                  seats.toString(),
+                              description ,
                               style: TextStyle(
                                   color: Colors.black.withOpacity(0.6)),
                             ),
@@ -184,7 +187,7 @@ class _CompanyHistoryState extends State<CompanyHistory> {
                                           ' ' +
                                           ' ' +
                                           'Offered by ' +
-                                          _foundTrips[index]['email'],
+                                          username.toString(),
                                       style: TextStyle(
                                           color: Colors.black.withOpacity(0.6)),
                                     ),
@@ -193,15 +196,21 @@ class _CompanyHistoryState extends State<CompanyHistory> {
                                     padding: const EdgeInsets.all(16.0),
                                     child: Text(
                                       _foundTrips[index]['description'] +
+                                         
                                           '\n' +
-                                          'Number of seats' +
-                                          _foundTrips[index]['seats']
-                                              .toString() + '\n' +
-                                              'From :'+
-                                              _foundTrips[index]['locations_from'].toString()
-                                              +'\n'+ 'To :'+_foundTrips[index]['locations_to'].toString()
-                                              +'\n' + 'Meals' + _foundTrips[index]['meals'].toString(),
-
+                                          'From :' +
+                                          _foundTrips[index]['locations_from']
+                                              .toString() +
+                                          '\n' +
+                                          'To :' +
+                                          _foundTrips[index]['locations_to']
+                                              .toString() +
+                                          '\n' +
+                                          'Meals' +
+                                          _foundTrips[index]['meals']
+                                              .toString()+ 
+                                          '\n'+ 
+                                          'Days' + _foundTrips [index]['date'],
                                       style: TextStyle(
                                           color: Colors.black.withOpacity(0.6)),
                                     ),
@@ -236,7 +245,45 @@ class _CompanyHistoryState extends State<CompanyHistory> {
                                       ),
                                     ],
                                   ),
-                                  Image.network(_foundTrips[index]['img']),
+                                  ImageSlideshow(
+                                    /// Width of the [ImageSlideshow].
+                                    width: double.infinity,
+
+                                    /// Height of the [ImageSlideshow].
+                                    height: 200,
+
+                                    /// The page to show when first creating the [ImageSlideshow].
+                                    initialPage: 0,
+
+                                    /// The color to paint the indicator.
+                                    indicatorColor: Colors.blue,
+
+                                    /// The color to paint behind th indicator.
+                                    indicatorBackgroundColor: Colors.grey,
+
+                                    /// The widgets to display in the [ImageSlideshow].
+                                    /// Add the sample image file into the images folder
+                                    children: [
+                                      Image.network(_foundTrips[index]['img']),
+                                      Image.network(_foundTrips[index]['img2']),
+                                      Image.network(_foundTrips[index]['img3']),
+                                    ],
+
+                                    /// Called whenever the page in the center of the viewport changes.
+                                    onPageChanged: (value) {
+                                      print('Page changed: $value');
+                                    },
+
+                                    /// Auto scroll interval.
+                                    /// Do not auto scroll with null or 0.
+                                    autoPlayInterval: 3000,
+
+                                    /// Loops back to first slide.
+                                    isLoop: true,
+                                  ),
+                                  /*Image.network(_foundTrips[index]['img']),
+                                  Image.network(_foundTrips[index]['img2']),
+                                  Image.network(_foundTrips[index]['img3']),*/
                                 ],
                               ),
                             ),

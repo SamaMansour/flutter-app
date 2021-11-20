@@ -16,6 +16,8 @@ class _GovermentHistoryState extends State<GovermentHistory> {
 
   final List<Map<String, dynamic>> _allCompanies = [];
 
+  
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -27,6 +29,10 @@ class _GovermentHistoryState extends State<GovermentHistory> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+
+            
+
+            
             StreamBuilder<QuerySnapshot>(
                 stream: _firestore.collection('accepted').snapshots(),
                 builder: (context, snapshot) {

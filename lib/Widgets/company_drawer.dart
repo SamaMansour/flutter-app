@@ -83,7 +83,8 @@ class _CompanyDrawerState extends State<CompanyDrawer> {
             ),
             SizedBox(height: 20),
             new ListTile(
-                title: Text('Dashboard',
+                leading: const Icon(Icons.home),
+                title: Text('Dashboard' ,
                     style: Theme.of(context).textTheme.headline6),
                 onTap: () {
                   //Keep At The Same Page
@@ -91,6 +92,7 @@ class _CompanyDrawerState extends State<CompanyDrawer> {
                 }),
             SizedBox(height: 20),
             new ListTile(
+              leading: const Icon(Icons.notifications),
                 title: Text('Notifications',
                     style: Theme.of(context).textTheme.headline6),
                 onTap: () {
@@ -100,6 +102,7 @@ class _CompanyDrawerState extends State<CompanyDrawer> {
                 }),
             SizedBox(height: 20),
             new ListTile(
+               leading: const Icon(Icons.history),
                 title: Text('History',
                     style: Theme.of(context).textTheme.headline6),
                 onTap: () {
@@ -108,6 +111,7 @@ class _CompanyDrawerState extends State<CompanyDrawer> {
                 }),
             SizedBox(height: 20),
             new ListTile(
+               leading: const Icon(Icons.person),
                 title: Text('EditProfile',
                     style: Theme.of(context).textTheme.headline6),
                 onTap: () {
@@ -116,6 +120,7 @@ class _CompanyDrawerState extends State<CompanyDrawer> {
                 }),
             SizedBox(height: 20),
             new ListTile(
+                leading: const Icon(Icons.logout),
                 title: Text('Logout',
                     style: Theme.of(context).textTheme.headline6),
                 onTap: () {

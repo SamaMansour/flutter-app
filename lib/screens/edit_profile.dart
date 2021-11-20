@@ -162,6 +162,12 @@ class _editProfileState extends State<editProfile> {
                     'phone': phone,
                     'role': "company",
                   });
+
+                  Navigator.of(context).pushNamed(
+                       'profile_info');
+
+
+                  
                 },
               ),
             ),

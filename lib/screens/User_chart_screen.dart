@@ -1,77 +1,67 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:date_range_form_field/date_range_form_field.dart';
 import 'package:flutter/material.dart';
-import 'package:jordantimes_final/models/userModel.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
+
 
 class UserChart extends StatefulWidget {
   @override
   _UserChartState createState() => _UserChartState();
 }
 
-class _UserChartState extends State<UserChart> {
-  
-  
-  late List<UsersData> _chartData;
-  @override
-  void initState() {
-    _chartData = getChartData();
-    super.initState();
-  }
+GlobalKey<FormState> myFormKey = new GlobalKey();
 
-  
+class _UserChartState extends State<UserChart> {
+  DateTimeRange? myDateRange;
+
+  void _submitForm() {
+    final FormState? form = myFormKey.currentState;
+    form!.save();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
+    return Scaffold(
       appBar: AppBar(
-        title: Text('Charts'),
+        title: Text("Date Range Form Example"),
       ),
-
-      
-
-      
-      body: SfCartesianChart(
-        
-        series: <ChartSeries>[
-          LineSeries<UsersData, double>(
-              dataSource: _chartData,
-              xValueMapper: (UsersData users, _) => users.month,
-              yValueMapper: (UsersData users, _) => users.users)
-        ],
-        primaryXAxis: NumericAxis(edgeLabelPlacement: EdgeLabelPlacement.shift),
+      body: SafeArea(
+        child: Form(
+          key: myFormKey,
+          child: Column(
+            children: [
+              SafeArea(
+                child: DateRangeField(
+                    enabled: true,
+                    initialValue: DateTimeRange(
+                        start: DateTime.now(),
+                        end: DateTime.now().add(Duration(days: 5))),
+                    decoration: InputDecoration(
+                      labelText: 'Date Range',
+                      prefixIcon: Icon(Icons.date_range),
+                      hintText: 'Please select a start and end date',
+                      border: OutlineInputBorder(),
+                    ),
+                    validator: (value) {
+                      if (value!.start.isBefore(DateTime.now())) {
+                        return 'Please enter a later start date';
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      setState(() {
+                        myDateRange = value!;
+                      });
+                    }),
+              ),
+              ElevatedButton(
+                child: Text('Submit'),
+                onPressed: _submitForm,
+              ),
+              if (myDateRange != null)
+                Text("Saved value is: ${myDateRange.toString()}")
+            ],
+          ),
+        ),
       ),
-    ));
+    );
   }
-}final _firestore = FirebaseFirestore.instance;
-
-
-
-
-
-
-
-
-List<UsersData> getChartData() {
-  final List<UsersData> chartData = [
-    UsersData(1, 100),
-    UsersData(2, 200),
-    UsersData(3, 300),
-    UsersData(4, 400),
-  ];
-  return chartData;
-}
-
-
-
-
-
-
- 
-
-class UsersData {
-  UsersData(this.month, this.users);
-
-  final double month;
-  final int users;
 }

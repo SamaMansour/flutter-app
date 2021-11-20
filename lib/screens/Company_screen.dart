@@ -10,6 +10,7 @@ import 'package:flutter_spinbox/flutter_spinbox.dart';
 import 'package:jordantimes_final/Widgets/company_drawer.dart';
 import 'package:jordantimes_final/api/FirebaseApi.dart';
 import 'package:jordantimes_final/api/checkbox_state.dart';
+import 'package:jordantimes_final/screens/Goverment_screen.dart';
 import 'package:jordantimes_final/screens/Locations_screen.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
@@ -23,10 +24,12 @@ class CompanyScreen extends StatefulWidget {
   _CompanyScreenState createState() => _CompanyScreenState();
 }
 
+GlobalKey<FormState> myFormKey = new GlobalKey();
+
 class _CompanyScreenState extends State<CompanyScreen> {
   final _firestore = FirebaseFirestore.instance;
   final formKey = new GlobalKey<FormState>();
-
+  DateTimeRange? myDateRange;
   List? _myFromLocations;
   List? _myToLocations;
   String _myFromLocationsResult = " ";
@@ -44,10 +47,11 @@ class _CompanyScreenState extends State<CompanyScreen> {
   int breakfast_price = 0;
   int lunch_price = 0;
   int dinner_price = 0;
-  List <String> meals =[];
+  List<String> meals = [];
 
   UploadTask? task;
   File? file;
+  List<File>? files;
 
   bool value = false;
   //final meals = [
@@ -88,12 +92,47 @@ class _CompanyScreenState extends State<CompanyScreen> {
   Widget build(BuildContext context) {
     final fileName = file != null ? basename(file!.path) : 'No File Selected';
     final _auth = FirebaseAuth.instance;
-    DateTime myDateRange;
+    List<Map<String, dynamic>> _foundUsers = [];
+
+    StreamBuilder<QuerySnapshot>(
+        stream: _firestore.collection('indicies').snapshots(),
+        builder: (context, snapshot) {
+          List<ItemLine> companiesWidgets = [];
+          if (!snapshot.hasData) {
+            return CircularProgressIndicator(
+              backgroundColor: Colors.red,
+            );
+          }
+
+          final companies = snapshot.data!.docs;
+          for (var company in companies) {
+            if (company.get('email') == _auth.currentUser!.email) {
+              var name = company.get('name');
+              _foundUsers.add(name);
+
+              final companyWidget = ItemLine(
+                name: name,
+              );
+
+              
+              print (_foundUsers);
+
+              companiesWidgets.add(companyWidget);
+            }
+          }
+
+          return Expanded(
+            child: ListView(
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 24),
+              children: companiesWidgets,
+            ),
+          );
+        });
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text(_auth.currentUser!.email as String),
+        title: Text(_foundUsers[0].toString()),
       ),
       drawer: CompanyDrawer(),
       backgroundColor: Colors.white,
@@ -196,17 +235,9 @@ class _CompanyScreenState extends State<CompanyScreen> {
                   hintText: 'Please select a start and end date',
                   border: OutlineInputBorder(),
                 ),
-                validator: (value) {
-                  if (value!.start.isBefore(DateTime.now())) {
-                    return 'Please enter a later start date';
-                  }
-                  return null;
-                },
-                onSaved: (value) {
-                  setState(() {
-                    myDateRange = value! as DateTime;
-                    print(myDateRange);
-                  });
+                onChanged: (value) {
+                  myDateRange = value!;
+                  print(myDateRange);
                 }),
             SizedBox(
               height: 8.0,
@@ -372,8 +403,7 @@ class _CompanyScreenState extends State<CompanyScreen> {
                 });
               },
             ),
-
-             SizedBox(
+            SizedBox(
               height: 18.0,
             ),
             Text('No of seats'),
@@ -381,7 +411,6 @@ class _CompanyScreenState extends State<CompanyScreen> {
               min: 1,
               max: 100,
               value: 5,
-             
               onChanged: (value) => seats = value.toInt(),
             ),
             SizedBox(
@@ -402,8 +431,6 @@ class _CompanyScreenState extends State<CompanyScreen> {
                         });
                       },
                     ),
-
-                 
                     Text('Breakfast'),
                   ],
                 ),
@@ -441,11 +468,8 @@ class _CompanyScreenState extends State<CompanyScreen> {
                 ),
               ],
             ),
-
-             
             Row(
               children: [
-               
                 TextButton.icon(
                     onPressed: () {
                       selectFile();
@@ -476,6 +500,8 @@ class _CompanyScreenState extends State<CompanyScreen> {
                 child: MaterialButton(
                   onPressed: () async {
                     String img = await uploadFile();
+                    String img2 = await uploadFile2();
+                    String img3 = await uploadFile3();
                     final loggedUser = _auth.currentUser;
                     price =
                         price + breakfast_price + lunch_price + dinner_price;
@@ -491,8 +517,10 @@ class _CompanyScreenState extends State<CompanyScreen> {
                       'ar_description': arDescription,
                       'price': price.toString(),
                       'img': img,
+                      'img2': img2,
+                      'img3': img3,
                       'seats': seats,
-                      'date': 'date',
+                      'date': myDateRange.toString(),
                       'meals': meals,
                       'locations_from': _myFromLocations,
                       'locations_to': _myToLocations,
@@ -522,21 +550,52 @@ class _CompanyScreenState extends State<CompanyScreen> {
   }
 
   Future selectFile() async {
-    final result = await FilePicker.platform.pickFiles(allowMultiple: false);
+    FilePickerResult? result =
+        await FilePicker.platform.pickFiles(allowMultiple: true);
 
-    if (result == null) return;
-    final path = result.files.single.path!;
-
-    setState(() => file = File(path));
+    if (result != null) {
+      files = result.paths.map((path) => File(path!)).toList();
+      print(files);
+    }
   }
 
   Future uploadFile() async {
-    if (file == null) return;
-
-    final fileName = basename(file!.path);
+    final fileName = basename(files![0].toString());
     final destination = 'files/$fileName';
 
-    task = FirebaseApi.uploadFile(destination, file!);
+    task = FirebaseApi.uploadFile(destination, files![0]);
+    setState(() {});
+
+    if (task == null) return;
+
+    final snapshot = await task!.whenComplete(() {});
+    final String urlDownload = await snapshot.ref.getDownloadURL();
+
+    return urlDownload;
+    print(urlDownload);
+  }
+
+  Future uploadFile2() async {
+    final fileName = basename(files![1].toString());
+    final destination = 'files/$fileName';
+
+    task = FirebaseApi.uploadFile(destination, files![1]);
+    setState(() {});
+
+    if (task == null) return;
+
+    final snapshot = await task!.whenComplete(() {});
+    final String urlDownload = await snapshot.ref.getDownloadURL();
+
+    return urlDownload;
+    print(urlDownload);
+  }
+
+  Future uploadFile3() async {
+    final fileName = basename(files![2].toString());
+    final destination = 'files/$fileName';
+
+    task = FirebaseApi.uploadFile(destination, files![2]);
     setState(() {});
 
     if (task == null) return;

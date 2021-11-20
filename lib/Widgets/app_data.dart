@@ -37,7 +37,7 @@ const Categories_data = const[
 
   Category(
       id: 'c5',
-      title:'Petra',
+      title:'Maan',
       imageUrl:'assets/petra.png'
 
   ),
@@ -48,7 +48,51 @@ const Categories_data = const[
       title:'Irbid',
       imageUrl:'assets/irbid.png'
 
-  )
+  ),
+
+   Category(
+      id: 'c7',
+      title:'Balqa',
+      imageUrl:'assets/balqa.png'
+
+  ),
+
+
+
+  Category(
+      id: 'c8',
+      title:'Madaba',
+      imageUrl:'assets/madaba.png'
+
+  ),
+
+
+    Category(
+      id: 'c9',
+      title:'AL-Karak',
+      imageUrl:'assets/karak.png'
+
+  ),
+
+
+  Category(
+      id: 'c10',
+      title:'Jarash',
+      imageUrl:'assets/jarash.png'
+
+  ),
+
+   Category(
+      id: 'c11',
+      title:'Mafraq',
+      imageUrl:'assets/omqais.png'
+
+  ),
+
+
+
+
+
 ];
 
 

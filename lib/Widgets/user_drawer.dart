@@ -6,7 +6,7 @@ import 'package:jordantimes_final/screens/User_chart_screen.dart';
 import 'package:jordantimes_final/screens/posts_screen.dart';
 import 'package:jordantimes_final/screens/welcome_screen.dart';
 
-class AdminDrawer extends StatelessWidget {
+class UserDrawer extends StatelessWidget {
   final _auth = FirebaseAuth.instance;
   Widget buildListTile(String title, IconData icon, Function onTapLink) {
     return ListTile(
@@ -44,21 +44,20 @@ class AdminDrawer extends StatelessWidget {
              
               title: Text('Dashboard', style: Theme.of(context).textTheme.headline6),
               onTap: () {
-                  Navigator.of(context).pushNamed(
-                       'Admin_screen');
+                
                 
               }),
           SizedBox(height: 20),
            new ListTile(
+             
               title: Text('Notifications', style: Theme.of(context).textTheme.headline6),
               onTap: () {
-                Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => GovermentNotifications()));
+               
               }),
          
           SizedBox(height: 20),
           new ListTile(
-              title: Text('Charts', style: Theme.of(context).textTheme.headline6),
+              title: Text('Favorites', style: Theme.of(context).textTheme.headline6),
               onTap: () {
                   Navigator.of(context).pushNamed(
                        'User_chart_screen');

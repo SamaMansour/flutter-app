@@ -28,7 +28,6 @@ class _TabScreenState extends State<TabScreen> {
 
   final List<Widget> _screens = [Categoriesscreen(),
   SearchScreen(),
-  favoriteScreen(),
   WelcomeScreen(),
   
 
@@ -48,8 +47,7 @@ class _TabScreenState extends State<TabScreen> {
           items: [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
            BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.favorite), label: 'Favourite'),
+           
             BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
           ],
         ));

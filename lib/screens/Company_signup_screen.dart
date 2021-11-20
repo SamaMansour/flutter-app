@@ -99,8 +99,6 @@ class _CompanySignupScreenState extends State<CompanySignupScreen> {
         else {
           number = v!;
           return null;
-          
-          
         }
       },
       decoration: InputDecoration(
@@ -321,6 +319,9 @@ class _CompanySignupScreenState extends State<CompanySignupScreen> {
                 'phone': phone,
                 'role': "company",
                 'verfied': "pending",
+              });
+              _firestore.collection('indicies').doc(email).set({
+                'name': name,
               });
 
               Navigator.push(

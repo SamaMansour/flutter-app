@@ -6,7 +6,7 @@ import 'package:jordantimes_final/screens/User_chart_screen.dart';
 import 'package:jordantimes_final/screens/posts_screen.dart';
 import 'package:jordantimes_final/screens/welcome_screen.dart';
 
-class AdminDrawer extends StatelessWidget {
+class FilterDrawer extends StatelessWidget {
   final _auth = FirebaseAuth.instance;
   Widget buildListTile(String title, IconData icon, Function onTapLink) {
     return ListTile(
@@ -35,46 +35,21 @@ class AdminDrawer extends StatelessWidget {
             alignment: Alignment.center,
             color: Colors.red,
             child: Text(
-            _auth.currentUser!.email as String,
+            'Filter',
               style: Theme.of(context).textTheme.headline6,
             ),
           ),
           SizedBox(height: 20),
           new ListTile(
              
-              title: Text('Dashboard', style: Theme.of(context).textTheme.headline6),
+              title: Text('Filter Drawer', style: Theme.of(context).textTheme.headline6),
               onTap: () {
                   Navigator.of(context).pushNamed(
-                       'Admin_screen');
+                       'filter_screen');
                 
               }),
           SizedBox(height: 20),
-           new ListTile(
-              title: Text('Notifications', style: Theme.of(context).textTheme.headline6),
-              onTap: () {
-                Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => GovermentNotifications()));
-              }),
-         
-          SizedBox(height: 20),
-          new ListTile(
-              title: Text('Charts', style: Theme.of(context).textTheme.headline6),
-              onTap: () {
-                  Navigator.of(context).pushNamed(
-                       'User_chart_screen');
-               
-              }),
-
-               
-        
-          SizedBox(height: 20),
-          new ListTile(
-              title: Text('Logout', style: Theme.of(context).textTheme.headline6),
-              onTap: () {
-                _auth.signOut();
-                Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => WelcomeScreen()));
-              }),
+      
         ],
       ),
     );

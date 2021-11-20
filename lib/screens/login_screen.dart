@@ -6,6 +6,8 @@ import 'package:jordantimes_final/screens/Company_screen.dart';
 import 'package:jordantimes_final/screens/ForgotPassword_screen.dart';
 import 'package:jordantimes_final/screens/Goverment_screen.dart';
 import 'package:jordantimes_final/screens/SendOtp_screen.dart';
+import 'package:jordantimes_final/screens/User_screen.dart';
+import 'package:sendgrid_mailer/sendgrid_mailer.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -14,24 +16,33 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   String email = " ";
-  
 
   String password = " ";
 
   final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
   bool val = false;
-  late String  _myFromLocationsResult = " ";
-  late String  _myToLocationsResult =" ";
+  late String _myFromLocationsResult = " ";
+  late String _myToLocationsResult = " ";
 
-  late List<String> _myFromLocations =[];
-  late List<String> _myToLocations =[];
+  late List<String> _myFromLocations = [];
+  late List<String> _myToLocations = [];
 
-  
+  main() async {
+    final mailer = Mailer('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');
+    final toAddress = Address('s.jamansour@gmail.com');
+    final fromAddress = Address('sma302000@gmail.com');
+    final content = Content('text/plain', 'Hello World!');
+    final subject = 'Hello Subject!';
+    final personalization = Personalization([toAddress]);
 
-  
+    final email =
+        Email([personalization], fromAddress, subject, content: [content]);
+    mailer.send(email).then((result) {
+      print('sent');
+    });
+  }
 
-  
   //Email Validation
   bool isValidEmail(value) {
     final emailRegExp = RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
@@ -67,6 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
               _passwordTextField(),
               _sizedBox3(),
               _forgotPassword(),
+           
               _submitButton(),
             ],
           ),
@@ -128,9 +140,7 @@ class _LoginScreenState extends State<LoginScreen> {
       textAlign: TextAlign.center,
       obscureText: true,
       validator: (v) {
-       
-          password = v!;
-         
+        password = v!;
       },
       decoration: InputDecoration(
         hintText: 'Enter Password',
@@ -163,6 +173,8 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Text('Forgot Password?'));
   }
 
+  
+
   Widget _submitButton() {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 16.0),
@@ -176,54 +188,54 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Text('Login'),
           onPressed: () async {
             if (_formKey.currentState!.validate()) {
-             final user = _auth.signInWithEmailAndPassword(
-                        email: email, password: password);
-                    final result = _auth.currentUser;
+              final user = _auth.signInWithEmailAndPassword(
+                  email: email, password: password);
+              final result = _auth.currentUser;
 
-                    //Navigate Goverment To Their Page
-                    if (_auth.currentUser!.email == "gov@gmail.com") {
+              //Navigate Goverment To Their Page
+              if (_auth.currentUser!.email == "gov@gmail.com") {
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => GovermentScreen()));
+              }
+
+              //Navigate Admin To Their Page
+              else if (_auth.currentUser!.email == "admin@gmail.com") {
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => AdminScreen()));
+              } else {
+                //Navigate Company To Their Page
+                await for (var snapshot
+                    in _firestore.collection('users').snapshots()) {
+                  for (var savedUser in snapshot.docs) {
+                    if (savedUser.get('role') as String == "company") {
+                      int calc_price = 0;
+                      main();
                       Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => GovermentScreen()));
-                    }
-                  
-                    //Navigate Admin To Their Page
-                    else if (_auth.currentUser!.email == "admin@gmail.com") {
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => AdminScreen()));
-                    } 
-                    else {
-                      //Navigate Company To Their Page 
-                      await for (var snapshot
-                      in _firestore.collection('users').snapshots()) {
-                        for (var savedUser in snapshot.docs) {
-                          
-                          if (savedUser.get('role') as String == "company") {
-                            int calc_price =0;
-                            Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        CompanyScreen()));
-                          }
-                        }
-                      }
+                          builder: (context) => CompanyScreen()));
                     }
 
-                    //Navigate Users To their Page
-                  
-
-                    /*await for (var snapshot
-                        in _firestore.collection('users').snapshots()) {
-                      for (var savedUser in snapshot.docs) {
-                       
-                          if (savedUser.get('role') as String == "user") {
+                    /* else {
+                             if (savedUser.get('role') as String == "user") {
                             Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(
                                     builder: (context) => UserScreen()));
                           }
+                          }*/
+                  }
+                }
+              }
+
+              //Navigate Users To their Page
+
+              /*await for (var snapshot
+                        in _firestore.collection('users').snapshots()) {
+                      for (var savedUser in snapshot.docs) {
+                       
+                         
                         
                       }
                     }*/
-                  
+
             }
           },
         ),
