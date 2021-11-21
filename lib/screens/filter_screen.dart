@@ -1,5 +1,6 @@
 import 'package:date_range_form_field/date_range_form_field.dart';
 import 'package:flutter/material.dart';
+import 'package:jordantimes_final/screens/category_trips_screen.dart';
 
 class FilterScreen extends StatefulWidget {
   const FilterScreen({Key? key}) : super(key: key);
@@ -10,7 +11,8 @@ class FilterScreen extends StatefulWidget {
 
 class _FilterScreenState extends State<FilterScreen> {
   String dropdownvalue = '1 Passenger';
-  int noOfPassengers = 0;
+  int noOfPassengers = 1;
+  var period =0 ;
   DateTimeRange? myDateRange;
   var items = [
     '1 Passenger',
@@ -78,7 +80,7 @@ class _FilterScreenState extends State<FilterScreen> {
               ),
               onChanged: (value) {
                 myDateRange = value!;
-                var period = myDateRange!.end.difference(myDateRange!.start);
+                period = myDateRange!.end.difference(myDateRange!.start) as int  ;
               }),
           SizedBox(height: 8),
           Padding(
@@ -91,7 +93,13 @@ class _FilterScreenState extends State<FilterScreen> {
                   minWidth: 400.0,
                   height: 42.0,
                   child: Text('Apply Filter'),
-                  onPressed: () async {}),
+                  onPressed: () async {
+
+                   
+                    Navigator.of(context).pop(MaterialPageRoute(
+                        builder: (context) =>
+                            CategoryTripsScreen(noOfPassengers,period )));
+                  }),
             ),
           ),
         ]));

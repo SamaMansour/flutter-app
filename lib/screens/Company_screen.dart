@@ -132,7 +132,7 @@ class _CompanyScreenState extends State<CompanyScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text(_foundUsers[0].toString()),
+        title: Text(_foundUsers.toString()),
       ),
       drawer: CompanyDrawer(),
       backgroundColor: Colors.white,

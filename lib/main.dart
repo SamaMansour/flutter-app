@@ -30,6 +30,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    int period = 1;
+    int noOfPassengers =1 ;
     return MaterialApp(
       title: 'JordanTimes',
       theme: ThemeData(
@@ -45,7 +47,7 @@ class MyApp extends StatelessWidget {
       //initialRoute: '/',
       routes: {
         '/': (context) => TabScreen(),
-        '/category-trips': (context) => CategoryTripsScreen(),
+        '/category-trips': (context) => CategoryTripsScreen(noOfPassengers,period),
         '/trip-detail': (context) => TripDetailScreen(),
         'CompanyHistory' : (context) => CompanyHistory(),
         'edit_profile' : (context) => editProfile(),
@@ -57,7 +59,7 @@ class MyApp extends StatelessWidget {
          //'User_chart_screen' : (context) => UserChart(),
          'Admin_screen' : (context) => AdminScreen(),
          'profile_info': (context) => ProfileInfo(),
-         'category_trips_screen': (context) => CategoryTripsScreen(), 
+         'category_trips_screen': (context) => CategoryTripsScreen(noOfPassengers, period), 
          'filter_screen' : (context) => FilterScreen(),
       },
     );

@@ -6,10 +6,10 @@ import 'package:jordantimes_final/Widgets/trip_item.dart';
 import '../Widgets/app_data.dart';
 
 class CategoryTripsScreen extends StatelessWidget {
-  //final String categoryId;
-  //final String categoryTitle;
+  final int noOfPassengers;
+  final int period;
 
-  //CategoryTripsScreen( this.categoryId, this.categoryTitle);
+  CategoryTripsScreen(this.noOfPassengers, this.period);
   final _firestore = FirebaseFirestore.instance;
 
   @override
@@ -24,7 +24,7 @@ class CategoryTripsScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(title: Text(categoryTitle!)),
-      drawer :FilterDrawer(),
+      drawer: FilterDrawer(),
       body: Column(
         children: [
           StreamBuilder<QuerySnapshot>(
@@ -46,7 +46,7 @@ class CategoryTripsScreen extends StatelessWidget {
                       final id = company.get('id');
                       final title = company.get('title');
                       final description = company.get('description');
-                      final price = company.get('price');
+                      var price = company.get('price');
                       final img = company.get('img');
                       final img2 = company.get('img2');
                       final img3 = company.get('img3');
@@ -54,6 +54,8 @@ class CategoryTripsScreen extends StatelessWidget {
                       final locations_from = company.get('locations_from');
                       final locations_to = company.get('locations_to');
                       final meals = company.get('meals');
+
+                      price = price * noOfPassengers * period;
 
                       final companyWidget = Card(
                         clipBehavior: Clip.antiAlias,
@@ -72,55 +74,58 @@ class CategoryTripsScreen extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.all(16.0),
                               child: Text(
-                                description + '\n' + ' locations from' + locations_from .toString()
-                                + ' to ' + locations_to.toString() + '\n' + 'Meals'+ meals.toString() + ' \n' + 'Days'+ date,
-                               
-                                    
+                                description +
+                                    '\n' +
+                                    ' locations from' +
+                                    locations_from.toString() +
+                                    ' to ' +
+                                    locations_to.toString() +
+                                    '\n' +
+                                    'Meals' +
+                                    meals.toString() +
+                                    ' \n' +
+                                    'Days' +
+                                    date,
                                 style: TextStyle(
                                     color: Colors.black.withOpacity(0.6)),
                               ),
                             ),
                             ImageSlideshow(
-                                    /// Width of the [ImageSlideshow].
-                                    width: double.infinity,
+                              /// Width of the [ImageSlideshow].
+                              width: double.infinity,
 
-                                    /// Height of the [ImageSlideshow].
-                                    height: 200,
+                              /// Height of the [ImageSlideshow].
+                              height: 200,
 
-                                    /// The page to show when first creating the [ImageSlideshow].
-                                    initialPage: 0,
+                              /// The page to show when first creating the [ImageSlideshow].
+                              initialPage: 0,
 
-                                    /// The color to paint the indicator.
-                                    indicatorColor: Colors.blue,
+                              /// The color to paint the indicator.
+                              indicatorColor: Colors.blue,
 
-                                    /// The color to paint behind th indicator.
-                                    indicatorBackgroundColor: Colors.grey,
+                              /// The color to paint behind th indicator.
+                              indicatorBackgroundColor: Colors.grey,
 
-                                    /// The widgets to display in the [ImageSlideshow].
-                                    /// Add the sample image file into the images folder
-                                    children: [
-                                      Image.network(img),
-                                      Image.network(img2),
-                                      Image.network(img3),
-                                    ],
+                              /// The widgets to display in the [ImageSlideshow].
+                              /// Add the sample image file into the images folder
+                              children: [
+                                Image.network(img),
+                                Image.network(img2),
+                                Image.network(img3),
+                              ],
 
-                                    /// Called whenever the page in the center of the viewport changes.
-                                    onPageChanged: (value) {
-                                      print('Page changed: $value');
-                                    },
+                              /// Called whenever the page in the center of the viewport changes.
+                              onPageChanged: (value) {
+                                print('Page changed: $value');
+                              },
 
-                                    /// Auto scroll interval.
-                                    /// Do not auto scroll with null or 0.
-                                    autoPlayInterval: 3000,
+                              /// Auto scroll interval.
+                              /// Do not auto scroll with null or 0.
+                              autoPlayInterval: 3000,
 
-                                    /// Loops back to first slide.
-                                    isLoop: true,
-                                  ),
-
-
-                            
-                           
-                            
+                              /// Loops back to first slide.
+                              isLoop: true,
+                            ),
                           ],
                         ),
                       );

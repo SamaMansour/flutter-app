@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +9,8 @@ import 'package:jordantimes_final/screens/ForgotPassword_screen.dart';
 import 'package:jordantimes_final/screens/Goverment_screen.dart';
 import 'package:jordantimes_final/screens/SendOtp_screen.dart';
 import 'package:jordantimes_final/screens/User_screen.dart';
-import 'package:sendgrid_mailer/sendgrid_mailer.dart';
+import 'package:mailer/mailer.dart';
+import 'package:mailer/smtp_server.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -29,18 +32,93 @@ class _LoginScreenState extends State<LoginScreen> {
   late List<String> _myToLocations = [];
 
   main() async {
-    final mailer = Mailer('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');
-    final toAddress = Address('s.jamansour@gmail.com');
-    final fromAddress = Address('sma302000@gmail.com');
-    final content = Content('text/plain', 'Hello World!');
-    final subject = 'Hello Subject!';
-    final personalization = Personalization([toAddress]);
+    String username = 'sma302000@gmail.com';
+    String password = 'semsem234';
 
-    final email =
-        Email([personalization], fromAddress, subject, content: [content]);
-    mailer.send(email).then((result) {
-      print('sent');
-    });
+    final smtpServer = gmail(username, password);
+    // Use the SmtpServer class to configure an SMTP server:
+    // final smtpServer = SmtpServer('smtp.domain.com');
+    // See the named arguments of SmtpServer for further configuration
+    // options.
+
+    final message = Message()
+      ..from = Address("sma302000@gmail.com", 'Jordantimes')
+      ..recipients.add(email)
+      ..subject = 'JordanTimes company status '
+      ..text =
+          'This is the plain text.\nThis is line 2 of the text part.' //body of the email
+      ..html =
+          '<h1>Check your company status </h1><p>You are still pending </p>';
+    try {
+      final sendReport = await send(message, smtpServer);
+      print('Message sent: ' +
+          sendReport.toString()); //print if the email is sent
+    } on MailerException catch (e) {
+      print(e.runtimeType.toString());
+      print('Message not sent. \n' +
+          e.toString()); //print if the email is not sent
+      // e.toString() will show why the email is not sending
+    }
+  }
+
+  main2() async {
+    String username = 'sma302000@gmail.com';
+    String password = 'semsem234';
+
+    final smtpServer = gmail(username, password);
+    // Use the SmtpServer class to configure an SMTP server:
+    // final smtpServer = SmtpServer('smtp.domain.com');
+    // See the named arguments of SmtpServer for further configuration
+    // options.
+
+    final message = Message()
+      ..from = Address("sma302000@gmail.com", 'Jordantimes')
+      ..recipients.add(email)
+      ..subject = 'JordanTimes company status '
+      ..text =
+          'This is the plain text.\nThis is line 2 of the text part.' //body of the email
+      ..html =
+          '<h1>Check your company status </h1><p>Congrates ! you got accepted now you can enjoy JordanTimes !!! </p>';
+    try {
+      final sendReport = await send(message, smtpServer);
+      print('Message sent: ' +
+          sendReport.toString()); //print if the email is sent
+    } on MailerException catch (e) {
+      print(e.runtimeType.toString());
+      print('Message not sent. \n' +
+          e.toString()); //print if the email is not sent
+      // e.toString() will show why the email is not sending
+    }
+  }
+
+  main3() async {
+    String username = 'sma302000@gmail.com';
+    String password = 'semsem234';
+
+    final smtpServer = gmail(username, password);
+    // Use the SmtpServer class to configure an SMTP server:
+    // final smtpServer = SmtpServer('smtp.domain.com');
+    // See the named arguments of SmtpServer for further configuration
+    // options.
+
+    final message = Message()
+      ..from = Address("sma302000@gmail.com", 'Jordantimes')
+      ..recipients.add(email)
+      ..subject = 'JordanTimes company status '
+      ..text =
+          'This is the plain text.\nThis is line 2 of the text part.' //body of the email
+      ..html =
+          '<h1>Check your company status </h1><p>Sorrrry ! unfortunately you got rejected by MOTA</p>';
+    try {
+      final sendReport = await send(message, smtpServer);
+      print('Message sent: ' +
+          sendReport.toString()); //print if the email is sent
+    } on MailerException catch (e) {
+      print(e.runtimeType.toString());
+      print('Message not sent. \n' +
+          e.toString()); //print if the email is not sent
+      // e.toString() will show why the email is not sending
+    }
   }
 
   //Email Validation
@@ -78,7 +156,6 @@ class _LoginScreenState extends State<LoginScreen> {
               _passwordTextField(),
               _sizedBox3(),
               _forgotPassword(),
-           
               _submitButton(),
             ],
           ),
@@ -173,8 +250,6 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Text('Forgot Password?'));
   }
 
-  
-
   Widget _submitButton() {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 16.0),
@@ -209,18 +284,42 @@ class _LoginScreenState extends State<LoginScreen> {
                   for (var savedUser in snapshot.docs) {
                     if (savedUser.get('role') as String == "company") {
                       int calc_price = 0;
+
+                      var acceptedDocument = FirebaseFirestore.instance
+                          .collection('accepted')
+                          .doc(email);
+
+                      acceptedDocument.get().then((docData) => {
+                            if (docData.exists)
+                              {
+                                main2(),
+                                Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                        builder: (context) => CompanyScreen()))
+                              }
+                          });
+
+                      var rejectedDocument = FirebaseFirestore.instance
+                          .collection('declined')
+                          .doc(email);
+
+                      rejectedDocument.get().then((docData) => {
+                            if (docData.exists)
+                              {
+                                main3(),
+                              }
+                          });
+
                       main();
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => CompanyScreen()));
                     }
 
-                    /* else {
+                     else {
                              if (savedUser.get('role') as String == "user") {
                             Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(
                                     builder: (context) => UserScreen()));
                           }
-                          }*/
+                          }
                   }
                 }
               }
