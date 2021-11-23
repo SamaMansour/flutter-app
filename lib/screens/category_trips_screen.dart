@@ -89,7 +89,19 @@ class CategoryTripsScreen extends StatelessWidget {
                                 style: TextStyle(
                                     color: Colors.black.withOpacity(0.6)),
                               ),
+
+                             
                             ),
+
+                             FlatButton(
+                                        textColor: Colors.red,
+                                        onPressed: () async {
+                                           Navigator.of(context).pushNamed(
+                                          'reservation_details');
+                                          
+                                        },
+                                        child: const Text('Select '),
+                                      ),
                             ImageSlideshow(
                               /// Width of the [ImageSlideshow].
                               width: double.infinity,

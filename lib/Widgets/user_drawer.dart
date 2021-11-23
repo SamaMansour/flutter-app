@@ -41,7 +41,7 @@ class UserDrawer extends StatelessWidget {
           ),
           SizedBox(height: 20),
           new ListTile(
-             
+              leading: const Icon(Icons.home),
               title: Text('Dashboard', style: Theme.of(context).textTheme.headline6),
               onTap: () {
                 
@@ -49,14 +49,28 @@ class UserDrawer extends StatelessWidget {
               }),
           SizedBox(height: 20),
            new ListTile(
-             
+               leading: const Icon(Icons.notifications),
               title: Text('Notifications', style: Theme.of(context).textTheme.headline6),
               onTap: () {
+               
+              }),
+
+
+              SizedBox(height: 20),
+           new ListTile(
+               leading: const Icon(Icons.person),
+              title: Text('Edit Profile', style: Theme.of(context).textTheme.headline6),
+              onTap: () {
+                   Navigator.of(context).pushNamed(
+                       'edit_profile_user');
                
               }),
          
           SizedBox(height: 20),
           new ListTile(
+
+             leading: const Icon(Icons.favorite),
+            
               title: Text('Favorites', style: Theme.of(context).textTheme.headline6),
               onTap: () {
                   Navigator.of(context).pushNamed(
@@ -68,6 +82,7 @@ class UserDrawer extends StatelessWidget {
         
           SizedBox(height: 20),
           new ListTile(
+               leading: const Icon(Icons.logout),
               title: Text('Logout', style: Theme.of(context).textTheme.headline6),
               onTap: () {
                 _auth.signOut();

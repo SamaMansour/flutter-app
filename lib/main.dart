@@ -16,6 +16,7 @@ import 'package:jordantimes_final/screens/edit_profile.dart';
 import 'package:jordantimes_final/screens/filter_screen.dart';
 import 'package:jordantimes_final/screens/posts_screen.dart';
 import 'package:jordantimes_final/screens/profile_info.dart';
+import 'package:jordantimes_final/screens/reservation_details.dart';
 import 'package:jordantimes_final/screens/tabs_screen.dart';
 import 'package:jordantimes_final/screens/trip_ditail_screen.dart';
 
@@ -56,11 +57,12 @@ class MyApp extends StatelessWidget {
          'Goverment_Notifications': (context) => GovermentNotifications(),
          'Rejected_companies' : (context) => RejectedCompanies(),
          'Locations_screen' : (context) => LocationsScreen(),
-         //'User_chart_screen' : (context) => UserChart(),
+         'User_chart_screen' : (context) => UserChart(),
          'Admin_screen' : (context) => AdminScreen(),
          'profile_info': (context) => ProfileInfo(),
          'category_trips_screen': (context) => CategoryTripsScreen(noOfPassengers, period), 
          'filter_screen' : (context) => FilterScreen(),
+         'reservation_details': (context) => ReservationDetails(),
       },
     );
   }
