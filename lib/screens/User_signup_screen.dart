@@ -13,6 +13,7 @@ class UserSignupScreen extends StatelessWidget {
   String email = ' ';
   String password = ' ';
   String confirmPassword = ' ';
+  DateTime date = DateTime.now();
 // Name Text Input
   @override
   Widget build(BuildContext context) {
@@ -183,7 +184,8 @@ class UserSignupScreen extends StatelessWidget {
                       'name': name,
                       'phone': phone,
                       'role': "user",
-                      'count': count 
+                      'count': count ,
+                      'myDate':date.month.toString(),
                     });
                     count++;
                   },

@@ -18,7 +18,7 @@ class _CompanyDrawerState extends State<CompanyDrawer> {
   final _auth = FirebaseAuth.instance;
   final _firestore = FirebaseFirestore.instance;
 
-  var status = 'Pendding';
+  var status = 'Accepted';
   bool setValue = false;
 
   @override
@@ -40,26 +40,39 @@ class _CompanyDrawerState extends State<CompanyDrawer> {
   @override
   Widget build(BuildContext context) {
     final email = _auth.currentUser!.email;
-    var document = FirebaseFirestore.instance
-        .collection('accepted')
-        .doc(_auth.currentUser!.email);
-    print(_auth.currentUser!.uid);
-    document.get().then((docData) => {
-          if (docData.exists)
-            {status = 'Accepted'}
-         
+    var name = " "; 
+    StreamBuilder<QuerySnapshot>(
+        stream: _firestore.collection('indicies').snapshots(),
+        builder: (context, snapshot) {
+          List<ItemLine> companiesWidgets = [];
+          if (!snapshot.hasData) {
+            return CircularProgressIndicator(
+              backgroundColor: Colors.red,
+            );
+          }
+
+          final companies = snapshot.data!.docs;
+          for (var company in companies) {
+            if (company.get('email') == _auth.currentUser!.email) {
+              name = company.get('name');
+
+              final companyWidget = ItemLine(
+                name: name,
+              );
+              print(name.toString() + "sasas");
+
+              companiesWidgets.add(companyWidget);
+            }
+          }
+
+          return Expanded(
+            child: ListView(
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 24),
+              children: companiesWidgets,
+            ),
+          );
         });
 
-
-        var document2 = FirebaseFirestore.instance
-        .collection('declined')
-        .doc(_auth.currentUser!.email);
-    print(_auth.currentUser!.uid);
-    document2.get().then((docData) => {
-          if (docData.exists)
-            {status = 'Declined'}
-         
-        });
     return Drawer(
       child: SafeArea(
         child: Column(
@@ -73,7 +86,7 @@ class _CompanyDrawerState extends State<CompanyDrawer> {
               child: Column(
                 children: [
                   Text(
-                    _auth.currentUser!.email as String,
+                    name,
                     style: Theme.of(context).textTheme.headline6,
                   ),
                   SizedBox(height: 5),
@@ -84,39 +97,34 @@ class _CompanyDrawerState extends State<CompanyDrawer> {
             SizedBox(height: 20),
             new ListTile(
                 leading: const Icon(Icons.home),
-                title: Text('Dashboard' ,
+                title: Text('Dashboard',
                     style: Theme.of(context).textTheme.headline6),
                 onTap: () {
                   //Keep At The Same Page
-                 
                 }),
             SizedBox(height: 20),
             new ListTile(
-              leading: const Icon(Icons.notifications),
+                leading: const Icon(Icons.notifications),
                 title: Text('Notifications',
                     style: Theme.of(context).textTheme.headline6),
                 onTap: () {
-                   Navigator.of(context).pushNamed(
-                       'Company_Notifications');
-                 
+                  Navigator.of(context).pushNamed('Company_Notifications');
                 }),
             SizedBox(height: 20),
             new ListTile(
-               leading: const Icon(Icons.history),
+                leading: const Icon(Icons.history),
                 title: Text('History',
                     style: Theme.of(context).textTheme.headline6),
                 onTap: () {
-                  Navigator.of(context).pushNamed(
-                       'CompanyHistory');
+                  Navigator.of(context).pushNamed('CompanyHistory');
                 }),
             SizedBox(height: 20),
             new ListTile(
-               leading: const Icon(Icons.person),
+                leading: const Icon(Icons.person),
                 title: Text('EditProfile',
                     style: Theme.of(context).textTheme.headline6),
                 onTap: () {
-                  Navigator.of(context).pushNamed(
-                       'edit_profile');
+                  Navigator.of(context).pushNamed('edit_profile');
                 }),
             SizedBox(height: 20),
             new ListTile(

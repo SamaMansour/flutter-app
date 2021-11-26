@@ -313,13 +313,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       main();
                     }
 
-                     else {
+                    /* else {
                              if (savedUser.get('role') as String == "user") {
                             Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(
                                     builder: (context) => UserScreen()));
                           }
-                          }
+                          }*/
                   }
                 }
               }

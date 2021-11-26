@@ -74,8 +74,10 @@ class _CompanyHistoryState extends State<CompanyHistory> {
                       backgroundColor: Colors.red,
                     );
                   }
-               var name  = FirebaseFirestore.instance.collection('indicies').doc(_auth.currentUser!.email);
-               final username = name.get() ;
+                  var name = FirebaseFirestore.instance
+                      .collection('indicies')
+                      .doc(_auth.currentUser!.email);
+                  final username = name.get();
 
                   final companies = snapshot.data!.docs;
                   for (var company in companies) {
@@ -97,12 +99,11 @@ class _CompanyHistoryState extends State<CompanyHistory> {
                       "title": title,
                       "description": description,
                       "price": price,
-                     
                       "img": img,
                       "img2": img2,
                       "img3": img3,
                       "date": date,
-                      "username":username,
+                      "username": username,
                       "locations_from": locations_from,
                       "locations_to": locations_to,
                       "meals": meals
@@ -125,7 +126,7 @@ class _CompanyHistoryState extends State<CompanyHistory> {
                           Padding(
                             padding: const EdgeInsets.all(16.0),
                             child: Text(
-                              description ,
+                              description,
                               style: TextStyle(
                                   color: Colors.black.withOpacity(0.6)),
                             ),
@@ -156,6 +157,7 @@ class _CompanyHistoryState extends State<CompanyHistory> {
                                 },
                                 child: const Text('Delete'),
                               ),
+                              
                             ],
                           ),
                           Image.network(img),
@@ -196,7 +198,6 @@ class _CompanyHistoryState extends State<CompanyHistory> {
                                     padding: const EdgeInsets.all(16.0),
                                     child: Text(
                                       _foundTrips[index]['description'] +
-                                         
                                           '\n' +
                                           'From :' +
                                           _foundTrips[index]['locations_from']
@@ -208,9 +209,10 @@ class _CompanyHistoryState extends State<CompanyHistory> {
                                           '\n' +
                                           'Meals' +
                                           _foundTrips[index]['meals']
-                                              .toString()+ 
-                                          '\n'+ 
-                                          'Days' + _foundTrips [index]['date'],
+                                              .toString() +
+                                          '\n' +
+                                          'Days' +
+                                          _foundTrips[index]['date'],
                                       style: TextStyle(
                                           color: Colors.black.withOpacity(0.6)),
                                     ),
@@ -243,6 +245,20 @@ class _CompanyHistoryState extends State<CompanyHistory> {
                                         },
                                         child: const Text('Delete'),
                                       ),
+
+
+                                      FlatButton(
+                                textColor: Colors.red,
+                                onPressed: () {
+                                  _firestore
+                                      .collection('trips')
+                                      .doc(_foundTrips[index]['id'])
+                                      .update({
+                                    'booked': 'fullybooked',
+                                  });
+                                },
+                                child: const Text('Closure'),
+                              ),
                                     ],
                                   ),
                                   ImageSlideshow(

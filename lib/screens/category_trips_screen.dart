@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:jordantimes_final/Widgets/filter_drawer.dart';
@@ -7,7 +8,7 @@ import '../Widgets/app_data.dart';
 
 class CategoryTripsScreen extends StatelessWidget {
   final int noOfPassengers;
-  final int period;
+  final String period;
 
   CategoryTripsScreen(this.noOfPassengers, this.period);
   final _firestore = FirebaseFirestore.instance;
@@ -54,25 +55,38 @@ class CategoryTripsScreen extends StatelessWidget {
                       final locations_from = company.get('locations_from');
                       final locations_to = company.get('locations_to');
                       final meals = company.get('meals');
-
-                      price = price * noOfPassengers * period;
+                      final booked = company.get('booked');
+                      print(noOfPassengers);
+                      price = price * noOfPassengers;
+                      print(price);
 
                       final companyWidget = Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
                         clipBehavior: Clip.antiAlias,
                         child: Column(
                           children: [
+                          
                             ListTile(
                               leading: CircleAvatar(
                                   backgroundImage: NetworkImage(img)),
-                              title: Text(title),
+                              title:
+                                  Text(title, style: TextStyle(fontSize: 20)),
                               subtitle: Text(
                                 price + 'JD' + ' ' + ' ' + 'Offered by ',
                                 style: TextStyle(
-                                    color: Colors.black.withOpacity(0.6)),
+                                    color: Colors.black.withOpacity(0.9)),
                               ),
+
+                               trailing: FavoriteButton(
+                                  valueChanged: (_) {},
+                                ),
                             ),
+
+                            
                             Padding(
-                              padding: const EdgeInsets.all(16.0),
+                              padding: const EdgeInsets.all(20.0),
                               child: Text(
                                 description +
                                     '\n' +
@@ -85,23 +99,28 @@ class CategoryTripsScreen extends StatelessWidget {
                                     meals.toString() +
                                     ' \n' +
                                     'Days' +
-                                    date,
+                                    date +
+                                    '\n' +
+                                    'Booked' +
+                                    booked,
                                 style: TextStyle(
                                     color: Colors.black.withOpacity(0.6)),
                               ),
-
-                             
                             ),
-
-                             FlatButton(
-                                        textColor: Colors.red,
-                                        onPressed: () async {
-                                           Navigator.of(context).pushNamed(
-                                          'reservation_details');
-                                          
-                                        },
-                                        child: const Text('Select '),
-                                      ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                FlatButton(
+                                  textColor: Colors.red,
+                                  onPressed: () async {
+                                    Navigator.of(context)
+                                        .pushNamed('reservation_details');
+                                  },
+                                  child: const Text('Select '),
+                                ),
+                               
+                              ],
+                            ),
                             ImageSlideshow(
                               /// Width of the [ImageSlideshow].
                               width: double.infinity,

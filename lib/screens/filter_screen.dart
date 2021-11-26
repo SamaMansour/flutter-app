@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_range_form_field/date_range_form_field.dart';
 import 'package:flutter/material.dart';
+import 'package:jordantimes_final/screens/Goverment_screen.dart';
 import 'package:jordantimes_final/screens/category_trips_screen.dart';
 
 class FilterScreen extends StatefulWidget {
@@ -10,9 +12,10 @@ class FilterScreen extends StatefulWidget {
 }
 
 class _FilterScreenState extends State<FilterScreen> {
+  final _firestore = FirebaseFirestore.instance;
   String dropdownvalue = '1 Passenger';
   int noOfPassengers = 1;
-  var period =0 ;
+  var period = " ";
   DateTimeRange? myDateRange;
   var items = [
     '1 Passenger',
@@ -29,6 +32,7 @@ class _FilterScreenState extends State<FilterScreen> {
           title: Text('Filter Screen'),
         ),
         body: Column(children: [
+          
           SizedBox(height: 8.0),
           Center(
             child: Container(
@@ -43,26 +47,19 @@ class _FilterScreenState extends State<FilterScreen> {
                     }).toList(),
                     onChanged: (newValue) {
                       dropdownvalue = newValue.toString();
-                      if (newValue == "1 Passenger") {
+                      if (dropdownvalue == "1 Passenger") {
                         noOfPassengers = 1;
-                      } else if (newValue == "2 Passenggers") {
+                      } else if (dropdownvalue == "2 Passenggers") {
                         noOfPassengers = 2;
-
-                      }
-                      else if (newValue == "3 Passengers"){
+                      } else if (dropdownvalue == "3 Passengers") {
                         noOfPassengers = 3;
-                      }
-
-                       else if (newValue == "4 Passengers"){
+                      } else if (dropdownvalue == "4 Passengers") {
                         noOfPassengers = 4;
-                      }
-                       else if (newValue == "5 Passengers"){
+                      } else if (dropdownvalue == "5 Passengers") {
                         noOfPassengers = 5;
-                      }
-                       else if (newValue == "6 Passengers"){
+                      } else if (dropdownvalue == "6 Passengers") {
                         noOfPassengers = 6;
                       }
-
                     }),
               ),
             ),
@@ -80,7 +77,8 @@ class _FilterScreenState extends State<FilterScreen> {
               ),
               onChanged: (value) {
                 myDateRange = value!;
-                period = myDateRange!.end.difference(myDateRange!.start) as int  ;
+                period =
+                    (myDateRange!.end.day - myDateRange!.start.day).toString();
               }),
           SizedBox(height: 8),
           Padding(
@@ -94,11 +92,12 @@ class _FilterScreenState extends State<FilterScreen> {
                   height: 42.0,
                   child: Text('Apply Filter'),
                   onPressed: () async {
+                    print(noOfPassengers);
+                    print(period);
 
-                   
                     Navigator.of(context).pop(MaterialPageRoute(
                         builder: (context) =>
-                            CategoryTripsScreen(noOfPassengers,period )));
+                            CategoryTripsScreen(noOfPassengers, period)));
                   }),
             ),
           ),

@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    int period = 1;
+    String period = " ";
     int noOfPassengers =1 ;
     return MaterialApp(
       title: 'JordanTimes',
