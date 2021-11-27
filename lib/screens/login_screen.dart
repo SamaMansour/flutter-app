@@ -19,6 +19,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   String email = " ";
+  bool logged = false;
 
   String password = " ";
 
@@ -262,6 +263,7 @@ class _LoginScreenState extends State<LoginScreen> {
           height: 42.0,
           child: Text('Login'),
           onPressed: () async {
+           
             if (_formKey.currentState!.validate()) {
               final user = _auth.signInWithEmailAndPassword(
                   email: email, password: password);
@@ -269,21 +271,24 @@ class _LoginScreenState extends State<LoginScreen> {
 
               //Navigate Goverment To Their Page
               if (_auth.currentUser!.email == "gov@gmail.com") {
+                logged = true;
                 Navigator.of(context).pushReplacement(
                     MaterialPageRoute(builder: (context) => GovermentScreen()));
               }
 
               //Navigate Admin To Their Page
               else if (_auth.currentUser!.email == "admin@gmail.com") {
+                logged = true;
                 Navigator.of(context).pushReplacement(
                     MaterialPageRoute(builder: (context) => AdminScreen()));
-              } else {
+              } else if (!logged) {
                 //Navigate Company To Their Page
                 await for (var snapshot
                     in _firestore.collection('users').snapshots()) {
                   for (var savedUser in snapshot.docs) {
                     if (savedUser.get('role') as String == "company") {
                       int calc_price = 0;
+                      
 
                       var acceptedDocument = FirebaseFirestore.instance
                           .collection('accepted')
@@ -312,14 +317,16 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       main();
                     }
-
-                    /* else {
-                             if (savedUser.get('role') as String == "user") {
-                            Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(
-                                    builder: (context) => UserScreen()));
-                          }
-                          }*/
+                  }
+                }
+              } else if (!logged) {
+                await for (var snapshot
+                    in _firestore.collection('users').snapshots()) {
+                  for (var savedUser in snapshot.docs) {
+                    if (savedUser.get('role') as String == "user") {
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) => UserScreen()));
+                    }
                   }
                 }
               }

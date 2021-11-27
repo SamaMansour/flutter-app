@@ -35,13 +35,13 @@ class AdminDrawer extends StatelessWidget {
             alignment: Alignment.center,
             color: Colors.red,
             child: Text(
-            _auth.currentUser!.email as String,
+            'Admin',
               style: Theme.of(context).textTheme.headline6,
             ),
           ),
           SizedBox(height: 20),
           new ListTile(
-             
+               leading: const Icon(Icons.home),
               title: Text('Dashboard', style: Theme.of(context).textTheme.headline6),
               onTap: () {
                   Navigator.of(context).pushNamed(
@@ -50,6 +50,7 @@ class AdminDrawer extends StatelessWidget {
               }),
           SizedBox(height: 20),
            new ListTile(
+              leading: const Icon(Icons.notifications),
               title: Text('Notifications', style: Theme.of(context).textTheme.headline6),
               onTap: () {
                 Navigator.of(context).pushReplacement(
@@ -58,6 +59,7 @@ class AdminDrawer extends StatelessWidget {
          
           SizedBox(height: 20),
           new ListTile(
+             leading: const Icon(Icons.pie_chart),
               title: Text('Charts', style: Theme.of(context).textTheme.headline6),
               onTap: () {
                   Navigator.of(context).pushNamed(
@@ -69,6 +71,7 @@ class AdminDrawer extends StatelessWidget {
         
           SizedBox(height: 20),
           new ListTile(
+            leading: const Icon(Icons.logout),
               title: Text('Logout', style: Theme.of(context).textTheme.headline6),
               onTap: () {
                 _auth.signOut();

@@ -15,8 +15,16 @@ class CompanyDrawer extends StatefulWidget {
 }
 
 class _CompanyDrawerState extends State<CompanyDrawer> {
+  @override
+  void initState() {
+    getName();
+
+    super.initState();
+  }
+
   final _auth = FirebaseAuth.instance;
   final _firestore = FirebaseFirestore.instance;
+  String loggedName = "";
 
   var status = 'Accepted';
   bool setValue = false;
@@ -40,38 +48,7 @@ class _CompanyDrawerState extends State<CompanyDrawer> {
   @override
   Widget build(BuildContext context) {
     final email = _auth.currentUser!.email;
-    var name = " "; 
-    StreamBuilder<QuerySnapshot>(
-        stream: _firestore.collection('indicies').snapshots(),
-        builder: (context, snapshot) {
-          List<ItemLine> companiesWidgets = [];
-          if (!snapshot.hasData) {
-            return CircularProgressIndicator(
-              backgroundColor: Colors.red,
-            );
-          }
-
-          final companies = snapshot.data!.docs;
-          for (var company in companies) {
-            if (company.get('email') == _auth.currentUser!.email) {
-              name = company.get('name');
-
-              final companyWidget = ItemLine(
-                name: name,
-              );
-              print(name.toString() + "sasas");
-
-              companiesWidgets.add(companyWidget);
-            }
-          }
-
-          return Expanded(
-            child: ListView(
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 24),
-              children: companiesWidgets,
-            ),
-          );
-        });
+    var name = " ";
 
     return Drawer(
       child: SafeArea(
@@ -86,7 +63,7 @@ class _CompanyDrawerState extends State<CompanyDrawer> {
               child: Column(
                 children: [
                   Text(
-                    name,
+                    loggedName,
                     style: Theme.of(context).textTheme.headline6,
                   ),
                   SizedBox(height: 5),
@@ -140,6 +117,21 @@ class _CompanyDrawerState extends State<CompanyDrawer> {
         ),
       ),
     );
+  }
+
+  Future<void> getName() async {
+    await for (var snapshot in _firestore.collection('indicies').snapshots()) {
+      for (var savedUser in snapshot.docs) {
+        if (savedUser.get('email') as String == _auth.currentUser!.email as String) {
+          loggedName = savedUser.get('name') as String;
+          print(loggedName);
+           setState(() => loggedName = loggedName);
+
+
+         
+        }
+      }
+    }
   }
 }
 

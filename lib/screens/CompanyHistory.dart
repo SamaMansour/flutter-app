@@ -17,13 +17,21 @@ class _CompanyHistoryState extends State<CompanyHistory> {
   final List<Map<String, dynamic>> _alltrips = [];
   final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
+  String loggedName = " ";
+
+  
 
   List<Map<String, dynamic>> _foundTrips = [];
   @override
   initState() {
     // at the beginning, all users are shown
     _foundTrips = _alltrips;
+
+     getName();
+
+   
     super.initState();
+
   }
 
   void _runFilter(String enteredKeyword) {
@@ -157,7 +165,6 @@ class _CompanyHistoryState extends State<CompanyHistory> {
                                 },
                                 child: const Text('Delete'),
                               ),
-                              
                             ],
                           ),
                           Image.network(img),
@@ -189,7 +196,7 @@ class _CompanyHistoryState extends State<CompanyHistory> {
                                           ' ' +
                                           ' ' +
                                           'Offered by ' +
-                                          username.toString(),
+                                          loggedName.toString(),
                                       style: TextStyle(
                                           color: Colors.black.withOpacity(0.6)),
                                     ),
@@ -245,20 +252,18 @@ class _CompanyHistoryState extends State<CompanyHistory> {
                                         },
                                         child: const Text('Delete'),
                                       ),
-
-
                                       FlatButton(
-                                textColor: Colors.red,
-                                onPressed: () {
-                                  _firestore
-                                      .collection('trips')
-                                      .doc(_foundTrips[index]['id'])
-                                      .update({
-                                    'booked': 'fullybooked',
-                                  });
-                                },
-                                child: const Text('Closure'),
-                              ),
+                                        textColor: Colors.red,
+                                        onPressed: () {
+                                          _firestore
+                                              .collection('trips')
+                                              .doc(_foundTrips[index]['id'])
+                                              .update({
+                                            'booked': 'fullybooked',
+                                          });
+                                        },
+                                        child: const Text('Closure'),
+                                      ),
                                     ],
                                   ),
                                   ImageSlideshow(
@@ -314,5 +319,18 @@ class _CompanyHistoryState extends State<CompanyHistory> {
         ),
       ),
     );
+  }
+
+  Future<void> getName() async {
+    await for (var snapshot in _firestore.collection('indicies').snapshots()) {
+      for (var savedUser in snapshot.docs) {
+        if (savedUser.get('email') as String ==
+            _auth.currentUser!.email as String) {
+          loggedName = savedUser.get('name') as String;
+          print(loggedName);
+          setState(() => loggedName = loggedName);
+        }
+      }
+    }
   }
 }

@@ -30,6 +30,9 @@ GlobalKey<FormState> myFormKey = new GlobalKey();
 class _CompanyScreenState extends State<CompanyScreen> {
   final _firestore = FirebaseFirestore.instance;
   final formKey = new GlobalKey<FormState>();
+   final _auth = FirebaseAuth.instance;
+  String loggedName = " ";
+
   DateTimeRange? myDateRange;
   List? _myFromLocations;
   List? _myToLocations;
@@ -76,6 +79,7 @@ class _CompanyScreenState extends State<CompanyScreen> {
     super.initState();
     _myFromLocations = [];
     _myFromLocationsResult = '';
+    
   }
 
   _saveForm() {
@@ -135,7 +139,7 @@ class _CompanyScreenState extends State<CompanyScreen> {
       return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          title: Text(name.toString()),
+          title: Text(loggedName.toString()),
         ),
         drawer: CompanyDrawer(),
         backgroundColor: Colors.white,
@@ -550,10 +554,14 @@ class _CompanyScreenState extends State<CompanyScreen> {
           backgroundColor: Colors.grey,
         ),
       );
+
+      
     }
     return LoginScreen();
+   
   }
 
+   
   Future selectFile() async {
     FilePickerResult? result =
         await FilePicker.platform.pickFiles(allowMultiple: true);
@@ -601,7 +609,7 @@ class _CompanyScreenState extends State<CompanyScreen> {
     final destination = 'files/$fileName';
 
     task = FirebaseApi.uploadFile(destination, files![2]);
-    setState(() {});
+    
 
     if (task == null) return;
 
@@ -629,4 +637,7 @@ class _CompanyScreenState extends State<CompanyScreen> {
           }
         },
       );
+
+
+      
 }

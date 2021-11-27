@@ -39,15 +39,16 @@ class _UserChartState extends State<UserChart> {
     getNoOfUsersAugest();
     getNoOfUsersSeptemper();
     getNoOfUsersOctober();
-    int noOfUsersDec = 0;
-    int noOfUsersNov = 0;
-
+   
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text ('Charts')
+      ),
         body: Center(
             child: Container(
                 child: SfCartesianChart(

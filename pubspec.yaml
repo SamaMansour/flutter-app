@@ -56,7 +56,7 @@ dependencies:
   mailer: ^5.0.2
   url_launcher: ^6.0.13
   favorite_button: ^0.0.4
-  fl_animated_linechart: ^1.1.4
+  
   
   
   

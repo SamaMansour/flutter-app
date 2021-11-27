@@ -74,7 +74,7 @@ class CategoryTripsScreen extends StatelessWidget {
                               title:
                                   Text(title, style: TextStyle(fontSize: 20)),
                               subtitle: Text(
-                                price + 'JD' + ' ' + ' ' + 'Offered by ',
+                                price + 'JD' + ' ' + ' ' + 'Offered by '+ email,
                                 style: TextStyle(
                                     color: Colors.black.withOpacity(0.9)),
                               ),

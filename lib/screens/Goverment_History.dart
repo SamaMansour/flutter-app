@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:jordantimes_final/Widgets/history_drawer.dart';
 
@@ -13,10 +14,11 @@ class GovermentHistory extends StatefulWidget {
 
 class _GovermentHistoryState extends State<GovermentHistory> {
   final _firestore = FirebaseFirestore.instance;
+   final _auth = FirebaseAuth.instance;
+ 
+   
 
   final List<Map<String, dynamic>> _allCompanies = [];
-
-  
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,10 +31,6 @@ class _GovermentHistoryState extends State<GovermentHistory> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-
-            
-
-            
             StreamBuilder<QuerySnapshot>(
                 stream: _firestore.collection('accepted').snapshots(),
                 builder: (context, snapshot) {
@@ -72,4 +70,6 @@ class _GovermentHistoryState extends State<GovermentHistory> {
       ),
     );
   }
+
+  
 }
