@@ -22,6 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool logged = false;
 
   String password = " ";
+  String alertText = " ";
 
   final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
@@ -157,6 +158,7 @@ class _LoginScreenState extends State<LoginScreen> {
               _passwordTextField(),
               _sizedBox3(),
               _forgotPassword(),
+              _alertText(),
               _submitButton(),
             ],
           ),
@@ -188,7 +190,7 @@ class _LoginScreenState extends State<LoginScreen> {
           email = v!;
           return null;
         } else {
-          return 'Please enter a valid email';
+          return 'Please enter a valid email ';
         }
       },
       decoration: InputDecoration(
@@ -251,6 +253,10 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Text('Forgot Password?'));
   }
 
+  Widget _alertText() {
+    return Text(alertText);
+  }
+
   Widget _submitButton() {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 16.0),
@@ -263,7 +269,6 @@ class _LoginScreenState extends State<LoginScreen> {
           height: 42.0,
           child: Text('Login'),
           onPressed: () async {
-           
             if (_formKey.currentState!.validate()) {
               final user = _auth.signInWithEmailAndPassword(
                   email: email, password: password);
@@ -288,7 +293,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   for (var savedUser in snapshot.docs) {
                     if (savedUser.get('role') as String == "company") {
                       int calc_price = 0;
-                      
 
                       var acceptedDocument = FirebaseFirestore.instance
                           .collection('accepted')
@@ -329,6 +333,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     }
                   }
                 }
+              } else {
+                alertText = "You have entered a wrong email or password";
               }
 
               //Navigate Users To their Page

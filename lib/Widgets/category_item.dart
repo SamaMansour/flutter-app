@@ -29,6 +29,10 @@ class CategoryItem extends StatelessWidget {
         Image.asset(imageUrl,height:250, fit: BoxFit.cover,),
 
           Container(
+            
+          
+           
+                        
             padding: EdgeInsets.all(10),
             alignment: Alignment.center,
             child: Text(
@@ -40,8 +44,8 @@ class CategoryItem extends StatelessWidget {
             ),
 
             decoration :BoxDecoration(
-              color:Colors.black.withOpacity(0.4),
-              borderRadius: BorderRadius.circular(15),
+              color:Colors.black.withOpacity(0.3),
+             
 
             ) ,
 
