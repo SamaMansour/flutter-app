@@ -7,10 +7,11 @@ import 'package:jordantimes_final/Widgets/trip_item.dart';
 import '../Widgets/app_data.dart';
 
 class CategoryTripsScreen extends StatelessWidget {
+  CategoryTripsScreen(this.noOfPassengers, this.period);
+
   final int noOfPassengers;
   final String period;
 
-  CategoryTripsScreen(this.noOfPassengers, this.period);
   final _firestore = FirebaseFirestore.instance;
 
   @override
@@ -67,24 +68,25 @@ class CategoryTripsScreen extends StatelessWidget {
                         clipBehavior: Clip.antiAlias,
                         child: Column(
                           children: [
-                          
                             ListTile(
                               leading: CircleAvatar(
                                   backgroundImage: NetworkImage(img)),
                               title:
                                   Text(title, style: TextStyle(fontSize: 20)),
                               subtitle: Text(
-                                price + 'JD' + ' ' + ' ' + 'Offered by '+ email,
+                                price +
+                                    'JD' +
+                                    ' ' +
+                                    ' ' +
+                                    'Offered by ' +
+                                    email,
                                 style: TextStyle(
                                     color: Colors.black.withOpacity(0.9)),
                               ),
-
-                               trailing: FavoriteButton(
-                                  valueChanged: (_) {},
-                                ),
+                              trailing: FavoriteButton(
+                                valueChanged: (_) {},
+                              ),
                             ),
-
-                            
                             Padding(
                               padding: const EdgeInsets.all(20.0),
                               child: Text(
@@ -110,15 +112,16 @@ class CategoryTripsScreen extends StatelessWidget {
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
-                                FlatButton(
-                                  textColor: Colors.red,
+                                TextButton(
+                                
                                   onPressed: () async {
                                     Navigator.of(context)
                                         .pushNamed('reservation_details');
+
+                                          print(noOfPassengers);
                                   },
                                   child: const Text('Select '),
                                 ),
-                               
                               ],
                             ),
                             ImageSlideshow(

@@ -53,8 +53,9 @@ class AdminDrawer extends StatelessWidget {
               leading: const Icon(Icons.notifications),
               title: Text('Notifications', style: Theme.of(context).textTheme.headline6),
               onTap: () {
-                Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => GovermentNotifications()));
+                Navigator.of(context).pushNamed(
+                       'Admin_Notifications');
+                
               }),
          
           SizedBox(height: 20),

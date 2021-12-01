@@ -277,8 +277,8 @@ class _LoginScreenState extends State<LoginScreen> {
               //Navigate Goverment To Their Page
               if (_auth.currentUser!.email == "gov@gmail.com") {
                 logged = true;
-                Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => GovermentScreen()));
+                Navigator.of(context).popAndPushNamed(
+                   'Goverment_screen' );
               }
 
               //Navigate Admin To Their Page
@@ -291,7 +291,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 await for (var snapshot
                     in _firestore.collection('users').snapshots()) {
                   for (var savedUser in snapshot.docs) {
-                    if (savedUser.get('role') as String == "company") {
+                    if (savedUser.get('role') as String != "user") {
                       int calc_price = 0;
 
                       var acceptedDocument = FirebaseFirestore.instance
@@ -321,19 +321,16 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       main();
                     }
-                  }
-                }
-              } else if (!logged) {
-                await for (var snapshot
-                    in _firestore.collection('users').snapshots()) {
-                  for (var savedUser in snapshot.docs) {
-                    if (savedUser.get('role') as String == "user") {
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+
+
+                    /*else {
+                       Navigator.of(context).pushReplacement(MaterialPageRoute(
                           builder: (context) => UserScreen()));
-                    }
+                    }*/
+                    
                   }
                 }
-              } else {
+              }  else {
                 alertText = "You have entered a wrong email or password";
               }
 

@@ -12,6 +12,13 @@ class FilterScreen extends StatefulWidget {
 }
 
 class _FilterScreenState extends State<FilterScreen> {
+  void state() {
+    getId();
+    getPrice();
+  }
+
+  var tripid = "";
+  var price =  " ";
   final _firestore = FirebaseFirestore.instance;
   String dropdownvalue = '1 Passenger';
   int noOfPassengers = 1;
@@ -32,7 +39,6 @@ class _FilterScreenState extends State<FilterScreen> {
           title: Text('Filter Screen'),
         ),
         body: Column(children: [
-          
           SizedBox(height: 8.0),
           Center(
             child: Container(
@@ -94,6 +100,12 @@ class _FilterScreenState extends State<FilterScreen> {
                   onPressed: () async {
                     print(noOfPassengers);
                     print(period);
+                   
+                    price = price * noOfPassengers * int.parse(period);
+                    FirebaseFirestore.instance
+                        .collection('trips')
+                        .doc('gf-6000')
+                        .update({price: price});
 
                     Navigator.of(context).pop(MaterialPageRoute(
                         builder: (context) =>
@@ -102,5 +114,25 @@ class _FilterScreenState extends State<FilterScreen> {
             ),
           ),
         ]));
+  }
+
+  Future<void> getId() async {
+    await for (var snapshot in _firestore.collection('trips').snapshots()) {
+      for (var savedUser in snapshot.docs) {
+        var id = savedUser.get('id') as String;
+        print(id);
+        setState(() => tripid = id);
+      }
+    }
+  }
+
+  Future<void> getPrice() async {
+    await for (var snapshot in _firestore.collection('trips').snapshots()) {
+      for (var savedUser in snapshot.docs) {
+        var priceEl = savedUser.get('price') as String;
+        print(priceEl);
+        setState(() => price = priceEl );
+      }
+    }
   }
 }

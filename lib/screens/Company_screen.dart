@@ -518,7 +518,7 @@ class _CompanyScreenState extends State<CompanyScreen> {
                       _firestore.collection('trips').doc(id).set({
                         'userId': loggedUser!.uid,
                         'id': id,
-                        'email': loggedUser.email,
+                        'email': _auth.currentUser!.email,
                         'title': title,
                         'description': description,
                         'ar_description': arDescription,

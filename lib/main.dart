@@ -2,12 +2,14 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:jordantimes_final/screens/Admin_Notifications.dart';
 import 'package:jordantimes_final/screens/Admin_screen.dart';
 import 'package:jordantimes_final/screens/Categories_screen.dart';
 import 'package:jordantimes_final/screens/CompanyHistory.dart';
 import 'package:jordantimes_final/screens/Company_Notifications.dart';
 import 'package:jordantimes_final/screens/Goverment_History.dart';
 import 'package:jordantimes_final/screens/Goverment_Notifications_screen.dart';
+import 'package:jordantimes_final/screens/Goverment_screen.dart';
 import 'package:jordantimes_final/screens/Locations_screen.dart';
 import 'package:jordantimes_final/screens/Rejected_companies.dart';
 import 'package:jordantimes_final/screens/User_chart_screen.dart';
@@ -63,6 +65,8 @@ class MyApp extends StatelessWidget {
          'category_trips_screen': (context) => CategoryTripsScreen(noOfPassengers, period), 
          'filter_screen' : (context) => FilterScreen(),
          'reservation_details': (context) => ReservationDetails(),
+          'Goverment_screen' : (context) => GovermentScreen(),
+          'Admin_Notifications' : (context) => AdminNotifications(),
       },
     );
   }
