@@ -1,16 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:jordantimes_final/screens/other_members.dart';
 
-class ReservationDetails extends StatefulWidget {
-  const ReservationDetails({ Key? key }) : super(key: key);
+class OtherMembers extends StatefulWidget {
+  const OtherMembers({ Key? key }) : super(key: key);
 
   @override
-  _ReservationDetailsState createState() => _ReservationDetailsState();
+  _OtherMembersState createState() => _OtherMembersState();
 }
 
-class _ReservationDetailsState extends State<ReservationDetails> {
+class _OtherMembersState extends State<OtherMembers> {
 
   TextEditingController _nameController = TextEditingController();
    TextEditingController _phoneController = TextEditingController();
@@ -21,8 +20,7 @@ class _ReservationDetailsState extends State<ReservationDetails> {
   void initState() {
     
     super.initState();
-    getName();
-    getPhone();
+   
   }
    
 
@@ -47,16 +45,14 @@ class _ReservationDetailsState extends State<ReservationDetails> {
             children: [
 
              
-              // First Component Shown
-      TextFormField(
-      textAlign: TextAlign.center,
-      controller :_nameController,
-      
+              
+//Second Component Shown 
 
+     TextFormField(
+      textAlign: TextAlign.center,
       
       decoration: InputDecoration(
         hintText: 'Name ',
-       
         contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
         
       ),
@@ -72,27 +68,15 @@ class _ReservationDetailsState extends State<ReservationDetails> {
       decoration: InputDecoration(
         hintText: 'Age ',
         contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
-        
+       
       ),
     ),
 
      SizedBox(height: 8.0),
 
 
-     TextFormField(
-      textAlign: TextAlign.center,
-      controller: _phoneController,
-      
-      decoration: InputDecoration(
-        hintText: 'Phone',
-        contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
-        
-      ),
-    ),
 
-
-    SizedBox(height: 8.0),
-
+    
 
     TextFormField(
       textAlign: TextAlign.center,
@@ -103,86 +87,24 @@ class _ReservationDetailsState extends State<ReservationDetails> {
         
       ),
     ),
-             
-                   
-
-    SizedBox(height:32.0),
+ SizedBox(height:32.0),
 
 
-
-    
-
-    
-
-
-
-
-
-
-
-
-    
-
-    
-
-
-
-
-
-
-
-
-    
-
-    
-
-
-
-
-
-
-
-
-    
-
-    
-
-
-
-
-
-
-
-
-    
-
-    
-
-
-
-
-
-
-
-
-    
-
-    
-
-
-
-
-
-
-
-
+  
+        
 
             ],
             
           ),
+
+         
+
+
           ),
         ),
       ),
+
+
        floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.of(context).pushReplacement(
@@ -194,33 +116,5 @@ class _ReservationDetailsState extends State<ReservationDetails> {
     );
   }
 
- Future<void> getName() async {
-    await for (var snapshot in FirebaseFirestore.instance.collection('users').snapshots()) {
-      for (var savedUser in snapshot.docs) {
-        if (savedUser.get('email') as String == _auth.currentUser!.email as String) {
-          _nameController.text = savedUser.get('name') as String;
-          print(_nameController.text);
-           setState(() => _nameController.text = _nameController.text);
 
-
-         
-        }
-      }
-    }
-  }
-
-  Future<void> getPhone() async {
-    await for (var snapshot in FirebaseFirestore.instance.collection('users').snapshots()) {
-      for (var savedUser in snapshot.docs) {
-        if (savedUser.get('email') as String == _auth.currentUser!.email as String) {
-          _phoneController.text = savedUser.get('phone') as String;
-          print(_phoneController.text);
-           setState(() => _phoneController.text = _phoneController.text);
-
-
-         
-        }
-      }
-    }
-  }
 }

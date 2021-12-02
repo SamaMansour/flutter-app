@@ -291,7 +291,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 await for (var snapshot
                     in _firestore.collection('users').snapshots()) {
                   for (var savedUser in snapshot.docs) {
-                    if (savedUser.get('role') as String != "user") {
+                    if (savedUser.get('role') as String != "company") {
                       int calc_price = 0;
 
                       var acceptedDocument = FirebaseFirestore.instance
@@ -323,10 +323,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     }
 
 
-                    /*else {
+                    else {
                        Navigator.of(context).pushReplacement(MaterialPageRoute(
                           builder: (context) => UserScreen()));
-                    }*/
+                    }
                     
                   }
                 }

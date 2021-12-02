@@ -31,6 +31,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   FirebaseAnalytics analytics = FirebaseAnalytics();
   // This widget is the root of your application.
+ 
   @override
   Widget build(BuildContext context) {
     String period = " ";
@@ -66,7 +67,7 @@ class MyApp extends StatelessWidget {
          'filter_screen' : (context) => FilterScreen(),
          'reservation_details': (context) => ReservationDetails(),
           'Goverment_screen' : (context) => GovermentScreen(),
-          'Admin_Notifications' : (context) => AdminNotifications(),
+         
       },
     );
   }

@@ -49,14 +49,7 @@ class AdminDrawer extends StatelessWidget {
                 
               }),
           SizedBox(height: 20),
-           new ListTile(
-              leading: const Icon(Icons.notifications),
-              title: Text('Notifications', style: Theme.of(context).textTheme.headline6),
-              onTap: () {
-                Navigator.of(context).pushNamed(
-                       'Admin_Notifications');
-                
-              }),
+           
          
           SizedBox(height: 20),
           new ListTile(
