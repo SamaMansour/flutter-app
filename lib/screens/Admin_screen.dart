@@ -143,6 +143,7 @@ class _AdminScreenState extends State<AdminScreen> {
                                     'id ': id,
                                     'title ': title,
                                     'description': description,
+                                    'email' : email,
                                     'reported': "reported",
                                   });
                                 },

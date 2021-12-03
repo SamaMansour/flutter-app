@@ -1,16 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:jordantimes_final/Widgets/charts_drawer.dart';
 import 'package:jordantimes_final/models/userModel.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-class UserChart extends StatefulWidget {
+class ColumnUserChart extends StatefulWidget {
   @override
-  _UserChartState createState() => _UserChartState();
+  _ColumnUserChartState createState() => _ColumnUserChartState();
 }
 
-class _UserChartState extends State<UserChart> {
+class _ColumnUserChartState extends State<ColumnUserChart> {
   int noOfUsersNov = 0;
   int noOfUsersDec = 0;
   int noOfUsersJan = 0;
@@ -50,14 +49,13 @@ class _UserChartState extends State<UserChart> {
       appBar: AppBar(
         title: Text ('Charts')
       ),
-      drawer:ChartsDrawer(),
         body: Center(
             child: Container(
                 child: SfCartesianChart(
                     // Initialize category axis
                     primaryXAxis: CategoryAxis(),
-                    series: <LineSeries<SalesData, String>>[
-          LineSeries<SalesData, String>(
+                    series: <ColumnSeries<SalesData, String>>[
+          ColumnSeries<SalesData, String>(
               // Bind data source
               dataSource: <SalesData>[
                 SalesData('Nov', noOfUsersNov),

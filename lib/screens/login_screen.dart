@@ -282,8 +282,7 @@ class _LoginScreenState extends State<LoginScreen> {
               }
 
               //Navigate Admin To Their Page
-              else if (_auth.currentUser!.email == "admin@gmail.com") {
-                logged = true;
+              else if (_auth.currentUser!.email == "admin@gmail.com") { 
                 Navigator.of(context).pushReplacement(
                     MaterialPageRoute(builder: (context) => AdminScreen()));
               } else if (!logged) {
@@ -323,10 +322,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     }
 
 
-                    else {
+                   /* else {
                        Navigator.of(context).pushReplacement(MaterialPageRoute(
                           builder: (context) => UserScreen()));
-                    }
+                    }*/
                     
                   }
                 }

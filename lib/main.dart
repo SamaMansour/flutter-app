@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:jordantimes_final/screens/Admin_Notifications.dart';
 import 'package:jordantimes_final/screens/Admin_screen.dart';
 import 'package:jordantimes_final/screens/Categories_screen.dart';
+import 'package:jordantimes_final/screens/Column_User_chart.dart';
 import 'package:jordantimes_final/screens/CompanyHistory.dart';
 import 'package:jordantimes_final/screens/Company_Notifications.dart';
 import 'package:jordantimes_final/screens/Goverment_History.dart';
@@ -67,6 +68,7 @@ class MyApp extends StatelessWidget {
          'filter_screen' : (context) => FilterScreen(),
          'reservation_details': (context) => ReservationDetails(),
           'Goverment_screen' : (context) => GovermentScreen(),
+          'Column_User_Chart': (context) => ColumnUserChart(),
          
       },
     );

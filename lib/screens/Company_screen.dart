@@ -103,7 +103,7 @@ class _CompanyScreenState extends State<CompanyScreen> {
     List<String> _foundUsers = [];
 
     StreamBuilder<QuerySnapshot>(
-        stream: _firestore.collection('indicies').snapshots(),
+        stream: _firestore.collection('users').snapshots(),
         builder: (context, snapshot) {
           List<ItemLine> companiesWidgets = [];
           if (!snapshot.hasData) {
@@ -619,6 +619,9 @@ class _CompanyScreenState extends State<CompanyScreen> {
     return urlDownload;
     print(urlDownload);
   }
+
+
+  
 
   Widget buildUploadStatus(UploadTask task) => StreamBuilder<TaskSnapshot>(
         stream: task.snapshotEvents,
