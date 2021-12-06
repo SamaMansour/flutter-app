@@ -1,16 +1,24 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:favorite_button/favorite_button.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:jordantimes_final/Widgets/filter_drawer.dart';
 import 'package:jordantimes_final/Widgets/trip_item.dart';
+import 'package:jordantimes_final/screens/filter_screen.dart';
 import '../Widgets/app_data.dart';
 
-class CategoryTripsScreen extends StatelessWidget {
-  CategoryTripsScreen(this.noOfPassengers, this.period);
+class CategoryTripsScreen extends StatefulWidget {
+  final String noOfPassengers = " ";
+  final String period = " ";
+  CategoryTripsScreen(String noOfPassengers, String period);
 
-  final int noOfPassengers;
-  final String period;
+  @override
+  _CategoryTripsScreenState createState() => _CategoryTripsScreenState();
+}
+
+class _CategoryTripsScreenState extends State<CategoryTripsScreen> {
+  final _auth = FirebaseAuth.instance;
 
   final _firestore = FirebaseFirestore.instance;
 
@@ -25,7 +33,20 @@ class CategoryTripsScreen extends StatelessWidget {
     }).toList();
 
     return Scaffold(
-      appBar: AppBar(title: Text(categoryTitle!)),
+      appBar: AppBar(
+        title: Text(categoryTitle!),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.filter,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.of(context).pushNamed('filter_screen');
+            },
+          )
+        ],
+      ),
       drawer: FilterDrawer(),
       body: Column(
         children: [
@@ -57,9 +78,9 @@ class CategoryTripsScreen extends StatelessWidget {
                       final locations_to = company.get('locations_to');
                       final meals = company.get('meals');
                       final booked = company.get('booked');
-                      print(noOfPassengers);
-                      price = price * noOfPassengers;
-                      print(price);
+                      int periodTime = int.parse(widget.period) ;
+                      int noPass = int.parse(widget.noOfPassengers) ;
+                      price = price *periodTime*noPass;
 
                       final companyWidget = Card(
                         shape: RoundedRectangleBorder(
@@ -84,7 +105,17 @@ class CategoryTripsScreen extends StatelessWidget {
                                     color: Colors.black.withOpacity(0.9)),
                               ),
                               trailing: FavoriteButton(
-                                valueChanged: (_) {},
+                                valueChanged: (_) {
+                                  FirebaseFirestore.instance
+                                      .collection('favorites')
+                                      .doc(_auth.currentUser!.email)
+                                      .set({
+                                    'email': _auth.currentUser!.email,
+                                    'id': id,
+                                    'title': title,
+                                    'description': description,
+                                  });
+                                },
                               ),
                             ),
                             Padding(
@@ -113,12 +144,10 @@ class CategoryTripsScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 TextButton(
-                                
                                   onPressed: () async {
-                                    Navigator.of(context)
-                                        .pushNamed('reservation_details');
-
-                                          print(noOfPassengers);
+                                    Navigator.of(context).pushNamed(
+                                        'reservation_details',
+                                        arguments: ScreenArguments(id));
                                   },
                                   child: const Text('Select '),
                                 ),
@@ -181,4 +210,10 @@ class CategoryTripsScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+class ScreenArguments {
+  final String id;
+
+  ScreenArguments(this.id);
 }

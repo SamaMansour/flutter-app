@@ -1,14 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:jordantimes_final/screens/Goverment_Notifications_screen.dart';
-import 'package:jordantimes_final/screens/Goverment_screen.dart';
-import 'package:jordantimes_final/screens/User_chart_screen.dart';
-import 'package:jordantimes_final/screens/posts_screen.dart';
 import 'package:jordantimes_final/screens/welcome_screen.dart';
 
-class AdminDrawer extends StatelessWidget {
-  final _auth = FirebaseAuth.instance;
+class MainDrawer extends StatelessWidget {
+  const MainDrawer({ Key? key }) : super(key: key);
+
+  @override
+ 
+   
   Widget buildListTile(String title, IconData icon, Function onTapLink) {
+     final _auth = FirebaseAuth.instance;
     return ListTile(
       leading: Icon(
         icon,
@@ -35,17 +36,17 @@ class AdminDrawer extends StatelessWidget {
             alignment: Alignment.center,
             color: Colors.red,
             child: Text(
-            'Admin',
+            'Home',
               style: Theme.of(context).textTheme.headline6,
             ),
           ),
           SizedBox(height: 20),
           new ListTile(
-               leading: const Icon(Icons.home),
-              title: Text('Dashboard', style: Theme.of(context).textTheme.headline6),
+               leading: const Icon(Icons.phone),
+              title: Text('Contactus', style: Theme.of(context).textTheme.headline6),
               onTap: () {
                   Navigator.of(context).pushNamed(
-                       'Admin_screen');
+                       'contactus');
                 
               }),
          
@@ -53,27 +54,23 @@ class AdminDrawer extends StatelessWidget {
          
           SizedBox(height: 20),
           new ListTile(
-             leading: const Icon(Icons.pie_chart),
-              title: Text('Charts', style: Theme.of(context).textTheme.headline6),
+             leading: const Icon(Icons.money),
+              title: Text('Currency Converter', style: Theme.of(context).textTheme.headline6),
               onTap: () {
-                  Navigator.of(context).pushNamed(
-                       'User_chart_screen');
-               
+                
               }),
 
                
         
           SizedBox(height: 20),
           new ListTile(
-            leading: const Icon(Icons.logout),
-              title: Text('Logout', style: Theme.of(context).textTheme.headline6),
+            leading: const Icon(Icons.translate),
+              title: Text('Change Language ', style: Theme.of(context).textTheme.headline6),
               onTap: () {
-                _auth.signOut();
-                Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => WelcomeScreen()));
+              
               }),
         ],
       ),
     );
   }
-}
+  }

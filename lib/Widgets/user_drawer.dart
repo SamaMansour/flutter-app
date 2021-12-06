@@ -74,7 +74,7 @@ class UserDrawer extends StatelessWidget {
               title: Text('Favorites', style: Theme.of(context).textTheme.headline6),
               onTap: () {
                   Navigator.of(context).pushNamed(
-                       'User_chart_screen');
+                       'favorite_screen');
                
               }),
 

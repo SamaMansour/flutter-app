@@ -86,6 +86,7 @@ class _CompanyHistoryState extends State<CompanyHistory> {
                       .collection('indicies')
                       .doc(_auth.currentUser!.email);
                   final username = name.get();
+                  
 
                   final companies = snapshot.data!.docs;
                   for (var company in companies) {

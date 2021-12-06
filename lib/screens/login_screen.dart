@@ -320,12 +320,15 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       main();
                     }
-
-
-                   /* else {
+                       if (!logged){
                        Navigator.of(context).pushReplacement(MaterialPageRoute(
                           builder: (context) => UserScreen()));
-                    }*/
+                    
+
+                   
+                    }
+
+                     
                     
                   }
                 }

@@ -18,11 +18,11 @@ class _FilterScreenState extends State<FilterScreen> {
   }
 
   var tripid = "";
-  var price =  " ";
+  var price = " ";
   final _firestore = FirebaseFirestore.instance;
   String dropdownvalue = '1 Passenger';
   int noOfPassengers = 1;
-  var period = " ";
+  String period = " ";
   DateTimeRange? myDateRange;
   var items = [
     '1 Passenger',
@@ -52,7 +52,10 @@ class _FilterScreenState extends State<FilterScreen> {
                       return DropdownMenuItem(value: items, child: Text(items));
                     }).toList(),
                     onChanged: (newValue) {
-                      dropdownvalue = newValue.toString();
+                      setState(() {
+                        dropdownvalue = newValue.toString();
+                      });
+
                       if (dropdownvalue == "1 Passenger") {
                         noOfPassengers = 1;
                       } else if (dropdownvalue == "2 Passenggers") {
@@ -100,16 +103,17 @@ class _FilterScreenState extends State<FilterScreen> {
                   onPressed: () async {
                     print(noOfPassengers);
                     print(period);
-                   
+                    final pass = noOfPassengers as String;
+
                     price = price * noOfPassengers * int.parse(period);
                     FirebaseFirestore.instance
                         .collection('trips')
                         .doc('gf-6000')
                         .update({price: price});
 
-                    Navigator.of(context).pop(MaterialPageRoute(
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
                         builder: (context) =>
-                            CategoryTripsScreen(noOfPassengers, period)));
+                            CategoryTripsScreen(pass,period)));
                   }),
             ),
           ),
@@ -131,8 +135,15 @@ class _FilterScreenState extends State<FilterScreen> {
       for (var savedUser in snapshot.docs) {
         var priceEl = savedUser.get('price') as String;
         print(priceEl);
-        setState(() => price = priceEl );
+        setState(() => price = priceEl);
       }
     }
   }
+}
+
+class ScreenViewArguments {
+  final int passengers;
+  final int period;
+
+  ScreenViewArguments(this.passengers, this.period);
 }
