@@ -10,6 +10,11 @@ class AdminScreen extends StatefulWidget {
 }
 
 class _AdminScreenState extends State<AdminScreen> {
+  String? id;
+  String? title;
+  String? description;
+  String? email;
+  var fetchedName = " ";
   final List<Map<String, dynamic>> _alltrips = [];
   final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
@@ -21,6 +26,7 @@ class _AdminScreenState extends State<AdminScreen> {
     // at the beginning, all users are shown
     _foundTrips = _alltrips;
     super.initState();
+    getName();
   }
 
   void _runFilter(String enteredKeyword) {
@@ -68,10 +74,10 @@ class _AdminScreenState extends State<AdminScreen> {
 
                   final companies = snapshot.data!.docs;
                   for (var company in companies) {
-                    final email = company.get('email');
-                    final id = company.get('id');
-                    final title = company.get('title');
-                    final description = company.get('description');
+                    email = company.get('email');
+                    id = company.get('id');
+                    title = company.get('title');
+                    description = company.get('description');
                     final price = company.get('price');
                     final img = company.get('img');
                     final img2 = company.get('img2');
@@ -102,9 +108,14 @@ class _AdminScreenState extends State<AdminScreen> {
                           ListTile(
                             leading: CircleAvatar(
                                 backgroundImage: NetworkImage(img)),
-                            title: Text(title),
+                            title: Text(title!),
                             subtitle: Text(
-                              price + 'JD' + ' ' + ' ' + 'Offered by ' + email,
+                              price +
+                                  'JD' +
+                                  ' ' +
+                                  ' ' +
+                                  'Offered by ' +
+                                  fetchedName,
                               style: TextStyle(
                                   color: Colors.black.withOpacity(0.6)),
                             ),
@@ -112,7 +123,7 @@ class _AdminScreenState extends State<AdminScreen> {
                           Padding(
                             padding: const EdgeInsets.all(16.0),
                             child: Text(
-                              description +
+                              description! +
                                   '\n' +
                                   ' locations from' +
                                   locations_from.toString() +
@@ -135,17 +146,8 @@ class _AdminScreenState extends State<AdminScreen> {
                                 textColor: Colors.red,
                                 onPressed: () {
                                   print(id);
-
-                                  _firestore
-                                      .collection('reported')
-                                      .doc(id)
-                                      .set({
-                                    'id ': id,
-                                    'title ': title,
-                                    'description': description,
-                                    'email' : email,
-                                    'reported': "reported",
-                                  });
+                                  createAlertDialog(context);
+                                  print(fetchedName);
                                 },
                                 child: const Text('Report'),
                               ),
@@ -159,8 +161,8 @@ class _AdminScreenState extends State<AdminScreen> {
                                     "description": description,
                                     "price": price,
                                     "img": img,
-                                    "img2" :img2,
-                                    "img3" :img3,
+                                    "img2": img2,
+                                    "img3": img3,
                                     "date": date,
                                     "locations_from": locations_from,
                                     "locations_to": locations_to,
@@ -216,6 +218,7 @@ class _AdminScreenState extends State<AdminScreen> {
                     //Stream Data from Database
 
                   }
+
                   return Expanded(
                     child: ListView(
                       padding:
@@ -228,5 +231,44 @@ class _AdminScreenState extends State<AdminScreen> {
         ),
       ),
     );
+  }
+
+  createAlertDialog(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Your Feedback'),
+            content: TextField(
+              controller: customController,
+            ),
+            actions: <Widget>[
+              MaterialButton(
+                  child: Text('Submit'),
+                  onPressed: () {
+                    _firestore.collection('reported').doc(id).set({
+                      'id ': id,
+                      'title ': title,
+                      'description': description,
+                      'email': email,
+                      'reported': "reported",
+                      'reason': customController.text
+                    });
+                  })
+            ],
+          );
+        });
+  }
+
+  Future<void> getName() async {
+    await for (var snapshot in _firestore.collection('indicies').snapshots()) {
+      for (var savedUser in snapshot.docs) {
+        if (savedUser.get('email') as String == email as String) {
+          fetchedName = savedUser.get('name') as String;
+          print(fetchedName);
+          setState(() => fetchedName = fetchedName);
+        }
+      }
+    }
   }
 }

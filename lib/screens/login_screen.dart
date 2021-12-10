@@ -141,7 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SafeArea(
+        body: SingleChildScrollView(child :SafeArea(
       child: Container(
         padding: EdgeInsets.all(20),
         child: Form(
@@ -164,6 +164,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
       ),
+    ),
     ));
   }
 
@@ -285,12 +286,15 @@ class _LoginScreenState extends State<LoginScreen> {
               else if (_auth.currentUser!.email == "admin@gmail.com") { 
                 Navigator.of(context).pushReplacement(
                     MaterialPageRoute(builder: (context) => AdminScreen()));
-              } else if (!logged) {
+              } 
+              
+              
+              else if (!logged) {
                 //Navigate Company To Their Page
                 await for (var snapshot
                     in _firestore.collection('users').snapshots()) {
                   for (var savedUser in snapshot.docs) {
-                    if (savedUser.get('role') as String != "company") {
+                    if (savedUser.get('role') as String == "company") {
                       int calc_price = 0;
 
                       var acceptedDocument = FirebaseFirestore.instance
@@ -320,19 +324,27 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       main();
                     }
-                       if (!logged){
+
+                    else if (savedUser.get('role') as String == "user"){
                        Navigator.of(context).pushReplacement(MaterialPageRoute(
                           builder: (context) => UserScreen()));
                     
 
                    
                     }
+                      
 
                      
                     
                   }
+
+                  
                 }
-              }  else {
+                
+              } 
+              
+              
+               else {
                 alertText = "You have entered a wrong email or password";
               }
 

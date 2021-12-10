@@ -4,7 +4,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:jordantimes_final/Widgets/trip_item.dart';
+import 'package:jordantimes_final/Widgets/user_drawer.dart';
 import 'package:jordantimes_final/screens/Goverment_screen.dart';
 import 'package:jordantimes_final/screens/edit_trip.dart';
 
@@ -18,6 +20,7 @@ class _UserTripsState extends State<UserTrips> {
   final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
   String loggedName = " ";
+  var id = " ";
 
   List<Map<String, dynamic>> _foundTrips = [];
   @override
@@ -53,8 +56,9 @@ class _UserTripsState extends State<UserTrips> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('TripsHistory'),
+        title: Text('Profile'),
       ),
+      drawer: UserDrawer(),
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -84,36 +88,36 @@ class _UserTripsState extends State<UserTrips> {
 
                   final companies = snapshot.data!.docs;
                   for (var company in companies) {
-                    final id = company.get('id');
+                     id = company.get('id');
                     final email = company.get('email');
                     final phone = company.get('phone');
                     final name = company.get('name');
                     final age = company.get('age');
                     final nationalId = company.get('nationalId');
-                    final name1 = company.get('name1');
-                    final age1 = company.get('age1');
-                    final nationalId1 = company.get('nationalId1');
-                    final name2 = company.get('name2');
-                    final age2 = company.get('age2');
-                    final nationalId2 = company.get('nationalId2');
-                    final name3 = company.get('name3');
-                    final age3 = company.get('age3');
-                    final nationalId3 = company.get('nationalId3');
-                    final name4 = company.get('name4');
-                    final age4 = company.get('age4');
-                    final nationalId4 = company.get('nationalId4');
-                    final name5 = company.get('name5');
-                    final age5 = company.get('age5');
-                    final nationalId5 = company.get('nationalId5');
-                    final name6 = company.get('name6');
-                    final age6 = company.get('age6');
-                    final nationalId6 = company.get('nationalId6');
+                    final name1 = company.get('name 1');
+                    final age1 = company.get('age 1');
+                    final nationalId1 = company.get('nationalId 1');
+                    final name2 = company.get('name 2');
+                    final age2 = company.get('age 2');
+                    final nationalId2 = company.get('nationalId 2');
+                    final name3 = company.get('name 3');
+                    final age3 = company.get('age 3');
+                    final nationalId3 = company.get('nationalId 3');
+                    final name4 = company.get('name 4');
+                    final age4 = company.get('age 4');
+                    final nationalId4 = company.get('nationalId 4');
+                    final name5 = company.get('name 5');
+                    final age5 = company.get('age 5');
+                    final nationalId5 = company.get('nationalId 5');
+                    final name6 = company.get('name 6');
+                    final age6 = company.get('age 6');
+                    final nationalId6 = company.get('nationalId 6');
                     _alltrips.add({
                       "id": id,
                       "name": name,
                       "email": email,
-                      "phone":phone,
                       "age": age,
+                      "phone": phone,
                       "nationalId": nationalId,
                       "name1": name1,
                       "age1": age1,
@@ -184,7 +188,7 @@ class _UserTripsState extends State<UserTrips> {
                   }
 
                   return Expanded(
-                      child: _foundTrips.isNotEmpty &&
+                    child: _foundTrips.isNotEmpty &&
                             _foundTrips[0]['email'] == _auth.currentUser!.email
                         ? ListView.builder(
                             itemCount: _foundTrips.length,
@@ -193,87 +197,65 @@ class _UserTripsState extends State<UserTrips> {
                               child: Column(
                                 children: [
                                   ListTile(
-                                    
                                     title: Text(_foundTrips[index]['id']),
-                                   
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.all(16.0),
                                     child: Text(
                                       _foundTrips[index]['name'] +
                                           '\n' +
-                                         
-                                          _foundTrips[index]['age']
-                                          +
-                                          '\n'  +
-                                          _foundTrips[index]['phone']
-                                           +
-                                          '\n'  +
-                                          _foundTrips[index]['nationalId']
-                                           +
+                                          _foundTrips[index]['age'] +
+                                          _foundTrips[index]['phone'] +
                                           '\n' +
-
-                                          _foundTrips[index]['name1']
-                                          +
-                                          '\n'  +
-                                          _foundTrips[index]['ag1']
-                                           +
-                                          '\n'  +
-                                          _foundTrips[index]['nationalId1']
-                                           +
+                                          _foundTrips[index]['nationalId'] +
                                           '\n' +
-
-                                          _foundTrips[index]['name2']
-                                          +
-                                          '\n'  +
-                                          _foundTrips[index]['age2']
-                                           +
-                                          '\n'  +
-                                          _foundTrips[index]['nationalId2']
-                                           +
+                                          _foundTrips[index]['name1'] +
+                                          ' ' +
+                                          _foundTrips[index]['age1'] +
+                                          ' ' +
+                                          _foundTrips[index]['nationalId1'] +
                                           '\n' +
-
-
-                                          _foundTrips[index]['name3']
-                                          +
-                                          '\n'  +
-                                          _foundTrips[index]['age3']
-                                           +
-                                          '\n'  +
-                                          _foundTrips[index]['nationalId3']
-                                           +
+                                          _foundTrips[index]['name2'] +
+                                          ' ' +
+                                          _foundTrips[index]['age2'] +
+                                          ' ' +
+                                          _foundTrips[index]['nationalId2'] +
                                           '\n' +
-                                          _foundTrips[index]['name4']
-                                          +
-                                          '\n'  +
-                                          _foundTrips[index]['age4']
-                                           +
-                                          '\n'  +
-                                          _foundTrips[index]['nationalId4']
-                                           +
+                                          _foundTrips[index]['name3'] +
+                                          ' ' +
+                                          _foundTrips[index]['age3'] +
+                                          ' ' +
+                                          _foundTrips[index]['nationalId3'] +
                                           '\n' +
-                                          _foundTrips[index]['name5']
-                                          +
-                                          '\n'  +
-                                          _foundTrips[index]['age5']
-                                           +
-                                          '\n'  +
-                                          _foundTrips[index]['nationalId5']
-                                           +
+                                          _foundTrips[index]['name4'] +
+                                          ' ' +
+                                          _foundTrips[index]['age4'] +
+                                          ' ' +
+                                          _foundTrips[index]['nationalId4'] +
                                           '\n' +
-                                          _foundTrips[index]['name6']
-                                          +
-                                          '\n'  +
-                                          _foundTrips[index]['age6']
-                                           +
-                                          '\n'  +
-                                          _foundTrips[index]['nationalId6']
-                                          ,
+                                          _foundTrips[index]['name5'] +
+                                          ' ' +
+                                          _foundTrips[index]['age5'] +
+                                          ' ' +
+                                          _foundTrips[index]['nationalId5'] +
+                                          '\n' +
+                                          _foundTrips[index]['name6'] +
+                                          ' ' +
+                                          _foundTrips[index]['age6'] +
+                                          ' ' +
+                                          _foundTrips[index]['nationalId6'],
                                       style: TextStyle(
                                           color: Colors.black.withOpacity(0.6)),
                                     ),
                                   ),
-                                 
+                                  FlatButton(
+                                    textColor: Colors.red,
+                                    onPressed: () async {
+                                      createAlertDialog(context);
+                                    },
+                                    child: const Text('Rate'),
+                                  ),
+
                                   /*Image.network(_foundTrips[index]['img']),
                                   Image.network(_foundTrips[index]['img2']),
                                   Image.network(_foundTrips[index]['img3']),*/
@@ -284,7 +266,7 @@ class _UserTripsState extends State<UserTrips> {
                         : const Text(
                             'No results found',
                             style: TextStyle(fontSize: 24),
-                        ),
+                          ),
                   );
                 })
           ],
@@ -304,5 +286,57 @@ class _UserTripsState extends State<UserTrips> {
         }
       }
     }
+  }
+
+  createAlertDialog(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Your Feedback'),
+            content: RatingBar.builder(
+              initialRating: 3,
+              itemCount: 5,
+              itemBuilder: (context, index) {
+                switch (index) {
+                  case 0:
+                    return Icon(
+                      Icons.sentiment_very_dissatisfied,
+                      color: Colors.red,
+                    );
+                  case 1:
+                    return Icon(
+                      Icons.sentiment_dissatisfied,
+                      color: Colors.redAccent,
+                    );
+                  case 2:
+                    return Icon(
+                      Icons.sentiment_neutral,
+                      color: Colors.amber,
+                    );
+                  case 3:
+                    return Icon(
+                      Icons.sentiment_satisfied,
+                      color: Colors.lightGreen,
+                    );
+                  case 4:
+                    return Icon(
+                      Icons.sentiment_very_satisfied,
+                      color: Colors.green,
+                    );
+                }
+                return Icon(Icons.star);
+              },
+              onRatingUpdate: (rating) {
+                print(rating);
+                FirebaseFirestore.instance.collection('trips').doc(id).update(
+                  {
+                    'rate':rating,
+                  }
+                );
+              },
+            ),
+          );
+        });
   }
 }

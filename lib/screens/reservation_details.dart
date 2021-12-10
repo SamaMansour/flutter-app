@@ -111,9 +111,12 @@ class _ReservationDetailsState extends State<ReservationDetails> {
                               'id': args.id,
                           'email': _auth.currentUser!.email,
                           'name': _nameController.text,
+                          'phone':_phoneController.text,
                           'age': age,
                           'nationalId': nationalId,
                         });
+                       Navigator.of(context).pushNamed(
+                       'payment_screen');
                       },
                     ),
                   ),

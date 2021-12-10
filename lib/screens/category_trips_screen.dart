@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:date_range_form_field/date_range_form_field.dart';
 import 'package:favorite_button/favorite_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -9,10 +10,6 @@ import 'package:jordantimes_final/screens/filter_screen.dart';
 import '../Widgets/app_data.dart';
 
 class CategoryTripsScreen extends StatefulWidget {
-  final String noOfPassengers = " ";
-  final String period = " ";
-  CategoryTripsScreen(String noOfPassengers, String period);
-
   @override
   _CategoryTripsScreenState createState() => _CategoryTripsScreenState();
 }
@@ -21,6 +18,23 @@ class _CategoryTripsScreenState extends State<CategoryTripsScreen> {
   final _auth = FirebaseAuth.instance;
 
   final _firestore = FirebaseFirestore.instance;
+
+  var tripid = "";
+  int price = 0;
+  var newprice = "";
+
+  String dropdownvalue = '1 Passenger';
+  int noOfPassengers = 1;
+  String period = " ";
+  DateTimeRange? myDateRange;
+  var items = [
+    '1 Passenger',
+    '2 Passengers',
+    '3 Passengers',
+    '4 Passengers',
+    '5 Passengers',
+    '6 Passengers'
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -42,12 +56,13 @@ class _CategoryTripsScreenState extends State<CategoryTripsScreen> {
               color: Colors.white,
             ),
             onPressed: () {
-              Navigator.of(context).pushNamed('filter_screen');
+              Navigator.of(context).pushNamed(
+                'filter_screen',
+              );
             },
           )
         ],
       ),
-      drawer: FilterDrawer(),
       body: Column(
         children: [
           StreamBuilder<QuerySnapshot>(
@@ -78,9 +93,9 @@ class _CategoryTripsScreenState extends State<CategoryTripsScreen> {
                       final locations_to = company.get('locations_to');
                       final meals = company.get('meals');
                       final booked = company.get('booked');
-                      int periodTime = int.parse(widget.period) ;
-                      int noPass = int.parse(widget.noOfPassengers) ;
-                      price = price *periodTime*noPass;
+                      //int periodTime = int.parse(widget.period) ;
+                      //int noPass = int.parse(widget.noOfPassengers) ;
+                      //price = price *periodTime*noPass;
 
                       final companyWidget = Card(
                         shape: RoundedRectangleBorder(
@@ -89,13 +104,99 @@ class _CategoryTripsScreenState extends State<CategoryTripsScreen> {
                         clipBehavior: Clip.antiAlias,
                         child: Column(
                           children: [
+                            SizedBox(height: 8.0),
+                            Center(
+                              child: Container(
+                                width: 300.0,
+                                height: 70.0,
+                                child: DropdownButtonHideUnderline(
+                                  child: DropdownButton(
+                                      value: dropdownvalue,
+                                      icon: Icon(Icons.keyboard_arrow_down),
+                                      items: items.map((String items) {
+                                        return DropdownMenuItem(
+                                            value: items, child: Text(items));
+                                      }).toList(),
+                                      onChanged: (newValue) {
+                                        setState(() {
+                                          dropdownvalue = newValue.toString();
+                                        });
+
+                                        if (dropdownvalue == "1 Passenger") {
+                                          noOfPassengers = 1;
+                                        } else if (dropdownvalue ==
+                                            "2 Passenggers") {
+                                          noOfPassengers = 2;
+                                        } else if (dropdownvalue ==
+                                            "3 Passengers") {
+                                          noOfPassengers = 3;
+                                        } else if (dropdownvalue ==
+                                            "4 Passengers") {
+                                          noOfPassengers = 4;
+                                        } else if (dropdownvalue ==
+                                            "5 Passengers") {
+                                          noOfPassengers = 5;
+                                        } else if (dropdownvalue ==
+                                            "6 Passengers") {
+                                          noOfPassengers = 6;
+                                        }
+                                      }),
+                                ),
+                              ),
+                            ),
+                            DateRangeField(
+                                enabled: true,
+                                initialValue: DateTimeRange(
+                                    start: DateTime.now(),
+                                    end: DateTime.now().add(Duration(days: 5))),
+                                decoration: InputDecoration(
+                                  labelText: 'Duration',
+                                  prefixIcon: Icon(Icons.date_range),
+                                  hintText:
+                                      'Please select a start and end date',
+                                  border: OutlineInputBorder(),
+                                ),
+                                onChanged: (value) {
+                                  myDateRange = value!;
+                                  period = (myDateRange!.end.day -
+                                          myDateRange!.start.day)
+                                      .toString();
+                                }),
+                            SizedBox(height: 8),
+                            Padding(
+                              padding: EdgeInsets.symmetric(vertical: 16.0),
+                              child: Material(
+                                color: Colors.red,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(30.0)),
+                                elevation: 5.0,
+                                child: MaterialButton(
+                                    minWidth: 400.0,
+                                    height: 42.0,
+                                    child: Text('Apply Filter'),
+                                    onPressed: () async {
+                                      print(noOfPassengers);
+                                      print(period);
+                                      final pass = noOfPassengers.toString();
+
+                                     
+                    price = price  * noOfPassengers * int.parse(period) ;
+                    FirebaseFirestore.instance
+                        .collection('trips')
+                        .doc('id')
+                        .update({
+                      'price': price,
+                    });
+                                    }),
+                              ),
+                            ),
                             ListTile(
                               leading: CircleAvatar(
                                   backgroundImage: NetworkImage(img)),
                               title:
                                   Text(title, style: TextStyle(fontSize: 20)),
                               subtitle: Text(
-                                price +
+                                newprice +
                                     'JD' +
                                     ' ' +
                                     ' ' +
@@ -216,4 +317,11 @@ class ScreenArguments {
   final String id;
 
   ScreenArguments(this.id);
+}
+
+class ScreenViewArguments {
+  final String id;
+  final String price;
+
+  ScreenViewArguments(this.id, this.price);
 }

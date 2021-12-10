@@ -56,7 +56,7 @@ class _CompanySignupScreenState extends State<CompanySignupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SafeArea(
+        body: SingleChildScrollView(child:SafeArea(
       child: Container(
         padding: EdgeInsets.all(20),
         child: Form(
@@ -82,6 +82,7 @@ class _CompanySignupScreenState extends State<CompanySignupScreen> {
           ),
         ),
       ),
+    ),
     ));
   }
 

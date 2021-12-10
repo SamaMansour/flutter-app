@@ -142,6 +142,18 @@ class _editProfileState extends State<editProfile> {
               ),
             ),
           ),
+
+          const SizedBox(height: 24),
+
+           FlatButton(
+                                textColor: Colors.red,
+                                onPressed: () {
+                                   Navigator.of(context).pushNamed(
+                                  'ForgotPassword_screen');
+                                },
+                                child: const Text('Change Password'),
+                              ),
+
           Padding(
             padding: EdgeInsets.symmetric(vertical: 16.0),
             child: Material(

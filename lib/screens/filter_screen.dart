@@ -18,7 +18,7 @@ class _FilterScreenState extends State<FilterScreen> {
   }
 
   var tripid = "";
-  var price = " ";
+  int price = 0;
   final _firestore = FirebaseFirestore.instance;
   String dropdownvalue = '1 Passenger';
   int noOfPassengers = 1;
@@ -103,17 +103,18 @@ class _FilterScreenState extends State<FilterScreen> {
                   onPressed: () async {
                     print(noOfPassengers);
                     print(period);
-                    final pass = noOfPassengers as String;
+                    final pass = noOfPassengers.toString();
 
-                    price = price * noOfPassengers * int.parse(period);
+                    price = price  * noOfPassengers * (period as int )  ;
                     FirebaseFirestore.instance
                         .collection('trips')
-                        .doc('gf-6000')
-                        .update({price: price});
+                        .doc('id')
+                        .update({
+                      'price': price,
+                    });
 
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) =>
-                            CategoryTripsScreen(pass,period)));
+                        builder: (context) => CategoryTripsScreen()));
                   }),
             ),
           ),
@@ -133,7 +134,7 @@ class _FilterScreenState extends State<FilterScreen> {
   Future<void> getPrice() async {
     await for (var snapshot in _firestore.collection('trips').snapshots()) {
       for (var savedUser in snapshot.docs) {
-        var priceEl = savedUser.get('price') as String;
+        int priceEl = savedUser.get('price') as int;
         print(priceEl);
         setState(() => price = priceEl);
       }
