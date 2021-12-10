@@ -40,13 +40,14 @@ class AppDrawer extends StatelessWidget {
           ),
           SizedBox(height: 20),
           new ListTile(
-             
+              leading: const Icon(Icons.home),
               title: Text('Dashboard', style: Theme.of(context).textTheme.headline6),
               onTap: () {
                //Keep At Same Page
               }),
           SizedBox(height: 20),
            new ListTile(
+              leading: const Icon(Icons.notifications),
               title: Text('Notifications', style: Theme.of(context).textTheme.headline6),
               onTap: () {
                  
@@ -55,6 +56,7 @@ class AppDrawer extends StatelessWidget {
          
           SizedBox(height: 20),
           new ListTile(
+             leading: const Icon(Icons.history),
               title: Text('History', style: Theme.of(context).textTheme.headline6),
               onTap: () {
                 Navigator.of(context).pushNamed(
@@ -65,6 +67,7 @@ class AppDrawer extends StatelessWidget {
         
           SizedBox(height: 20),
           new ListTile(
+             leading: const Icon(Icons.logout),
               title: Text('Logout', style: Theme.of(context).textTheme.headline6),
               onTap: () {
                 _auth.signOut();

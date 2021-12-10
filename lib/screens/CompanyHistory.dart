@@ -18,8 +18,7 @@ class _CompanyHistoryState extends State<CompanyHistory> {
   final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
   String loggedName = " ";
-
-  
+  var gottenImg = " ";
 
   List<Map<String, dynamic>> _foundTrips = [];
   @override
@@ -27,11 +26,10 @@ class _CompanyHistoryState extends State<CompanyHistory> {
     // at the beginning, all users are shown
     _foundTrips = _alltrips;
 
-     getName();
+    getName();
+    getImg();
 
-   
     super.initState();
-
   }
 
   void _runFilter(String enteredKeyword) {
@@ -86,7 +84,6 @@ class _CompanyHistoryState extends State<CompanyHistory> {
                       .collection('indicies')
                       .doc(_auth.currentUser!.email);
                   final username = name.get();
-                  
 
                   final companies = snapshot.data!.docs;
                   for (var company in companies) {
@@ -330,6 +327,19 @@ class _CompanyHistoryState extends State<CompanyHistory> {
           loggedName = savedUser.get('name') as String;
           print(loggedName);
           setState(() => loggedName = loggedName);
+        }
+      }
+    }
+  }
+
+  Future<void> getImg() async {
+    await for (var snapshot in _firestore.collection('users').snapshots()) {
+      for (var savedUser in snapshot.docs) {
+        if (savedUser.get('email') as String ==
+            _auth.currentUser!.email as String) {
+            gottenImg = savedUser.get('img') as String;
+          
+          setState(() => gottenImg = gottenImg);
         }
       }
     }

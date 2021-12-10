@@ -34,7 +34,7 @@ class _GovermentHistoryState extends State<GovermentHistory> {
             StreamBuilder<QuerySnapshot>(
                 stream: _firestore.collection('accepted').snapshots(),
                 builder: (context, snapshot) {
-                  List<ItemLine> companiesWidgets = [];
+                  List<ItemLineOne> companiesWidgets = [];
                   if (!snapshot.hasData) {
                     return CircularProgressIndicator(
                       backgroundColor: Colors.red,
@@ -48,7 +48,7 @@ class _GovermentHistoryState extends State<GovermentHistory> {
                     final name = company.get('name');
                     final status = company.get('verfied');
 
-                    final companyWidget = ItemLine(
+                    final companyWidget = ItemLineOne(
                       no: no,
                       name: name,
                       status: status,
@@ -73,3 +73,78 @@ class _GovermentHistoryState extends State<GovermentHistory> {
 
   
 }
+
+
+class ItemLineOne extends StatelessWidget {
+  TextEditingController customController = TextEditingController();
+  var pressedValue = false;
+  final _firestore = FirebaseFirestore.instance;
+  ItemLineOne(
+      {this.no,
+      this.name,
+      this.phone,
+      this.email,
+      Key? key,
+      status,
+      title,
+      description,
+      price, bio, img, id})
+      : super(key: key);
+
+  String? no;
+  String? name;
+  String? phone;
+  String? email;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Row(children: [
+        Padding(
+          padding: const EdgeInsets.all(0.0),
+          child: Material(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
+              child: Text(
+                '$no \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t $name \t',
+                style: TextStyle(fontSize: 18, color: Colors.red),
+              ),
+            ),
+          ),
+        ),
+        SizedBox(
+          width: 6,
+        )
+        
+      ]),
+    );
+  }
+
+  createAlertDialog(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Your Feedback'),
+            content: TextField(
+              controller: customController,
+            ),
+            actions: <Widget>[
+              MaterialButton(
+                  child: Text('Submit'),
+                  onPressed: () {
+                    _firestore.collection('declined').doc(email).set({
+                      'name': name,
+                      'number': no,
+                      'phone': phone,
+                      'role': "company",
+                      'verfied': "declined",
+                      'reason': customController.text,
+                    });
+                  })
+            ],
+          );
+        });
+  }
+}
+

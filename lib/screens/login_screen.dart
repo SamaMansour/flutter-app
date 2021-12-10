@@ -309,6 +309,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                     MaterialPageRoute(
                                         builder: (context) => CompanyScreen()))
                               }
+
+
+                              else {
+                       Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) => UserScreen()))
+                    
+
+                   
+                    }
                           });
 
                       var rejectedDocument = FirebaseFirestore.instance
@@ -325,13 +334,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       main();
                     }
 
-                    else if (savedUser.get('role') as String == "user"){
-                       Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => UserScreen()));
                     
-
-                   
-                    }
                       
 
                      

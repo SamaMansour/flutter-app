@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:jordantimes_final/screens/Goverment_History.dart';
 import 'package:jordantimes_final/screens/Goverment_screen.dart';
 
 class RejectedCompanies extends StatefulWidget {
@@ -30,7 +31,7 @@ class _RejectedCompaniesState extends State<RejectedCompanies> {
               
                 stream: _firestore.collection('declined').snapshots(),
                 builder: (context, snapshot) {
-                  List<ItemLine> companiesWidgets = [];
+                  List<ItemLineOne> companiesWidgets = [];
                   if (!snapshot.hasData) {
                     return CircularProgressIndicator(
                       backgroundColor: Colors.red,
@@ -45,7 +46,7 @@ class _RejectedCompaniesState extends State<RejectedCompanies> {
                       final name = company.get('name');
                       final status = company.get('verfied');
 
-                      final companyWidget = ItemLine(
+                      final companyWidget = ItemLineOne(
                         no: no,
                         name: name,
                         status: status,
