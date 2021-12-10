@@ -20,6 +20,7 @@ class editProfile extends StatefulWidget {
 class _editProfileState extends State<editProfile> {
   final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
+  final FirebaseAuth auth = FirebaseAuth.instance;
   UploadTask? task;
   File? file;
   String? name;
@@ -142,18 +143,14 @@ class _editProfileState extends State<editProfile> {
               ),
             ),
           ),
-
           const SizedBox(height: 24),
-
-           FlatButton(
-                                textColor: Colors.red,
-                                onPressed: () {
-                                   Navigator.of(context).pushNamed(
-                                  'ForgotPassword_screen');
-                                },
-                                child: const Text('Change Password'),
-                              ),
-
+          FlatButton(
+            textColor: Colors.red,
+            onPressed: () {
+              Navigator.of(context).pushNamed('ForgotPassword_screen');
+            },
+            child: const Text('Change Password'),
+          ),
           Padding(
             padding: EdgeInsets.symmetric(vertical: 16.0),
             child: Material(
@@ -166,6 +163,7 @@ class _editProfileState extends State<editProfile> {
                 child: Text('Edit Profile'),
                 onPressed: () async {
                   String img = await uploadFile();
+                  resetEmail(email!);
 
                   _firestore.collection('users').doc(loggedId).update({
                     'email': email,
@@ -225,6 +223,18 @@ class _editProfileState extends State<editProfile> {
         }
       }
     }
+  }
+
+  Future resetEmail(String newEmail) async {
+    var message;
+    final User? firebaseUser = auth.currentUser;
+    firebaseUser!
+        .updateEmail(newEmail)
+        .then(
+          (value) => message = 'Success',
+        )
+        .catchError((onError) => message = 'error');
+    return message;
   }
 }
 
