@@ -20,7 +20,7 @@ class WelcomeScreen extends StatelessWidget {
             Row(
               children: <Widget>[
                 Container(
-                  child: Image.asset('assets/amman.png'),
+                  child: Image.asset('assets/logo.png'),
                   height: 60.0,
                 ),
                 Text(

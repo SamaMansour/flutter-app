@@ -50,17 +50,7 @@ class _CategoryTripsScreenState extends State<CategoryTripsScreen> {
       appBar: AppBar(
         title: Text(categoryTitle!),
         actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.filter,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              Navigator.of(context).pushNamed(
-                'filter_screen',
-              );
-            },
-          )
+         
         ],
       ),
       body: Column(

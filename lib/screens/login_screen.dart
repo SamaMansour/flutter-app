@@ -171,7 +171,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _imageContainer() {
     return Container(
       height: 200.0,
-      child: Image.asset('assets/amman.png'),
+      child: Image.asset('assets/logo.png'),
     );
   }
 
