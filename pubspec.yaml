@@ -62,9 +62,10 @@ dependencies:
   flutter_stripe: ^2.0.2
   flutter_paystack: ^1.0.5+1
   flutter_rating_bar: ^4.0.0
-  
-  
-  
+  dropdown_below: ^1.0.2
+  money_converter: ^2.0.1
+ 
+
   
   
   

@@ -57,6 +57,8 @@ class MainDrawer extends StatelessWidget {
              leading: const Icon(Icons.money),
               title: Text('Currency Converter', style: Theme.of(context).textTheme.headline6),
               onTap: () {
+                   Navigator.of(context).pushNamed(
+                       'currency_converter');
                 
               }),
 

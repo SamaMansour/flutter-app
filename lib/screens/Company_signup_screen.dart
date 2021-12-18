@@ -319,6 +319,7 @@ class _CompanySignupScreenState extends State<CompanySignupScreen> {
                 'name': name,
                 'phone': phone,
                 'role': "company",
+                'img': " ",
                 'verfied': "pending",
               });
               _firestore.collection('indicies').doc(email).set({

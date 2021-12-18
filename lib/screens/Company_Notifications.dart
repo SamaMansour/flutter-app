@@ -14,9 +14,7 @@ class CompanyNotifications extends StatefulWidget {
 
 class _CompanyNotificationsState extends State<CompanyNotifications> {
   final _firestore = FirebaseFirestore.instance;
-   final _auth = FirebaseAuth.instance;
- 
-   
+  final _auth = FirebaseAuth.instance;
 
   final List<Map<String, dynamic>> _allCompanies = [];
 
@@ -44,18 +42,21 @@ class _CompanyNotificationsState extends State<CompanyNotifications> {
 
                   final companies = snapshot.data!.docs;
                   for (var company in companies) {
-                    final id = company.get('id');
-                    final title = company.get('title');
-                    final reason = company.get('reason');
+                    final email = company.get('email');
+                    if (_auth.currentUser!.email == email) {
+                      //final no = company.get('id');
+                      final name = company.get('title');
+                      final status = company.get('reason');
 
-                    final companyWidget = ItemLineOne(
-                     id :id,
-                     title :title,
-                     reason :reason,
-                    );
-                    _allCompanies.add({"id" :id , "title" :title , "reason" :reason});
+                      final companyWidget = ItemLineOne(
+                        //no: no,
+                        name: name,
+                        status: status,
+                      );
+                      _allCompanies.add({"name": name});
 
-                    companiesWidgets.add(companyWidget);
+                      companiesWidgets.add(companyWidget);
+                    }
                   }
                   return Expanded(
                     child: ListView(
@@ -70,10 +71,7 @@ class _CompanyNotificationsState extends State<CompanyNotifications> {
       ),
     );
   }
-
-  
 }
-
 
 class ItemLineOne extends StatelessWidget {
   TextEditingController customController = TextEditingController();
@@ -88,16 +86,16 @@ class ItemLineOne extends StatelessWidget {
       status,
       title,
       description,
-      price, bio, img, id, reason})
+      price,
+      bio,
+      img,
+      id})
       : super(key: key);
 
   String? no;
   String? name;
   String? phone;
   String? email;
-  String? id;
-  String ? title;
-  String? reason;
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +107,7 @@ class ItemLineOne extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
               child: Text(
-                '$id \t \t \t \t \t \t \t \t  $title \t \t  $reason \t',
+                '$no \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t $name \t',
                 style: TextStyle(fontSize: 18, color: Colors.red),
               ),
             ),
@@ -118,7 +116,6 @@ class ItemLineOne extends StatelessWidget {
         SizedBox(
           width: 6,
         )
-        
       ]),
     );
   }
@@ -150,4 +147,3 @@ class ItemLineOne extends StatelessWidget {
         });
   }
 }
-

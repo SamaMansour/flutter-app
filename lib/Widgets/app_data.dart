@@ -89,6 +89,13 @@ const Categories_data = const[
 
   ),
 
+  Category(
+      id: 'c12',
+      title:'Tafila',
+      imageUrl:'assets/tafila.png'
+
+  ),
+
 
 
 

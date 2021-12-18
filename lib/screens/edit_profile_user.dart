@@ -20,12 +20,18 @@ class editProfileUser extends StatefulWidget {
 class _editProfileUserState extends State<editProfileUser> {
   final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
+  final FirebaseAuth auth = FirebaseAuth.instance;
   UploadTask? task;
   File? file;
   String? name;
   String? email;
   String? phone;
-  
+  String? bio;
+  var loggedId = " ";
+  @override
+  void initState() {
+    getId();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,95 +46,86 @@ class _editProfileUserState extends State<editProfileUser> {
         padding: EdgeInsets.symmetric(horizontal: 32),
         physics: BouncingScrollPhysics(),
         children: [
-         
-
-          ProfileWidget(
-            onClicked: () async {
-              selectFile();
-            },
-            imagePath: 'https://firebasestorage.googleapis.com/v0/b/project0-324506.appspot.com/o/files%2FProfile_avatar_placeholder_large.png?alt=media&token=d2f79f34-f58b-4221-97cb-c66538764844',
-            isEdit: true,
-          ),
+        
           const SizedBox(height: 24),
+          //Edit user name
           TextField(
-            
             onChanged: (value) {
               name = value;
             },
-             decoration: InputDecoration(
-        hintText: 'Enter Name ',
-        contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(32.0)),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.red, width: 1.0),
-          borderRadius: BorderRadius.all(Radius.circular(32.0)),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.red, width: 2.0),
-          borderRadius: BorderRadius.all(Radius.circular(32.0)),
-        ),
-      ),
+            decoration: InputDecoration(
+              hintText: 'Enter Company Name ',
+              contentPadding:
+                  EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(32.0)),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.red, width: 1.0),
+                borderRadius: BorderRadius.all(Radius.circular(32.0)),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.red, width: 2.0),
+                borderRadius: BorderRadius.all(Radius.circular(32.0)),
+              ),
+            ),
           ),
           const SizedBox(height: 24),
+          //Edit user email
           TextField(
-          
             onChanged: (value) {
               email = value;
             },
-             decoration: InputDecoration(
-        hintText: 'Enter Email ',
-        contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(32.0)),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.red, width: 1.0),
-          borderRadius: BorderRadius.all(Radius.circular(32.0)),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.red, width: 2.0),
-          borderRadius: BorderRadius.all(Radius.circular(32.0)),
-        ),
-      ),
+            decoration: InputDecoration(
+              hintText: 'Enter Company Email ',
+              contentPadding:
+                  EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(32.0)),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.red, width: 1.0),
+                borderRadius: BorderRadius.all(Radius.circular(32.0)),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.red, width: 2.0),
+                borderRadius: BorderRadius.all(Radius.circular(32.0)),
+              ),
+            ),
           ),
           const SizedBox(height: 24),
+          //Edit user phone
           TextField(
-            
             onChanged: (value) {
               phone = value;
             },
-             decoration: InputDecoration(
-        hintText: 'Enter Phone ',
-        contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(32.0)),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.red, width: 1.0),
-          borderRadius: BorderRadius.all(Radius.circular(32.0)),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.red, width: 2.0),
-          borderRadius: BorderRadius.all(Radius.circular(32.0)),
-        ),
-      ),
+            decoration: InputDecoration(
+              hintText: 'Enter Company Phone ',
+              contentPadding:
+                  EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(32.0)),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.red, width: 1.0),
+                borderRadius: BorderRadius.all(Radius.circular(32.0)),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.red, width: 2.0),
+                borderRadius: BorderRadius.all(Radius.circular(32.0)),
+              ),
+            ),
           ),
           const SizedBox(height: 24),
-
-
-          FlatButton(
-                                textColor: Colors.red,
-                                onPressed: () {
-                                   Navigator.of(context).pushNamed(
-                                  'ForgotPassword_screen');
-                                },
-                                child: const Text('Change Password'),
-                              ),
-
+         
           const SizedBox(height: 24),
-          
+          FlatButton(
+            textColor: Colors.red,
+            onPressed: () {
+              Navigator.of(context).pushNamed('ForgotPassword_screen');
+            },
+            child: const Text('Change Password'),
+          ),
           Padding(
             padding: EdgeInsets.symmetric(vertical: 16.0),
             child: Material(
@@ -139,26 +136,20 @@ class _editProfileUserState extends State<editProfileUser> {
                 minWidth: 400.0,
                 height: 42.0,
                 child: Text('Edit Profile'),
+                //Edit company profile 
                 onPressed: () async {
-                  String img = await uploadFile();
+                 
+                  resetEmail(email!);
 
-                  _firestore
-                      .collection('profiles')
-                      .doc(_auth.currentUser!.email)
-                      .set({
+                  _firestore.collection('users').doc(loggedId).update({
                     'email': email,
                     'name': name,
-                    'img': img,
-                   
+                    'bio': bio,
                     'phone': phone,
                     'role': "company",
                   });
 
-                  Navigator.of(context).pushNamed(
-                       'profile_info');
-
-
-                  
+                  Navigator.of(context).pushNamed('profile_info');
                 },
               ),
             ),
@@ -168,48 +159,74 @@ class _editProfileUserState extends State<editProfileUser> {
     );
   }
 
-  Future selectFile() async {
-    final result = await FilePicker.platform.pickFiles(allowMultiple: false);
+  // Future selectFile() async {
+  //   final result = await FilePicker.platform.pickFiles(allowMultiple: false);
 
-    if (result == null) return;
-    final path = result.files.single.path!;
+  //   if (result == null) return;
+  //   final path = result.files.single.path!;
 
-    setState(() => file = File(path));
-  }
+  //   setState(() => file = File(path));
+  // }
 
-  Future uploadFile() async {
-    if (file == null) return;
+  // Future uploadFile() async {
+  //   if (file == null) return;
 
-    final fileName = basename(file!.path);
-    final destination = 'files/$fileName';
+  //   final fileName = basename(file!.path);
+  //   final destination = 'files/$fileName';
 
-    task = FirebaseApi.uploadFile(destination, file!);
-    setState(() {});
+  //   task = FirebaseApi.uploadFile(destination, file!);
+  //   setState(() {});
 
-    if (task == null) return;
+  //   if (task == null) return;
 
-    final snapshot = await task!.whenComplete(() {});
-    final String urlDownload = await snapshot.ref.getDownloadURL();
+  //   final snapshot = await task!.whenComplete(() {});
+  //   final String urlDownload = await snapshot.ref.getDownloadURL();
 
-    return urlDownload;
-    print(urlDownload);
-  }
+  //   return urlDownload;
+  //   print(urlDownload);
+  // }
 
-  Widget buildUploadStatus(UploadTask task) => StreamBuilder<TaskSnapshot>(
-        stream: task.snapshotEvents,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            final snap = snapshot.data!;
-            final progress = snap.bytesTransferred / snap.totalBytes;
-            final percentage = (progress * 100).toStringAsFixed(2);
-
-            return Text(
-              '$percentage %',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            );
-          } else {
-            return Container();
+  Future<void> getId() async {
+    await for (var snapshot in _firestore.collection('users').snapshots()) {
+      for (var savedUser in snapshot.docs) {
+        if (savedUser.get('role') as String == "company") {
+          if (savedUser.get('email') as String == _auth.currentUser!.email) {
+            loggedId = savedUser.get('id') as String;
+            print(loggedId);
+            setState(() => loggedId = loggedId);
           }
-        },
-      );
+        }
+      }
+    }
+  }
+
+  Future resetEmail(String newEmail) async {
+    var message;
+    final User? firebaseUser = auth.currentUser;
+    firebaseUser!
+        .updateEmail(newEmail)
+        .then(
+          (value) => message = 'Success',
+        )
+        .catchError((onError) => message = 'error');
+    return message;
+  }
 }
+
+Widget buildUploadStatus(UploadTask task) => StreamBuilder<TaskSnapshot>(
+      stream: task.snapshotEvents,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          final snap = snapshot.data!;
+          final progress = snap.bytesTransferred / snap.totalBytes;
+          final percentage = (progress * 100).toStringAsFixed(2);
+
+          return Text(
+            '$percentage %',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          );
+        } else {
+          return Container();
+        }
+      },
+    );

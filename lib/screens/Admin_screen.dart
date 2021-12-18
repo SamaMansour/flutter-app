@@ -246,7 +246,7 @@ class _AdminScreenState extends State<AdminScreen> {
               MaterialButton(
                   child: Text('Submit'),
                   onPressed: () {
-                    _firestore.collection('reported').doc(id).set({
+                    _firestore.collection('reported').doc(email).set({
                       'id ': id,
                       'title ': title,
                       'description': description,
@@ -263,7 +263,7 @@ class _AdminScreenState extends State<AdminScreen> {
   Future<void> getName() async {
     await for (var snapshot in _firestore.collection('indicies').snapshots()) {
       for (var savedUser in snapshot.docs) {
-        if (savedUser.get('email') as String == email as String) {
+        if (savedUser.get('email') as String == email ) {
           fetchedName = savedUser.get('name') as String;
           print(fetchedName);
           setState(() => fetchedName = fetchedName);

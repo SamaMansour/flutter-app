@@ -180,10 +180,10 @@ class _CategoryTripsScreenState extends State<CategoryTripsScreen> {
                                       final pass = noOfPassengers.toString();
 
                                      
-                    price = price  * noOfPassengers * int.parse(period) ;
+                    price = price  * noOfPassengers  * int.parse(period) ;
                     FirebaseFirestore.instance
                         .collection('trips')
-                        .doc('id')
+                        .doc(id)
                         .update({
                       'price': price,
                     });

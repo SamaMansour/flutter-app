@@ -22,7 +22,7 @@ class favoriteScreen extends StatelessWidget {
             StreamBuilder<QuerySnapshot>(
                 stream: _firestore.collection('favorites').snapshots(),
                 builder: (context, snapshot) {
-                  List<ItemLineView> companiesWidgets = [];
+                  List<ItemLine> companiesWidgets = [];
                   if (!snapshot.hasData) {
                     return CircularProgressIndicator(
                       backgroundColor: Colors.red,
@@ -30,14 +30,15 @@ class favoriteScreen extends StatelessWidget {
                   }
 
                   final companies = snapshot.data!.docs;
+
                   for (var company in companies) {
-                    if (company.get('email') == _auth.currentUser!.email) {
+                    final email = company.get('email');
+                    if (email == _auth.currentUser!.email) {
                       final id = company.get('id');
                       final title = company.get('title');
                       final description = company.get('description');
-                      final email = company.get('email');
 
-                      final companyWidget = ItemLineView(
+                      final companyWidget = ItemLine(
                         id: id,
                         title: title,
                         description: description,
@@ -58,7 +59,6 @@ class favoriteScreen extends StatelessWidget {
         ),
       ),
     );
-
   }
 }
 

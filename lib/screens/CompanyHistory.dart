@@ -27,7 +27,7 @@ class _CompanyHistoryState extends State<CompanyHistory> {
     _foundTrips = _alltrips;
 
     getName();
-    getImg();
+   // getImg();
 
     super.initState();
   }
@@ -185,8 +185,7 @@ class _CompanyHistoryState extends State<CompanyHistory> {
                                   ListTile(
                                     leading: CircleAvatar(
                                         backgroundImage: NetworkImage(
-                                            _foundTrips[index]['img']
-                                                .toString())),
+                                        gottenImg.toString())),
                                     title: Text(_foundTrips[index]['title']),
                                     subtitle: Text(
                                       _foundTrips[index]['price'] +
@@ -320,7 +319,7 @@ class _CompanyHistoryState extends State<CompanyHistory> {
   }
 
   Future<void> getName() async {
-    await for (var snapshot in _firestore.collection('indicies').snapshots()) {
+    await for (var snapshot in _firestore.collection('users').snapshots()) {
       for (var savedUser in snapshot.docs) {
         if (savedUser.get('email') as String ==
             _auth.currentUser!.email as String) {
@@ -332,16 +331,16 @@ class _CompanyHistoryState extends State<CompanyHistory> {
     }
   }
 
-  Future<void> getImg() async {
-    await for (var snapshot in _firestore.collection('users').snapshots()) {
-      for (var savedUser in snapshot.docs) {
-        if (savedUser.get('email') as String ==
-            _auth.currentUser!.email as String) {
-            gottenImg = savedUser.get('img') as String;
+  // Future<void> getImg() async {
+  //   await for (var snapshot in _firestore.collection('users').snapshots()) {
+  //     for (var savedUser in snapshot.docs) {
+  //       if (savedUser.get('email') as String ==
+  //           _auth.currentUser!.email as String) {
+  //           gottenImg = savedUser.get('img') as String;
           
-          setState(() => gottenImg = gottenImg);
-        }
-      }
-    }
-  }
+  //         setState(() => gottenImg = gottenImg);
+  //       }
+  //     }
+  //   }
+  // }
 }

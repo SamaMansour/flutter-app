@@ -185,6 +185,7 @@ class UserSignupScreen extends StatelessWidget {
                       'phone': phone,
                       'role': "user",
                       'count': count ,
+                      'email': email,
                       'myDate':date.month.toString(),
                     });
                     count++;

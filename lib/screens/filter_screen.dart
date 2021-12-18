@@ -101,16 +101,19 @@ class _FilterScreenState extends State<FilterScreen> {
                   height: 42.0,
                   child: Text('Apply Filter'),
                   onPressed: () async {
+                    //print(tripid);
+                    print(price);
                     print(noOfPassengers);
                     print(period);
                     final pass = noOfPassengers.toString();
 
-                    price = price  * noOfPassengers * (period as int )  ;
+                    price = price * noOfPassengers * int.parse(period);
+                    print(price);
                     FirebaseFirestore.instance
                         .collection('trips')
-                        .doc('id')
+                        .doc(tripid)
                         .update({
-                      'price': price,
+                      'price': price.toString(),
                     });
 
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
