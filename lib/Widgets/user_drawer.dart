@@ -72,14 +72,8 @@ class _UserDrawerState extends State<UserDrawer> {
               onTap: () {
                 Navigator.of(context).pushNamed('edit_profile_user');
               }),
-          SizedBox(height: 20),
-          new ListTile(
-              leading: const Icon(Icons.favorite),
-              title: Text('Favorites',
-                  style: Theme.of(context).textTheme.headline6),
-              onTap: () {
-                Navigator.of(context).pushNamed('favorite_screen');
-              }),
+       
+        
           SizedBox(height: 20),
           new ListTile(
               leading: const Icon(Icons.logout),

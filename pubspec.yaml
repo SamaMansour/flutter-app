@@ -35,7 +35,8 @@ dependencies:
   pinput: ^1.2.1
   flutter_local_notifications: ^9.0.0
   firebase_storage: ^10.0.5
-  file_picker: ^4.1.5
+ 
+  file_picker: ^4.3.0
   image_picker: ^0.8.4+3
   syncfusion_flutter_charts: ^19.3.46
   firebase_analytics: ^8.3.4
@@ -64,7 +65,8 @@ dependencies:
   flutter_rating_bar: ^4.0.0
   dropdown_below: ^1.0.2
   money_converter: ^2.0.1
- 
+  http: ^0.13.0
+  
 
   
   

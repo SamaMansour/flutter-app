@@ -17,7 +17,7 @@ class SearchScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Text('Search Screen '),
+      
     );
   }
 }
@@ -74,7 +74,7 @@ class CitySearch extends SearchDelegate<Cities> {
                     children: [
                       ListTile(
                         leading: Icon(
-                          Icons.person,
+                          Icons.location_city,
                           size: 40,
                         ),
                         title: Text(listItems[index].name),

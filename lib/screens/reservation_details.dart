@@ -59,7 +59,7 @@ class _ReservationDetailsState extends State<ReservationDetails> {
                     age = value;
                   },
                   decoration: InputDecoration(
-                    hintText: 'Age ',
+                    hintText: 'Age > 18 ',
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
                   ),
@@ -104,17 +104,7 @@ class _ReservationDetailsState extends State<ReservationDetails> {
                       height: 42.0,
                       child: Text('Book Now '),
                       onPressed: () async {
-                        FirebaseFirestore.instance
-                            .collection('members')
-                            .doc(_auth.currentUser!.email)
-                            .set({
-                              'id': args.id,
-                          'email': _auth.currentUser!.email,
-                          'name': _nameController.text,
-                          'phone':_phoneController.text,
-                          'age': age,
-                          'nationalId': nationalId,
-                        });
+                       
                        Navigator.of(context).pushNamed(
                        'payment_screen');
                       },
@@ -128,6 +118,36 @@ class _ReservationDetailsState extends State<ReservationDetails> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+           FirebaseFirestore.instance
+                            .collection('members')
+                            .doc(_auth.currentUser!.email)
+                            .set({
+                              'id': args.id,
+                          'email': _auth.currentUser!.email,
+                          'name': _nameController.text,
+                          'phone':_phoneController.text,
+                          'age': age,
+                          'nationalId': nationalId,
+                           'name 1': "null",
+                           'age 1 ': "null",
+                            'nationalId 1': "null",
+                              'name 2': " null",
+                           'age 2 ': "null",
+                            'nationalId 2': "null",
+                              'name  3': "null",
+                           'age 3 ': "null",
+                            'nationalId 3 ': "null",
+                              'name 4': "null",
+                           'age 4 ': "null",
+                            'nationalId 4': "null",
+                              'name 5': "null",
+                           'age 5 ': "null",
+                            'nationalId 5': "null",
+                              'name 6': "null",
+                           'age 6 ': "null",
+                            'nationalId 6': "null"
+                          
+                        });
           Navigator.of(context).pushReplacement(
               MaterialPageRoute(builder: (context) => OtherMembers()));
         },

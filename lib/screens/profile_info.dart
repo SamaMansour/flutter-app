@@ -152,8 +152,8 @@ class _ProfileInfoState extends State<ProfileInfo> {
             loggedName = savedUser.get('name') as String;
             loggedEmail = savedUser.get('email') as String;
             loggedPhone = savedUser.get('phone') as String;
-           // loggedBio = savedUser.get('Bio') as String;
-            //enteredImage = savedUser.get('image') as String;
+            loggedBio = savedUser.get('bio') as String;
+            enteredImage = savedUser.get('img') as String;
             setState(() => {
                   loggedName = loggedName,
                   loggedEmail = loggedEmail,

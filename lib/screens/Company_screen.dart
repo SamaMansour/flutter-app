@@ -38,7 +38,7 @@ class _CompanyScreenState extends State<CompanyScreen> {
   List? _myToLocations;
   String _myFromLocationsResult = " ";
   String _myToLocationsResult = "";
-
+  
   String id = " ";
   String title = " ";
   String description = " ";
@@ -264,7 +264,7 @@ class _CompanyScreenState extends State<CompanyScreen> {
                 height: 8.0,
               ),
               MultiSelectFormField(
-                autovalidate: false,
+               
                 chipBackGroundColor: Colors.red,
                 chipLabelStyle: TextStyle(fontWeight: FontWeight.bold),
                 dialogTextStyle: TextStyle(fontWeight: FontWeight.bold),
@@ -339,7 +339,7 @@ class _CompanyScreenState extends State<CompanyScreen> {
                 height: 18.0,
               ),
               MultiSelectFormField(
-                autovalidate: false,
+                
                 chipBackGroundColor: Colors.red,
                 chipLabelStyle: TextStyle(fontWeight: FontWeight.bold),
                 dialogTextStyle: TextStyle(fontWeight: FontWeight.bold),
@@ -531,6 +531,7 @@ class _CompanyScreenState extends State<CompanyScreen> {
                         'meals': meals,
                         'locations_from': _myFromLocations,
                         'locations_to': _myToLocations,
+                         'booked': 'available'
                       });
                       uploadFile();
                     },

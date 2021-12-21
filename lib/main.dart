@@ -9,7 +9,7 @@ import 'package:jordantimes_final/screens/Admin_screen.dart';
 import 'package:jordantimes_final/screens/Categories_screen.dart';
 import 'package:jordantimes_final/screens/Column_User_chart.dart';
 import 'package:jordantimes_final/screens/CompanyHistory.dart';
-import 'package:jordantimes_final/screens/Company_Notifications.dart';
+
 import 'package:jordantimes_final/screens/ForgotPassword_screen.dart';
 import 'package:jordantimes_final/screens/Goverment_History.dart';
 import 'package:jordantimes_final/screens/Goverment_Notifications_screen.dart';
@@ -77,7 +77,7 @@ class MyApp extends StatelessWidget {
         '/trip-detail': (context) => TripDetailScreen(),
         'CompanyHistory' : (context) => CompanyHistory(),
         'edit_profile' : (context) => editProfile(),
-        'Company_Notifications' : (context) => CompanyNotifications(),
+        
          'Goverment_History':(context) => GovermentHistory(),
          'Goverment_Notifications': (context) => GovermentNotifications(),
          'Rejected_companies' : (context) => RejectedCompanies(),
@@ -96,7 +96,7 @@ class MyApp extends StatelessWidget {
           'payment_screen': (context) => PaymentScreen(),
           'ForgotPassword_screen': (context) =>ForgotPassword(),
           'edit_profile_user': (context) => editProfileUser(),
-          //'currency_converter':(context) => CurrencyConverter()
+          'currency_converter':(context) => CurrencyConverter()
 
          
          

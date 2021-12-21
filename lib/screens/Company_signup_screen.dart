@@ -58,7 +58,7 @@ class _CompanySignupScreenState extends State<CompanySignupScreen> {
     return Scaffold(
         body: SingleChildScrollView(child:SafeArea(
       child: Container(
-        padding: EdgeInsets.all(20),
+       padding: EdgeInsets.fromLTRB(20, 120, 20, 0),
         child: Form(
           key: _formKey,
           child: Column(
@@ -88,6 +88,7 @@ class _CompanySignupScreenState extends State<CompanySignupScreen> {
 
   Widget _numberTextField() {
     return TextFormField(
+      
       textAlign: TextAlign.center,
       validator: (v) {
         var document = FirebaseFirestore.instance.collection('users').doc(v);
@@ -103,7 +104,7 @@ class _CompanySignupScreenState extends State<CompanySignupScreen> {
         }
       },
       decoration: InputDecoration(
-        hintText: 'Enter Company Number',
+        hintText: 'Enter Company Number AZ-xxxx',
         contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(32.0)),

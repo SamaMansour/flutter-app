@@ -53,7 +53,7 @@ class _LocationsScreenState extends State<LocationsScreen> {
       body: Column(
         children: [
           MultiSelectFormField(
-            autovalidate: false,
+          
             chipBackGroundColor: Colors.red,
             chipLabelStyle: TextStyle(fontWeight: FontWeight.bold),
             dialogTextStyle: TextStyle(fontWeight: FontWeight.bold),
@@ -128,7 +128,7 @@ class _LocationsScreenState extends State<LocationsScreen> {
             height: 18.0,
           ),
           MultiSelectFormField(
-            autovalidate: false,
+            
             chipBackGroundColor: Colors.red,
             chipLabelStyle: TextStyle(fontWeight: FontWeight.bold),
             dialogTextStyle: TextStyle(fontWeight: FontWeight.bold),

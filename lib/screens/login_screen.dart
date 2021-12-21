@@ -195,7 +195,7 @@ class _LoginScreenState extends State<LoginScreen> {
         }
       },
       decoration: InputDecoration(
-        hintText: 'Enter Company Email',
+        hintText: 'Enter Email',
         contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(32.0)),
@@ -283,7 +283,7 @@ class _LoginScreenState extends State<LoginScreen> {
               }
 
               //Navigate Admin To Their Page
-              else if (_auth.currentUser!.email == "admin@gmail.com") { 
+              if (_auth.currentUser!.email == "admin@gmail.com") { 
                 Navigator.of(context).pushReplacement(
                     MaterialPageRoute(builder: (context) => AdminScreen()));
               } 

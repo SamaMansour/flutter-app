@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:jordantimes_final/screens/CompanyHistory.dart';
-import 'package:jordantimes_final/screens/Company_Notifications.dart';
+
 import 'package:jordantimes_final/screens/Company_screen.dart';
 import 'package:jordantimes_final/screens/Goverment_Notifications_screen.dart';
 import 'package:jordantimes_final/screens/Goverment_screen.dart';
@@ -79,14 +79,7 @@ class _CompanyDrawerState extends State<CompanyDrawer> {
                 onTap: () {
                   //Keep At The Same Page
                 }),
-            SizedBox(height: 20),
-            new ListTile(
-                leading: const Icon(Icons.notifications),
-                title: Text('Notifications',
-                    style: Theme.of(context).textTheme.headline6),
-                onTap: () {
-                  Navigator.of(context).pushNamed('Company_Notifications');
-                }),
+          
             SizedBox(height: 20),
             new ListTile(
                 leading: const Icon(Icons.history),

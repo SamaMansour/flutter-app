@@ -21,6 +21,7 @@ class _CategoryTripsScreenState extends State<CategoryTripsScreen> {
 
   var tripid = "";
   int price = 0;
+  int price2 = 0;
   var newprice = "";
 
   String dropdownvalue = '1 Passenger';
@@ -49,14 +50,12 @@ class _CategoryTripsScreenState extends State<CategoryTripsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(categoryTitle!),
-        actions: <Widget>[
-         
-        ],
+        actions: <Widget>[],
       ),
       body: Column(
         children: [
           StreamBuilder<QuerySnapshot>(
-              stream: _firestore.collection('trips').snapshots(),
+              stream: _firestore.collection('added').snapshots(),
               builder: (context, snapshot) {
                 List<Card> companiesWidgets = [];
                 if (!snapshot.hasData) {
@@ -168,15 +167,12 @@ class _CategoryTripsScreenState extends State<CategoryTripsScreen> {
                                       print(noOfPassengers);
                                       print(period);
                                       final pass = noOfPassengers.toString();
-
+                                     setState(() {
+                                        price2 = int.parse(price) *
+                                          noOfPassengers *
+                                          int.parse(period);
+                                     });
                                      
-                    price = price  * noOfPassengers  * int.parse(period) ;
-                    FirebaseFirestore.instance
-                        .collection('trips')
-                        .doc(id)
-                        .update({
-                      'price': price,
-                    });
                                     }),
                               ),
                             ),
@@ -186,27 +182,14 @@ class _CategoryTripsScreenState extends State<CategoryTripsScreen> {
                               title:
                                   Text(title, style: TextStyle(fontSize: 20)),
                               subtitle: Text(
-                                newprice +
+                                price2.toString() +
                                     'JD' +
                                     ' ' +
                                     ' ' +
-                                    'Offered by ' +
+                                    'Offered by '+
                                     email,
                                 style: TextStyle(
                                     color: Colors.black.withOpacity(0.9)),
-                              ),
-                              trailing: FavoriteButton(
-                                valueChanged: (_) {
-                                  FirebaseFirestore.instance
-                                      .collection('favorites')
-                                      .doc(_auth.currentUser!.email)
-                                      .set({
-                                    'email': _auth.currentUser!.email,
-                                    'id': id,
-                                    'title': title,
-                                    'description': description,
-                                  });
-                                },
                               ),
                             ),
                             Padding(
@@ -301,7 +284,10 @@ class _CategoryTripsScreenState extends State<CategoryTripsScreen> {
       ),
     );
   }
+ 
 }
+
+
 
 class ScreenArguments {
   final String id;

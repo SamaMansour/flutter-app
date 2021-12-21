@@ -33,7 +33,7 @@ class _UserScreenState extends State<UserScreen> {
 
   final List<Widget> _screens = [Categoriesscreen(),
   SearchScreen(),
-  favoriteScreen(),
+ 
   UserTrips(),
   
   
@@ -57,8 +57,7 @@ class _UserScreenState extends State<UserScreen> {
           items: [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
            BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.favorite), label: 'Favourite'),
+            
             BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
           ],
         )
