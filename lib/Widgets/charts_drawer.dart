@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'package:jordantimes_final/screens/Goverment_Notifications_screen.dart';
 import 'package:jordantimes_final/screens/Goverment_screen.dart';
 import 'package:jordantimes_final/screens/User_chart_screen.dart';
@@ -35,14 +36,14 @@ class ChartsDrawer extends StatelessWidget {
             alignment: Alignment.center,
             color: Colors.red,
             child: Text(
-            'Charts',
+            translate('Charts'),
               style: Theme.of(context).textTheme.headline6,
             ),
           ),
           SizedBox(height: 20),
           new ListTile(
              
-              title: Text('Column Charts', style: Theme.of(context).textTheme.headline6),
+              title: Text(translate('Column Charts'), style: Theme.of(context).textTheme.headline6),
               onTap: () {
                   Navigator.of(context).pushNamed(
                        'Column_User_Chart');

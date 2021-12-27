@@ -46,11 +46,11 @@ class _LoginScreenState extends State<LoginScreen> {
     final message = Message()
       ..from = Address("sma302000@gmail.com", 'Jordantimes')
       ..recipients.add(email)
-      ..subject = 'JordanTimes company status '
+      ..subject = 'JordanTimes status '
       ..text =
           'This is the plain text.\nThis is line 2 of the text part.' //body of the email
       ..html =
-          '<h1>Check your company status </h1><p>You are still pending </p>';
+          '<h1>Your Status </h1><p>If you are our user then welcome back !! if you are a company then You are still pending </p>';
     try {
       final sendReport = await send(message, smtpServer);
       print('Message sent: ' +
@@ -141,30 +141,31 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SingleChildScrollView(child :SafeArea(
-      child: Container(
-        padding: EdgeInsets.all(20),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _imageContainer(),
-              _sizedBox1(),
-              _sizedBox4(),
-              _emailTFTextField(),
-              _sizedBox2(),
-              _passwordTextField(),
-              _sizedBox3(),
-              _forgotPassword(),
-              _alertText(),
-              _submitButton(),
-            ],
+        body: SingleChildScrollView(
+      child: SafeArea(
+        child: Container(
+          padding: EdgeInsets.all(20),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _imageContainer(),
+                _sizedBox1(),
+                _sizedBox4(),
+                _emailTFTextField(),
+                _sizedBox2(),
+                _passwordTextField(),
+                _sizedBox3(),
+                _forgotPassword(),
+                _alertText(),
+                _submitButton(),
+              ],
+            ),
           ),
         ),
       ),
-    ),
     ));
   }
 
@@ -278,18 +279,23 @@ class _LoginScreenState extends State<LoginScreen> {
               //Navigate Goverment To Their Page
               if (_auth.currentUser!.email == "gov@gmail.com") {
                 logged = true;
-                Navigator.of(context).popAndPushNamed(
-                   'Goverment_screen' );
+                setState(() {
+                 
+                  Navigator.of(context).popAndPushNamed('Goverment_screen');
+                 
+                  
+                });
               }
 
               //Navigate Admin To Their Page
-              if (_auth.currentUser!.email == "admin@gmail.com") { 
-                Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => AdminScreen()));
-              } 
-              
-              
-              else if (!logged) {
+              if (_auth.currentUser!.email == "admin@gmail.com") {
+                setState(() {
+                
+                  Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (context) => AdminScreen()));
+                        
+                });
+              } else if (!logged) {
                 //Navigate Company To Their Page
                 await for (var snapshot
                     in _firestore.collection('users').snapshots()) {
@@ -305,19 +311,23 @@ class _LoginScreenState extends State<LoginScreen> {
                             if (docData.exists)
                               {
                                 main2(),
-                                Navigator.of(context).pushReplacement(
-                                    MaterialPageRoute(
-                                        builder: (context) => CompanyScreen()))
+                                setState(() {
+                                 
+                                  Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              CompanyScreen()));
+                                })
                               }
-
-
-                              else {
-                       Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => UserScreen()))
-                    
-
-                   
-                    }
+                            else
+                              {
+                                setState(() {
+                               
+                                  Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                          builder: (context) => UserScreen()));
+                                })
+                              }
                           });
 
                       var rejectedDocument = FirebaseFirestore.instance
@@ -333,21 +343,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       main();
                     }
-
-                    
-                      
-
-                     
-                    
                   }
-
-                  
                 }
-                
-              } 
-              
-              
-               else {
+              } else {
                 alertText = "You have entered a wrong email or password";
               }
 

@@ -90,15 +90,8 @@ class _OtherMembersState extends State<OtherMembers> {
                       height: 42.0,
                       child: Text('Book Now '),
                       onPressed: () async {
-                        count++;
-                        FirebaseFirestore.instance
-                            .collection('members')
-                            .doc(_auth.currentUser!.email)
-                            .update({
-                          'name ${count}': name,
-                          'age ${count}': age,
-                          'nationalId ${count}': nationalId,
-                        });
+                       Navigator.of(context).pushNamed(
+                       'payment_screen');
                       },
                     ),
                   ),
@@ -112,6 +105,16 @@ class _OtherMembersState extends State<OtherMembers> {
         onPressed: () {
           Navigator.of(context).pushReplacement(
               MaterialPageRoute(builder: (context) => OtherMembers()));
+
+               count++;
+                        FirebaseFirestore.instance
+                            .collection('members')
+                            .doc(_auth.currentUser!.email)
+                            .update({
+                          'name ${count}': name,
+                          'age ${count}': age,
+                          'nationalId ${count}': nationalId,
+                        });
         },
         child: const Icon(Icons.add),
         backgroundColor: Colors.grey,

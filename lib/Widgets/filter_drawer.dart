@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'package:jordantimes_final/screens/Goverment_Notifications_screen.dart';
 import 'package:jordantimes_final/screens/Goverment_screen.dart';
 import 'package:jordantimes_final/screens/User_chart_screen.dart';
@@ -35,14 +36,14 @@ class FilterDrawer extends StatelessWidget {
             alignment: Alignment.center,
             color: Colors.red,
             child: Text(
-            'Filter',
+            translate('Filter'),
               style: Theme.of(context).textTheme.headline6,
             ),
           ),
           SizedBox(height: 20),
           new ListTile(
              
-              title: Text('Filter Drawer', style: Theme.of(context).textTheme.headline6),
+              title: Text(translate('Filter Drawer'), style: Theme.of(context).textTheme.headline6),
               onTap: () {
                   Navigator.of(context).pushNamed(
                        'filter_screen');

@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:jordantimes_final/screens/Admin_Notifications.dart';
 import 'package:jordantimes_final/screens/Admin_screen.dart';
@@ -31,11 +34,18 @@ import 'package:jordantimes_final/screens/reservation_details.dart';
 import 'package:jordantimes_final/screens/tabs_screen.dart';
 import 'package:jordantimes_final/screens/trip_ditail_screen.dart';
 import 'package:jordantimes_final/screens/user_trips.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 
 void main() async {
    WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
     await Firebase.initializeApp();
+    var delegate = await LocalizationDelegate.create(
+      fallbackLocale: 'en_US', supportedLocales: ['en_US', 'es', 'fa', 'ar']);
+
+  runApp(LocalizedApp(delegate, MyApp()));
   runApp(
    
    
@@ -48,6 +58,7 @@ void main() async {
   );
 }
 
+
 class MyApp extends StatelessWidget {
   FirebaseAnalytics analytics = FirebaseAnalytics();
   // This widget is the root of your application.
@@ -57,13 +68,21 @@ class MyApp extends StatelessWidget {
     String period = " ";
     String noOfPassengers = " " ;
    
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'JordanTimes',
-      theme: ThemeData(
-        primarySwatch: Colors.red,
-      ),
+  var localizationDelegate = LocalizedApp.of(context).delegate;
 
+    return LocalizationProvider(
+      state: LocalizationProvider.of(context).state,
+      child: MaterialApp(
+        title: 'Jordantimes',
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          localizationDelegate
+        ],
+        supportedLocales: localizationDelegate.supportedLocales,
+        locale: localizationDelegate.currentLocale,
+        theme: ThemeData(primarySwatch: Colors.red),
+  
 
 
       navigatorObservers: [
@@ -101,6 +120,7 @@ class MyApp extends StatelessWidget {
          
          
       },
+      )
     );
   }
 }

@@ -1,13 +1,22 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'package:jordantimes_final/screens/Goverment_Notifications_screen.dart';
 import 'package:jordantimes_final/screens/Goverment_screen.dart';
 import 'package:jordantimes_final/screens/User_chart_screen.dart';
 import 'package:jordantimes_final/screens/posts_screen.dart';
 import 'package:jordantimes_final/screens/welcome_screen.dart';
+import 'package:translator/translator.dart';
 
-class AdminDrawer extends StatelessWidget {
+class AdminDrawer extends StatefulWidget {
+  
+  @override
+  State<AdminDrawer> createState() => _AdminDrawerState();
+}
+
+class _AdminDrawerState extends State<AdminDrawer> {
   final _auth = FirebaseAuth.instance;
+
   Widget buildListTile(String title, IconData icon, Function onTapLink) {
     return ListTile(
       leading: Icon(
@@ -42,7 +51,7 @@ class AdminDrawer extends StatelessWidget {
           SizedBox(height: 20),
           new ListTile(
                leading: const Icon(Icons.home),
-              title: Text('Dashboard', style: Theme.of(context).textTheme.headline6),
+              title: Text(translate('Dashboard'), style: Theme.of(context).textTheme.headline6),
               onTap: () {
                   Navigator.of(context).pushNamed(
                        'Admin_screen');
@@ -54,7 +63,7 @@ class AdminDrawer extends StatelessWidget {
           SizedBox(height: 20),
           new ListTile(
              leading: const Icon(Icons.pie_chart),
-              title: Text('Charts', style: Theme.of(context).textTheme.headline6),
+              title: Text(translate('Charts'), style: Theme.of(context).textTheme.headline6),
               onTap: () {
                   Navigator.of(context).pushNamed(
                        'User_chart_screen');
@@ -66,7 +75,7 @@ class AdminDrawer extends StatelessWidget {
           SizedBox(height: 20),
           new ListTile(
             leading: const Icon(Icons.logout),
-              title: Text('Logout', style: Theme.of(context).textTheme.headline6),
+              title: Text(translate('Logout'), style: Theme.of(context).textTheme.headline6),
               onTap: () {
                 _auth.signOut();
                 Navigator.of(context).pushReplacement(

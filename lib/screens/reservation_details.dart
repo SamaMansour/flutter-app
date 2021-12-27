@@ -1,23 +1,31 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:jordantimes_final/screens/Admin_screen.dart';
+import 'package:jordantimes_final/screens/Company_screen.dart';
+import 'package:jordantimes_final/screens/ForgotPassword_screen.dart';
+import 'package:jordantimes_final/screens/Goverment_screen.dart';
+import 'package:jordantimes_final/screens/SendOtp_screen.dart';
+import 'package:jordantimes_final/screens/User_screen.dart';
 import 'package:jordantimes_final/screens/category_trips_screen.dart';
 import 'package:jordantimes_final/screens/other_members.dart';
+import 'package:mailer/mailer.dart';
+import 'package:mailer/smtp_server.dart';
 
 class ReservationDetails extends StatefulWidget {
-  const ReservationDetails({Key? key}) : super(key: key);
-
   @override
   _ReservationDetailsState createState() => _ReservationDetailsState();
 }
 
 class _ReservationDetailsState extends State<ReservationDetails> {
-  TextEditingController _nameController = TextEditingController();
-  TextEditingController _phoneController = TextEditingController();
-  
   final _auth = FirebaseAuth.instance;
   String age = " ";
   String nationalId = " ";
+
+  TextEditingController _nameController = TextEditingController();
+  TextEditingController _phoneController = TextEditingController();
 
   @override
   void initState() {
@@ -26,21 +34,27 @@ class _ReservationDetailsState extends State<ReservationDetails> {
     getPhone();
   }
 
+  //Age Validation
+  bool isValidAge(value) {
+    return value >= 18;
+  }
+
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    final args =ModalRoute.of(context)!.settings.arguments as ScreenArguments;
+    var args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
+
     return Scaffold(
-      appBar: AppBar(title: Text('Add Members')),
-      resizeToAvoidBottomInset: false,
-      body: SingleChildScrollView(
+        body: SingleChildScrollView(
+      child: SafeArea(
         child: Container(
           padding: EdgeInsets.all(20),
-          child: Expanded(
+          child: Form(
+            key: _formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // First Component Shown
                 TextFormField(
                   textAlign: TextAlign.center,
                   controller: _nameController,
@@ -50,23 +64,23 @@ class _ReservationDetailsState extends State<ReservationDetails> {
                         EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
                   ),
                 ),
-
-                SizedBox(height: 8.0),
-
+                sizedBox(),
                 TextFormField(
                   textAlign: TextAlign.center,
-                  onChanged: (value) {
-                    age = value;
+                  validator: (v) {
+                    if (isValidAge(v)) {
+                      age = v!;
+                      return null;
+                    } else
+                      return 'Please enter a valid age';
                   },
                   decoration: InputDecoration(
-                    hintText: 'Age > 18 ',
+                    hintText: 'age>18',
                     contentPadding:
-                        EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
+                        EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
                   ),
                 ),
-
-                SizedBox(height: 8.0),
-
+                sizedBox(),
                 TextFormField(
                   textAlign: TextAlign.center,
                   controller: _phoneController,
@@ -76,9 +90,7 @@ class _ReservationDetailsState extends State<ReservationDetails> {
                         EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
                   ),
                 ),
-
-                SizedBox(height: 8.0),
-
+                sizedBox(),
                 TextFormField(
                   textAlign: TextAlign.center,
                   onChanged: (value) {
@@ -90,9 +102,7 @@ class _ReservationDetailsState extends State<ReservationDetails> {
                         EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
                   ),
                 ),
-
-                SizedBox(height: 32.0),
-
+                sizedBox(),
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 16.0),
                   child: Material(
@@ -104,57 +114,62 @@ class _ReservationDetailsState extends State<ReservationDetails> {
                       height: 42.0,
                       child: Text('Book Now '),
                       onPressed: () async {
-                       
-                       Navigator.of(context).pushNamed(
-                       'payment_screen');
+                        if (_formKey.currentState!.validate()) {
+                          try {
+                            FirebaseFirestore.instance
+                                .collection('members')
+                                .doc(_auth.currentUser!.email)
+                                .set({
+                              'id': args.id,
+                              'email': _auth.currentUser!.email,
+                              'name': _nameController.text,
+                              'phone': _phoneController.text,
+                              'age': age,
+                              'nationalId': nationalId,
+                              'name 1': "null",
+                              'age 1 ': "null",
+                              'nationalId 1': "null",
+                              'name 2': " null",
+                              'age 2 ': "null",
+                              'nationalId 2': "null",
+                              'name  3': "null",
+                              'age 3 ': "null",
+                              'nationalId 3 ': "null",
+                              'name 4': "null",
+                              'age 4 ': "null",
+                              'nationalId 4': "null",
+                              'name 5': "null",
+                              'age 5 ': "null",
+                              'nationalId 5': "null",
+                              'name 6': "null",
+                              'age 6 ': "null",
+                              'nationalId 6': "null"
+                            });
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) => OtherMembers()));
+                          } catch (e) {
+                            print(e);
+                          }
+                        }
                       },
                     ),
+
+
+                    
                   ),
                 ),
+                
               ],
             ),
+            
           ),
+
+
+          
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-           FirebaseFirestore.instance
-                            .collection('members')
-                            .doc(_auth.currentUser!.email)
-                            .set({
-                              'id': args.id,
-                          'email': _auth.currentUser!.email,
-                          'name': _nameController.text,
-                          'phone':_phoneController.text,
-                          'age': age,
-                          'nationalId': nationalId,
-                           'name 1': "null",
-                           'age 1 ': "null",
-                            'nationalId 1': "null",
-                              'name 2': " null",
-                           'age 2 ': "null",
-                            'nationalId 2': "null",
-                              'name  3': "null",
-                           'age 3 ': "null",
-                            'nationalId 3 ': "null",
-                              'name 4': "null",
-                           'age 4 ': "null",
-                            'nationalId 4': "null",
-                              'name 5': "null",
-                           'age 5 ': "null",
-                            'nationalId 5': "null",
-                              'name 6': "null",
-                           'age 6 ': "null",
-                            'nationalId 6': "null"
-                          
-                        });
-          Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => OtherMembers()));
-        },
-        child: const Icon(Icons.add),
-        backgroundColor: Colors.grey,
-      ),
-    );
+    ));
   }
 
   Future<void> getName() async {
@@ -184,8 +199,17 @@ class _ReservationDetailsState extends State<ReservationDetails> {
       }
     }
   }
+}
 
+class sizedBox extends StatelessWidget {
+  const sizedBox({
+    Key? key,
+  }) : super(key: key);
 
-
-  
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 8.0,
+    );
+  }
 }

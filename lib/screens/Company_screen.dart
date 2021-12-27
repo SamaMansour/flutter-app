@@ -30,7 +30,7 @@ GlobalKey<FormState> myFormKey = new GlobalKey();
 class _CompanyScreenState extends State<CompanyScreen> {
   final _firestore = FirebaseFirestore.instance;
   final formKey = new GlobalKey<FormState>();
-   final _auth = FirebaseAuth.instance;
+  final _auth = FirebaseAuth.instance;
   String loggedName = " ";
 
   DateTimeRange? myDateRange;
@@ -38,7 +38,7 @@ class _CompanyScreenState extends State<CompanyScreen> {
   List? _myToLocations;
   String _myFromLocationsResult = " ";
   String _myToLocationsResult = "";
-  
+
   String id = " ";
   String title = " ";
   String description = " ";
@@ -79,7 +79,6 @@ class _CompanyScreenState extends State<CompanyScreen> {
     super.initState();
     _myFromLocations = [];
     _myFromLocationsResult = '';
-    
   }
 
   _saveForm() {
@@ -120,13 +119,11 @@ class _CompanyScreenState extends State<CompanyScreen> {
               final companyWidget = ItemLine(
                 name: name,
               );
-               print(name.toString() + "sasas");
+              print(name.toString() + "sasas");
 
               companiesWidgets.add(companyWidget);
             }
           }
-
-         
 
           return Expanded(
             child: ListView(
@@ -249,6 +246,9 @@ class _CompanyScreenState extends State<CompanyScreen> {
               SizedBox(
                 height: 8.0,
               ),
+
+
+              
               TextField(
                 textAlign: TextAlign.center,
                 onChanged: (value) {
@@ -264,7 +264,6 @@ class _CompanyScreenState extends State<CompanyScreen> {
                 height: 8.0,
               ),
               MultiSelectFormField(
-               
                 chipBackGroundColor: Colors.red,
                 chipLabelStyle: TextStyle(fontWeight: FontWeight.bold),
                 dialogTextStyle: TextStyle(fontWeight: FontWeight.bold),
@@ -339,7 +338,6 @@ class _CompanyScreenState extends State<CompanyScreen> {
                 height: 18.0,
               ),
               MultiSelectFormField(
-                
                 chipBackGroundColor: Colors.red,
                 chipLabelStyle: TextStyle(fontWeight: FontWeight.bold),
                 dialogTextStyle: TextStyle(fontWeight: FontWeight.bold),
@@ -423,6 +421,7 @@ class _CompanyScreenState extends State<CompanyScreen> {
               SizedBox(
                 height: 18.0,
               ),
+             
               Column(
                 children: [
                   Row(
@@ -433,7 +432,7 @@ class _CompanyScreenState extends State<CompanyScreen> {
                           // This is where we update the state when the checkbox is tapped
                           setState(() {
                             breakfast = value!;
-                            breakfast_price = 2;
+                           
                             meals.add('breakfast');
                           });
                         },
@@ -449,7 +448,7 @@ class _CompanyScreenState extends State<CompanyScreen> {
                           // This is where we update the state when the checkbox is tapped
                           setState(() {
                             lunch = value!;
-                            lunch_price = 5;
+                            
                             meals.add('lunch');
                           });
                         },
@@ -465,7 +464,7 @@ class _CompanyScreenState extends State<CompanyScreen> {
                           // This is where we update the state when the checkbox is tapped
                           setState(() {
                             dinner = value!;
-                            dinner_price = 10;
+                        
                             meals.add('dinner');
                           });
                         },
@@ -474,6 +473,43 @@ class _CompanyScreenState extends State<CompanyScreen> {
                     ],
                   ),
                 ],
+              ),
+
+               TextField(
+                textAlign: TextAlign.center,
+                
+                onChanged: (value) {
+                  breakfast_price = int.parse(value);
+                },
+                decoration: InputDecoration(
+                  hintText: 'Breakfast Price ',
+                  contentPadding:
+                      EdgeInsets.all(20),
+                ),
+              ),
+
+              TextField(
+                textAlign: TextAlign.center,
+                onChanged: (value) {
+                  lunch_price = int.parse(value) ;
+                },
+                decoration: InputDecoration(
+                  hintText: 'Lunch Price ',
+                  contentPadding:EdgeInsets.all(20),
+                     
+                ),
+              ),
+
+              TextField(
+                textAlign: TextAlign.center,
+                onChanged: (value) {
+                  dinner_price = int.parse(value) ;
+                },
+                decoration: InputDecoration(
+                  hintText: 'Dinner Price ',
+                  contentPadding:
+                     EdgeInsets.all(20),
+                ),
               ),
               Row(
                 children: [
@@ -531,7 +567,7 @@ class _CompanyScreenState extends State<CompanyScreen> {
                         'meals': meals,
                         'locations_from': _myFromLocations,
                         'locations_to': _myToLocations,
-                         'booked': 'available'
+                        'booked': 'available'
                       });
                       uploadFile();
                     },
@@ -555,14 +591,10 @@ class _CompanyScreenState extends State<CompanyScreen> {
           backgroundColor: Colors.grey,
         ),
       );
-
-      
     }
     return LoginScreen();
-   
   }
 
-   
   Future selectFile() async {
     FilePickerResult? result =
         await FilePicker.platform.pickFiles(allowMultiple: true);
@@ -610,7 +642,6 @@ class _CompanyScreenState extends State<CompanyScreen> {
     final destination = 'files/$fileName';
 
     task = FirebaseApi.uploadFile(destination, files![2]);
-    
 
     if (task == null) return;
 
@@ -620,9 +651,6 @@ class _CompanyScreenState extends State<CompanyScreen> {
     return urlDownload;
     print(urlDownload);
   }
-
-
-  
 
   Widget buildUploadStatus(UploadTask task) => StreamBuilder<TaskSnapshot>(
         stream: task.snapshotEvents,
@@ -641,7 +669,4 @@ class _CompanyScreenState extends State<CompanyScreen> {
           }
         },
       );
-
-
-      
 }

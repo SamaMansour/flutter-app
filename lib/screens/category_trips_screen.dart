@@ -23,6 +23,9 @@ class _CategoryTripsScreenState extends State<CategoryTripsScreen> {
   int price = 0;
   int price2 = 0;
   var newprice = "";
+  var profileImg = " ";
+  String email = " ";
+  var enteredName = " ";
 
   String dropdownvalue = '1 Passenger';
   int noOfPassengers = 1;
@@ -36,6 +39,13 @@ class _CategoryTripsScreenState extends State<CategoryTripsScreen> {
     '5 Passengers',
     '6 Passengers'
   ];
+
+  @override
+  void initState() {
+    getProfileImage();
+    getName();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +79,7 @@ class _CategoryTripsScreenState extends State<CategoryTripsScreen> {
                   final locations_to = company.get('locations_to');
                   for (var x in locations_to) {
                     if (x == categoryTitle) {
-                      final email = company.get('email');
+                      email = company.get('email');
                       final id = company.get('id');
                       final title = company.get('title');
                       final description = company.get('description');
@@ -167,18 +177,19 @@ class _CategoryTripsScreenState extends State<CategoryTripsScreen> {
                                       print(noOfPassengers);
                                       print(period);
                                       final pass = noOfPassengers.toString();
-                                     setState(() {
+                                      setState(() {
                                         price2 = int.parse(price) *
-                                          noOfPassengers *
-                                          int.parse(period);
-                                     });
-                                     
+                                            noOfPassengers *
+                                            int.parse(period);
+                                      });
                                     }),
                               ),
                             ),
                             ListTile(
                               leading: CircleAvatar(
-                                  backgroundImage: NetworkImage(img)),
+                                  backgroundImage: NetworkImage(
+                                      profileImg.toString(),
+                                      scale: 1.0)),
                               title:
                                   Text(title, style: TextStyle(fontSize: 20)),
                               subtitle: Text(
@@ -186,8 +197,8 @@ class _CategoryTripsScreenState extends State<CategoryTripsScreen> {
                                     'JD' +
                                     ' ' +
                                     ' ' +
-                                    'Offered by '+
-                                    email,
+                                    'Offered by ' +
+                                    enteredName,
                                 style: TextStyle(
                                     color: Colors.black.withOpacity(0.9)),
                               ),
@@ -219,9 +230,11 @@ class _CategoryTripsScreenState extends State<CategoryTripsScreen> {
                               children: [
                                 TextButton(
                                   onPressed: () async {
-                                    Navigator.of(context).pushNamed(
-                                        'reservation_details',
-                                        arguments: ScreenArguments(id));
+                                    if (_auth.currentUser!.email != null) {
+                                      Navigator.of(context).pushNamed(
+                                          'reservation_details',
+                                          arguments: ScreenArguments(id));
+                                    }
                                   },
                                   child: const Text('Select '),
                                 ),
@@ -284,10 +297,31 @@ class _CategoryTripsScreenState extends State<CategoryTripsScreen> {
       ),
     );
   }
- 
+
+  Future<void> getProfileImage() async {
+    await for (var snapshot in _firestore.collection('users').snapshots()) {
+      for (var savedUser in snapshot.docs) {
+        if (savedUser.get('email') as String == email) {
+          profileImg = savedUser.get('img') as String;
+          print(profileImg);
+          setState(() => profileImg = profileImg);
+        }
+      }
+    }
+  }
+
+  Future<void> getName() async {
+    await for (var snapshot in _firestore.collection('indicies').snapshots()) {
+      for (var savedUser in snapshot.docs) {
+        if (savedUser.get('email') as String == email) {
+          enteredName = savedUser.get('name') as String;
+
+          setState(() => enteredName = enteredName);
+        }
+      }
+    }
+  }
 }
-
-
 
 class ScreenArguments {
   final String id;

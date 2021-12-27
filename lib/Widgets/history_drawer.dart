@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 
 import 'package:jordantimes_final/screens/Goverment_History.dart';
 import 'package:jordantimes_final/screens/Goverment_Notifications_screen.dart';
@@ -36,14 +37,14 @@ class HistoryDrawer extends StatelessWidget {
             alignment: Alignment.center,
             color: Colors.red,
             child: Text(
-              'History',
+              translate('History'),
               style: Theme.of(context).textTheme.headline6,
             ),
           ),
           SizedBox(height: 20),
           new ListTile(
              
-              title: Text('Accepted', style: Theme.of(context).textTheme.headline6),
+              title: Text(translate('Accepted'), style: Theme.of(context).textTheme.headline6),
               onTap: () {
                  Navigator.of(context).pushNamed(
                        'Goverment_History');
@@ -51,7 +52,7 @@ class HistoryDrawer extends StatelessWidget {
               }),
           SizedBox(height: 20),
            new ListTile(
-              title: Text('Rejected', style: Theme.of(context).textTheme.headline6),
+              title: Text(translate('Rejected'), style: Theme.of(context).textTheme.headline6),
               onTap: () {
                 Navigator.of(context).pushNamed(
                        'Rejected_companies');

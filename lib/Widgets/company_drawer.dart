@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'package:jordantimes_final/screens/CompanyHistory.dart';
 
 import 'package:jordantimes_final/screens/Company_screen.dart';
@@ -74,7 +75,7 @@ class _CompanyDrawerState extends State<CompanyDrawer> {
             SizedBox(height: 20),
             new ListTile(
                 leading: const Icon(Icons.home),
-                title: Text('Dashboard',
+                title: Text(translate('Dashboard'),
                     style: Theme.of(context).textTheme.headline6),
                 onTap: () {
                   //Keep At The Same Page
@@ -83,7 +84,7 @@ class _CompanyDrawerState extends State<CompanyDrawer> {
             SizedBox(height: 20),
             new ListTile(
                 leading: const Icon(Icons.history),
-                title: Text('History',
+                title: Text(translate('History'),
                     style: Theme.of(context).textTheme.headline6),
                 onTap: () {
                   Navigator.of(context).pushNamed('CompanyHistory');
@@ -91,7 +92,7 @@ class _CompanyDrawerState extends State<CompanyDrawer> {
             SizedBox(height: 20),
             new ListTile(
                 leading: const Icon(Icons.person),
-                title: Text('EditProfile',
+                title: Text(translate('EditProfile'),
                     style: Theme.of(context).textTheme.headline6),
                 onTap: () {
                   Navigator.of(context).pushNamed('edit_profile');
@@ -99,7 +100,7 @@ class _CompanyDrawerState extends State<CompanyDrawer> {
             SizedBox(height: 20),
             new ListTile(
                 leading: const Icon(Icons.logout),
-                title: Text('Logout',
+                title: Text(translate('Logout'),
                     style: Theme.of(context).textTheme.headline6),
                 onTap: () {
                   _auth.signOut();

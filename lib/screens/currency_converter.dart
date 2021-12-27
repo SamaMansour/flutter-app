@@ -12,7 +12,7 @@ class CurrencyConverter extends StatefulWidget {
 class _CurrencyConverterState extends State<CurrencyConverter> {
   //def varebile
   String? usdToEgp;
-  int currValue =0 ;
+  var currValue = 0;
   TextEditingController _currentController = new TextEditingController();
 
   @override
@@ -22,16 +22,6 @@ class _CurrencyConverterState extends State<CurrencyConverter> {
     getAmounts();
   }
 
-// call function to convert
-  void getAmounts() async {
-    var usdConvert = await MoneyConverter.convert(
-        Currency(Currency.EGP, amount: currValue*0.0451247), Currency(Currency.USD));
-   
-    setState(() {
-      usdToEgp = usdConvert.toString();
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     print(Currency.EGP.toString());
@@ -39,21 +29,21 @@ class _CurrencyConverterState extends State<CurrencyConverter> {
       home: Scaffold(
         appBar: AppBar(
           title: const Text('Money Convertor'),
+          backgroundColor: Colors.red,
           centerTitle: true,
         ),
         body: Container(
-          
           padding: EdgeInsets.all(20),
-          
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                TextField(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              TextField(
                 textAlign: TextAlign.center,
-                controller:_currentController,
+                controller: _currentController,
                 onChanged: (value) {
-                  currValue = int.parse(value) ;
-                 
+                  setState(() {
+                    currValue = int.parse(_currentController.text);
+                  });
                 },
                 decoration: InputDecoration(
                   hintText: 'Enter Value',
@@ -61,28 +51,37 @@ class _CurrencyConverterState extends State<CurrencyConverter> {
                       EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
                 ),
               ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      "Converted = ",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
-                    ),
-                    Text(
-                      "$usdToEgp ${Currency.USD}",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 22,
-                          color: Colors.green),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    "Converted = ",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+                  ),
+                  Text(
+                    "$usdToEgp ${Currency.USD}",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 22,
+                        color: Colors.green),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  // call function to convert
+  void getAmounts() async {
+    var usdConvert = await MoneyConverter.convert(
+        Currency(Currency.EGP, amount: 112 * 0.0451247),
+        Currency(Currency.USD));
+
+    setState(() {
+      usdToEgp = usdConvert.toString();
+    });
   }
 }
