@@ -43,7 +43,7 @@ class _CategoryItemState extends State<CategoryItem> {
             padding: EdgeInsets.all(10),
             alignment: Alignment.center,
             child: Text(
-             translate( widget.title),
+              widget.title,
               style: TextStyle(
                 fontSize: 20,
                 color: Colors.white,

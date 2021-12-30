@@ -37,14 +37,14 @@ class HistoryDrawer extends StatelessWidget {
             alignment: Alignment.center,
             color: Colors.red,
             child: Text(
-              translate('History'),
+             'History',
               style: Theme.of(context).textTheme.headline6,
             ),
           ),
           SizedBox(height: 20),
           new ListTile(
              
-              title: Text(translate('Accepted'), style: Theme.of(context).textTheme.headline6),
+              title: Text('Accepted', style: Theme.of(context).textTheme.headline6),
               onTap: () {
                  Navigator.of(context).pushNamed(
                        'Goverment_History');
@@ -52,7 +52,7 @@ class HistoryDrawer extends StatelessWidget {
               }),
           SizedBox(height: 20),
            new ListTile(
-              title: Text(translate('Rejected'), style: Theme.of(context).textTheme.headline6),
+              title: Text('Rejected', style: Theme.of(context).textTheme.headline6),
               onTap: () {
                 Navigator.of(context).pushNamed(
                        'Rejected_companies');

@@ -22,7 +22,7 @@ class _AppDrawerState extends State<AppDrawer> {
         color: Colors.red,
       ),
       title: Text(
-        translate(title),
+       title,
         style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
       ),
       onTap: onTapLink(),
@@ -48,14 +48,14 @@ class _AppDrawerState extends State<AppDrawer> {
           SizedBox(height: 20),
           new ListTile(
               leading: const Icon(Icons.home),
-              title: Text(translate('Dashboard'), style: Theme.of(context).textTheme.headline6),
+              title: Text('Dashboard', style: Theme.of(context).textTheme.headline6),
               onTap: () {
                //Keep At Same Page
               }),
           SizedBox(height: 20),
            new ListTile(
               leading: const Icon(Icons.notifications),
-              title: Text(translate('Notifications'), style: Theme.of(context).textTheme.headline6),
+              title: Text('Notifications', style: Theme.of(context).textTheme.headline6),
               onTap: () {
                  
                
@@ -64,7 +64,7 @@ class _AppDrawerState extends State<AppDrawer> {
           SizedBox(height: 20),
           new ListTile(
              leading: const Icon(Icons.history),
-              title: Text(translate('History'), style: Theme.of(context).textTheme.headline6),
+              title: Text('History', style: Theme.of(context).textTheme.headline6),
               onTap: () {
                 Navigator.of(context).pushNamed(
                        'Goverment_History');
@@ -75,7 +75,7 @@ class _AppDrawerState extends State<AppDrawer> {
           SizedBox(height: 20),
           new ListTile(
              leading: const Icon(Icons.logout),
-              title: Text(translate('Logout'), style: Theme.of(context).textTheme.headline6),
+              title: Text('Logout', style: Theme.of(context).textTheme.headline6),
               onTap: () {
                 _auth.signOut();
                 Navigator.of(context).pushReplacement(

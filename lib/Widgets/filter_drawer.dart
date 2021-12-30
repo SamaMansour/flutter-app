@@ -36,14 +36,14 @@ class FilterDrawer extends StatelessWidget {
             alignment: Alignment.center,
             color: Colors.red,
             child: Text(
-            translate('Filter'),
+            'Filter',
               style: Theme.of(context).textTheme.headline6,
             ),
           ),
           SizedBox(height: 20),
           new ListTile(
              
-              title: Text(translate('Filter Drawer'), style: Theme.of(context).textTheme.headline6),
+              title: Text('Filter Drawer', style: Theme.of(context).textTheme.headline6),
               onTap: () {
                   Navigator.of(context).pushNamed(
                        'filter_screen');

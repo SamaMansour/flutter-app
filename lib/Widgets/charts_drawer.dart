@@ -36,14 +36,14 @@ class ChartsDrawer extends StatelessWidget {
             alignment: Alignment.center,
             color: Colors.red,
             child: Text(
-            translate('Charts'),
+            'Charts',
               style: Theme.of(context).textTheme.headline6,
             ),
           ),
           SizedBox(height: 20),
           new ListTile(
              
-              title: Text(translate('Column Charts'), style: Theme.of(context).textTheme.headline6),
+              title: Text('Column Charts', style: Theme.of(context).textTheme.headline6),
               onTap: () {
                   Navigator.of(context).pushNamed(
                        'Column_User_Chart');

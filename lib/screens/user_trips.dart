@@ -248,13 +248,7 @@ class _UserTripsState extends State<UserTrips> {
                                           color: Colors.black.withOpacity(0.6)),
                                     ),
                                   ),
-                                  FlatButton(
-                                    textColor: Colors.red,
-                                    onPressed: () async {
-                                      createAlertDialog(context);
-                                    },
-                                    child: const Text('Rate'),
-                                  ),
+                                
 
                                   /*Image.network(_foundTrips[index]['img']),
                                   Image.network(_foundTrips[index]['img2']),

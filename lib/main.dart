@@ -1,12 +1,10 @@
-import 'dart:convert';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
+
 import 'package:jordantimes_final/screens/Admin_Notifications.dart';
 import 'package:jordantimes_final/screens/Admin_screen.dart';
 import 'package:jordantimes_final/screens/Categories_screen.dart';
@@ -34,101 +32,69 @@ import 'package:jordantimes_final/screens/reservation_details.dart';
 import 'package:jordantimes_final/screens/tabs_screen.dart';
 import 'package:jordantimes_final/screens/trip_ditail_screen.dart';
 import 'package:jordantimes_final/screens/user_trips.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_translate/flutter_translate.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
-   WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
-    await Firebase.initializeApp();
-    var delegate = await LocalizationDelegate.create(
-      fallbackLocale: 'en_US', supportedLocales: ['en_US', 'es', 'fa', 'ar']);
 
-  runApp(LocalizedApp(delegate, MyApp()));
+  await Firebase.initializeApp();
   runApp(
-   
-   
     EasyLocalization(
-      supportedLocales: [Locale('en', 'US'), Locale('ar', 'AR')],
-      path: 'assets/lang', // <-- change the path of the translation files 
-      fallbackLocale: Locale('en', 'US'),
-      child: MyApp()
-    ),
+        supportedLocales: [Locale('en', 'US'), Locale('ar', 'AR')],
+        path: 'assets/lang', // <-- change the path of the translation files
+        fallbackLocale: Locale('en', 'US'),
+        child: MyApp()),
   );
 }
-
 
 class MyApp extends StatelessWidget {
   FirebaseAnalytics analytics = FirebaseAnalytics();
   // This widget is the root of your application.
- 
+
   @override
   Widget build(BuildContext context) {
     String period = " ";
-    String noOfPassengers = " " ;
-   
-  var localizationDelegate = LocalizedApp.of(context).delegate;
-
-    return LocalizationProvider(
-      state: LocalizationProvider.of(context).state,
-      child: MaterialApp(
-        title: 'Jordantimes',
-        localizationsDelegates: [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          localizationDelegate
-        ],
-        supportedLocales: localizationDelegate.supportedLocales,
-        locale: localizationDelegate.currentLocale,
-        theme: ThemeData(primarySwatch: Colors.red),
-  
-
+    String noOfPassengers = " ";
+    final String apiKey = "AIzaSyDSotvProLu8FZSmGssd7PNjhbggSq_48I";
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'JordanTimes',
+      theme: ThemeData(
+        primarySwatch: Colors.red,
+      ),
 
       navigatorObservers: [
-    FirebaseAnalyticsObserver(analytics: analytics),
-  ],
+        FirebaseAnalyticsObserver(analytics: analytics),
+      ],
       //home: Categoriesscreen(),
       //initialRoute: '/',
       routes: {
         '/': (context) => TabScreen(),
         '/category-trips': (context) => CategoryTripsScreen(),
         '/trip-detail': (context) => TripDetailScreen(),
-        'CompanyHistory' : (context) => CompanyHistory(),
-        'edit_profile' : (context) => editProfile(),
-        
-         'Goverment_History':(context) => GovermentHistory(),
-         'Goverment_Notifications': (context) => GovermentNotifications(),
-         'Rejected_companies' : (context) => RejectedCompanies(),
-         'Locations_screen' : (context) => LocationsScreen(),
-         'User_chart_screen' : (context) => UserChart(),
-         'Admin_screen' : (context) => AdminScreen(),
-         'profile_info': (context) => ProfileInfo(),
-         'category_trips_screen': (context) => CategoryTripsScreen(), 
-         'filter_screen' : (context) => FilterScreen(),
-         'reservation_details': (context) => ReservationDetails(),
-          'Goverment_screen' : (context) => GovermentScreen(),
-          'Column_User_Chart': (context) => ColumnUserChart(),
-           'favorite_screen' : (context) => favoriteScreen(),
-          'contactus': (context) => ContactusScreen(),
-          'user_trips' : (context) =>UserTrips(),
-          'payment_screen': (context) => PaymentScreen(),
-          'ForgotPassword_screen': (context) =>ForgotPassword(),
-          'edit_profile_user': (context) => editProfileUser(),
-          'currency_converter':(context) => CurrencyConverter()
-
-         
-         
+        'CompanyHistory': (context) => CompanyHistory(),
+        'edit_profile': (context) => editProfile(),
+        'Goverment_History': (context) => GovermentHistory(),
+        'Goverment_Notifications': (context) => GovermentNotifications(),
+        'Rejected_companies': (context) => RejectedCompanies(),
+        'Locations_screen': (context) => LocationsScreen(),
+        'User_chart_screen': (context) => UserChart(),
+        'Admin_screen': (context) => AdminScreen(),
+        'profile_info': (context) => ProfileInfo(),
+        'category_trips_screen': (context) => CategoryTripsScreen(),
+        'filter_screen': (context) => FilterScreen(),
+        'reservation_details': (context) => ReservationDetails(),
+        'Goverment_screen': (context) => GovermentScreen(),
+        'Column_User_Chart': (context) => ColumnUserChart(),
+        'favorite_screen': (context) => favoriteScreen(),
+        'contactus': (context) => ContactusScreen(),
+        'user_trips': (context) => UserTrips(),
+        'payment_screen': (context) => PaymentScreen(),
+        'ForgotPassword_screen': (context) => ForgotPassword(),
+        'edit_profile_user': (context) => editProfileUser(),
+        'currency_converter': (context) => CurrencyConverter()
       },
-      )
     );
   }
 }
-
-         
-         
-         
-         
-         
-         
-      

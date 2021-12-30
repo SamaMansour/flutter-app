@@ -132,7 +132,7 @@ class _UserSignupScreenState extends State<UserSignupScreen> {
         }
       },
       decoration: InputDecoration(
-        hintText: ' +962 Enter Company Phone',
+        hintText: ' +962 Enter Phone',
         contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(32.0)),
@@ -165,7 +165,7 @@ class _UserSignupScreenState extends State<UserSignupScreen> {
         }
       },
       decoration: InputDecoration(
-        hintText: 'Enter Company Email',
+        hintText: 'Enter Email',
         contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(32.0)),

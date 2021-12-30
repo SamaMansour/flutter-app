@@ -51,7 +51,7 @@ class _AdminDrawerState extends State<AdminDrawer> {
           SizedBox(height: 20),
           new ListTile(
                leading: const Icon(Icons.home),
-              title: Text(translate('Dashboard'), style: Theme.of(context).textTheme.headline6),
+              title: Text('Dashboard', style: Theme.of(context).textTheme.headline6),
               onTap: () {
                   Navigator.of(context).pushNamed(
                        'Admin_screen');
@@ -63,7 +63,7 @@ class _AdminDrawerState extends State<AdminDrawer> {
           SizedBox(height: 20),
           new ListTile(
              leading: const Icon(Icons.pie_chart),
-              title: Text(translate('Charts'), style: Theme.of(context).textTheme.headline6),
+              title: Text('Charts', style: Theme.of(context).textTheme.headline6),
               onTap: () {
                   Navigator.of(context).pushNamed(
                        'User_chart_screen');
@@ -75,7 +75,7 @@ class _AdminDrawerState extends State<AdminDrawer> {
           SizedBox(height: 20),
           new ListTile(
             leading: const Icon(Icons.logout),
-              title: Text(translate('Logout'), style: Theme.of(context).textTheme.headline6),
+              title: Text('Logout', style: Theme.of(context).textTheme.headline6),
               onTap: () {
                 _auth.signOut();
                 Navigator.of(context).pushReplacement(

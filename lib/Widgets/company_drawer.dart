@@ -75,7 +75,7 @@ class _CompanyDrawerState extends State<CompanyDrawer> {
             SizedBox(height: 20),
             new ListTile(
                 leading: const Icon(Icons.home),
-                title: Text(translate('Dashboard'),
+                title: Text('Dashboard',
                     style: Theme.of(context).textTheme.headline6),
                 onTap: () {
                   //Keep At The Same Page
@@ -84,7 +84,7 @@ class _CompanyDrawerState extends State<CompanyDrawer> {
             SizedBox(height: 20),
             new ListTile(
                 leading: const Icon(Icons.history),
-                title: Text(translate('History'),
+                title: Text('History',
                     style: Theme.of(context).textTheme.headline6),
                 onTap: () {
                   Navigator.of(context).pushNamed('CompanyHistory');
@@ -92,7 +92,7 @@ class _CompanyDrawerState extends State<CompanyDrawer> {
             SizedBox(height: 20),
             new ListTile(
                 leading: const Icon(Icons.person),
-                title: Text(translate('EditProfile'),
+                title: Text('EditProfile',
                     style: Theme.of(context).textTheme.headline6),
                 onTap: () {
                   Navigator.of(context).pushNamed('edit_profile');
@@ -100,7 +100,7 @@ class _CompanyDrawerState extends State<CompanyDrawer> {
             SizedBox(height: 20),
             new ListTile(
                 leading: const Icon(Icons.logout),
-                title: Text(translate('Logout'),
+                title: Text('Logout',
                     style: Theme.of(context).textTheme.headline6),
                 onTap: () {
                   _auth.signOut();

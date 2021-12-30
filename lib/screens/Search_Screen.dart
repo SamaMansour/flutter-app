@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:jordantimes_final/Widgets/SearchItems.dart';
+import 'package:jordantimes_final/Widgets/category_item.dart';
+import 'package:jordantimes_final/screens/Categories_screen.dart';
+import 'package:jordantimes_final/screens/category_trips_screen.dart';
 
 class SearchScreen extends StatelessWidget {
   
@@ -80,6 +83,8 @@ class CitySearch extends SearchDelegate<Cities> {
                         title: Text(listItems[index].name),
                         
                         onTap: () {
+                           Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => Categoriesscreen()));
                         
                         },
                       ),

@@ -18,7 +18,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  String email = " ";
+  String? email;
   bool logged = false;
 
   String password = " ";
@@ -272,28 +272,46 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Text('Login'),
           onPressed: () async {
             if (_formKey.currentState!.validate()) {
-              final user = _auth.signInWithEmailAndPassword(
-                  email: email, password: password);
+              final user = _auth
+                  .signInWithEmailAndPassword(email: email.toString(), password: password)
+                  .catchError((err) {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text("Wrong email or password"),
+                        content: Text(err.message),
+                        actions: [
+                          FlatButton(
+                            child: Text("Ok"),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          )
+                        ],
+                      );
+                    });
+              });
               final result = _auth.currentUser;
-
+              
               //Navigate Goverment To Their Page
-              if (_auth.currentUser!.email == "gov@gmail.com") {
+              if (email == "gov@gmail.com") {
                 logged = true;
                 setState(() {
-                 
                   Navigator.of(context).popAndPushNamed('Goverment_screen');
-                 
-                  
+                  //email = " ";
+                  //password = " ";
                 });
               }
 
               //Navigate Admin To Their Page
-              if (_auth.currentUser!.email == "admin@gmail.com") {
+              else if (email == "admin@gmail.com") {
                 setState(() {
-                
                   Navigator.of(context).pushReplacement(
                       MaterialPageRoute(builder: (context) => AdminScreen()));
-                        
+
+                  //email = " ";
+                  //password = " ";
                 });
               } else if (!logged) {
                 //Navigate Company To Their Page
@@ -312,20 +330,22 @@ class _LoginScreenState extends State<LoginScreen> {
                               {
                                 main2(),
                                 setState(() {
-                                 
                                   Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(
                                           builder: (context) =>
                                               CompanyScreen()));
+                                  //email = " ";
+                                  //password = " ";
                                 })
                               }
                             else
                               {
                                 setState(() {
-                               
                                   Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(
                                           builder: (context) => UserScreen()));
+                                  //email = " ";
+                                  //password = " ";
                                 })
                               }
                           });

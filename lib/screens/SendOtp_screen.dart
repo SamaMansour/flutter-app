@@ -48,7 +48,7 @@ class SendOtp extends StatelessWidget {
           children: <Widget>[
             Container(
               height: 200.0,
-              child: Image.asset('assets/amman.png'),
+              child: Image.asset('assets/logo.png'),
             ),
            
             SizedBox(

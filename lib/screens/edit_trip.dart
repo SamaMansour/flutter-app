@@ -127,17 +127,7 @@ class _EditTripState extends State<EditTrip> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              TextField(
-                textAlign: TextAlign.center,
-                onChanged: (value) {
-                  id = value;
-                },
-                decoration: InputDecoration(
-                  hintText: 'Enter Campagin ID ',
-                  contentPadding:
-                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-                ),
-              ),
+             
               SizedBox(
                 height: 8.0,
               ),
@@ -552,7 +542,7 @@ class _EditTripState extends State<EditTrip> {
                     minWidth: 200.0,
                     height: 42.0,
                     child: Text(
-                      'Add Campagin',
+                      'Edit Campagin',
                     ),
                   ),
                 ),
@@ -574,15 +564,16 @@ class _EditTripState extends State<EditTrip> {
            
          
   }
+   Future selectFile() async {
+    FilePickerResult? result =
+        await FilePicker.platform.pickFiles(allowMultiple: true);
 
-  Future selectFile() async {
-    final result = await FilePicker.platform.pickFiles(allowMultiple: false);
-
-    if (result == null) return;
-    final path = result.files.single.path!;
-
-    setState(() => file = File(path));
+    if (result != null) {
+      files = result.paths.map((path) => File(path!)).toList();
+      print(files);
+    }
   }
+ 
 
   Future uploadFile() async {
     final fileName = basename(files![0].toString());

@@ -311,7 +311,7 @@ class _CategoryTripsScreenState extends State<CategoryTripsScreen> {
   }
 
   Future<void> getName() async {
-    await for (var snapshot in _firestore.collection('indicies').snapshots()) {
+    await for (var snapshot in _firestore.collection('users').snapshots()) {
       for (var savedUser in snapshot.docs) {
         if (savedUser.get('email') as String == email) {
           enteredName = savedUser.get('name') as String;

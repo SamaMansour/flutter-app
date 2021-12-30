@@ -2,7 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+
 import 'package:jordantimes_final/screens/welcome_screen.dart';
+import 'package:translator/src/extension.dart';
 
 class MainDrawer extends StatelessWidget {
   const MainDrawer({ Key? key }) : super(key: key);
@@ -43,14 +45,14 @@ TextDirection currentTextDir = TextDirection.ltr;
             alignment: Alignment.center,
             color: Colors.red,
             child: Text(
-            translate('Home'),
+           'Home',
               style: Theme.of(context).textTheme.headline6,
             ),
           ),
           SizedBox(height: 20),
           new ListTile(
                leading: const Icon(Icons.phone),
-              title: Text(translate('Contactus'), style: Theme.of(context).textTheme.headline6),
+              title: Text('Contactus', style: Theme.of(context).textTheme.headline6),
               onTap: () {
                   Navigator.of(context).pushNamed(
                        'contactus');
@@ -62,7 +64,7 @@ TextDirection currentTextDir = TextDirection.ltr;
           SizedBox(height: 20),
           new ListTile(
              leading: const Icon(Icons.money),
-              title: Text(translate('Currency Converter'), style: Theme.of(context).textTheme.headline6),
+              title: Text('Currency Converter', style: Theme.of(context).textTheme.headline6),
               onTap: () {
                    Navigator.of(context).pushNamed(
                        'currency_converter');
@@ -74,7 +76,7 @@ TextDirection currentTextDir = TextDirection.ltr;
           SizedBox(height: 20),
           new ListTile(
             leading: const Icon(Icons.translate),
-              title: Text(translate('Change Language '), style: Theme.of(context).textTheme.headline6),
+              title: Text('Change Language ', style: Theme.of(context).textTheme.headline6),
               onTap: () => _onActionSheetPress(context)),
         ],
       ),

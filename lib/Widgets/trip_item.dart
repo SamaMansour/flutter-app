@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import 'package:jordantimes_final/models/Trip.dart';
 import 'package:jordantimes_final/screens/trip_ditail_screen.dart';
 
