@@ -12,7 +12,7 @@ import 'package:jordantimes_final/api/FirebaseApi.dart';
 import 'package:jordantimes_final/api/checkbox_state.dart';
 import 'package:jordantimes_final/screens/Company_screen.dart';
 import 'package:jordantimes_final/screens/Goverment_screen.dart';
-import 'package:jordantimes_final/screens/Locations_screen.dart';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:jordantimes_final/screens/Login_screen.dart';
 import 'package:multiselect_formfield/multiselect_formfield.dart';

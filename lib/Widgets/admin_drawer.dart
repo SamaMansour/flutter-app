@@ -4,7 +4,7 @@ import 'package:flutter_translate/flutter_translate.dart';
 import 'package:jordantimes_final/screens/Goverment_Notifications_screen.dart';
 import 'package:jordantimes_final/screens/Goverment_screen.dart';
 import 'package:jordantimes_final/screens/User_chart_screen.dart';
-import 'package:jordantimes_final/screens/posts_screen.dart';
+
 import 'package:jordantimes_final/screens/welcome_screen.dart';
 import 'package:translator/translator.dart';
 

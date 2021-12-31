@@ -90,6 +90,15 @@ class _CompanyDrawerState extends State<CompanyDrawer> {
                   Navigator.of(context).pushNamed('CompanyHistory');
                 }),
             SizedBox(height: 20),
+
+             new ListTile(
+                leading: const Icon(Icons.notifications),
+                title: Text('Notifications',
+                    style: Theme.of(context).textTheme.headline6),
+                onTap: () {
+                  Navigator.of(context).pushNamed('CompanyNotifications');
+                }),
+                 SizedBox(height: 20),
             new ListTile(
                 leading: const Icon(Icons.person),
                 title: Text('EditProfile',

@@ -10,12 +10,12 @@ import 'package:jordantimes_final/screens/Admin_screen.dart';
 import 'package:jordantimes_final/screens/Categories_screen.dart';
 import 'package:jordantimes_final/screens/Column_User_chart.dart';
 import 'package:jordantimes_final/screens/CompanyHistory.dart';
+import 'package:jordantimes_final/screens/Company_Notifications.dart';
 
 import 'package:jordantimes_final/screens/ForgotPassword_screen.dart';
 import 'package:jordantimes_final/screens/Goverment_History.dart';
 import 'package:jordantimes_final/screens/Goverment_Notifications_screen.dart';
 import 'package:jordantimes_final/screens/Goverment_screen.dart';
-import 'package:jordantimes_final/screens/Locations_screen.dart';
 import 'package:jordantimes_final/screens/Rejected_companies.dart';
 import 'package:jordantimes_final/screens/User_chart_screen.dart';
 import 'package:jordantimes_final/screens/category_trips_screen.dart';
@@ -23,10 +23,10 @@ import 'package:jordantimes_final/screens/contactus.dart';
 import 'package:jordantimes_final/screens/currency_converter.dart';
 import 'package:jordantimes_final/screens/edit_profile.dart';
 import 'package:jordantimes_final/screens/edit_profile_user.dart';
-import 'package:jordantimes_final/screens/favorite_screen.dart';
+
 import 'package:jordantimes_final/screens/filter_screen.dart';
 import 'package:jordantimes_final/screens/payment_screen.dart';
-import 'package:jordantimes_final/screens/posts_screen.dart';
+
 import 'package:jordantimes_final/screens/profile_info.dart';
 import 'package:jordantimes_final/screens/reservation_details.dart';
 import 'package:jordantimes_final/screens/tabs_screen.dart';
@@ -78,7 +78,6 @@ class MyApp extends StatelessWidget {
         'Goverment_History': (context) => GovermentHistory(),
         'Goverment_Notifications': (context) => GovermentNotifications(),
         'Rejected_companies': (context) => RejectedCompanies(),
-        'Locations_screen': (context) => LocationsScreen(),
         'User_chart_screen': (context) => UserChart(),
         'Admin_screen': (context) => AdminScreen(),
         'profile_info': (context) => ProfileInfo(),
@@ -87,13 +86,13 @@ class MyApp extends StatelessWidget {
         'reservation_details': (context) => ReservationDetails(),
         'Goverment_screen': (context) => GovermentScreen(),
         'Column_User_Chart': (context) => ColumnUserChart(),
-        'favorite_screen': (context) => favoriteScreen(),
         'contactus': (context) => ContactusScreen(),
         'user_trips': (context) => UserTrips(),
         'payment_screen': (context) => PaymentScreen(),
         'ForgotPassword_screen': (context) => ForgotPassword(),
         'edit_profile_user': (context) => editProfileUser(),
-        'currency_converter': (context) => CurrencyConverter()
+        'currency_converter': (context) => CurrencyConverter(),
+        'CompanyNotifications':(context) => CompanyNotifications()
       },
     );
   }

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:jordantimes_final/Widgets/app_drawer.dart';
 import 'package:jordantimes_final/screens/Categories_screen.dart';
 import 'package:jordantimes_final/screens/Search_Screen.dart';
-import 'package:jordantimes_final/screens/favorite_screen.dart';
+
 import 'package:jordantimes_final/screens/tabs_screen.dart';
 import 'package:jordantimes_final/screens/welcome_screen.dart';
 

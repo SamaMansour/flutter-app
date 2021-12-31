@@ -6,7 +6,7 @@ import 'package:jordantimes_final/screens/Search_Screen.dart';
 import 'package:jordantimes_final/screens/User_screen.dart';
 import 'package:jordantimes_final/screens/welcome_screen.dart';
 import './Categories_screen.dart';
-import 'favorite_screen.dart';
+
 
 class TabScreen extends StatefulWidget {
   const TabScreen({Key? key}) : super(key: key);

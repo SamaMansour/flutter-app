@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:jordantimes_final/Widgets/user_drawer.dart';
 import 'package:jordantimes_final/screens/Categories_screen.dart';
 import 'package:jordantimes_final/screens/Search_Screen.dart';
-import 'package:jordantimes_final/screens/favorite_screen.dart';
+
 import 'package:jordantimes_final/screens/user_profile_screen.dart';
 import 'package:jordantimes_final/screens/user_trips.dart';
 import 'package:jordantimes_final/screens/welcome_screen.dart';
